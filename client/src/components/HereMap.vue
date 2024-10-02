@@ -2,8 +2,8 @@
 <script setup>
   import { onMounted, ref } from 'vue';
 
-  const mapContainer = ref(null);
-  const apiKey = 'eWA19joj95t3z3zNFgJdHrnjpC2fTFdPt6f1jCRRijU';
+  const mapContainer = ref('');
+  const apiKey = ''; // Enter API KEY here
 
   onMounted(() => {
     initializeMap();
@@ -44,10 +44,9 @@
 
 <style lang="scss" scoped>
   .map-container {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
     width: 600px;
     height: 600px;
     border: 1px solid #333;
+    margin: 1rem auto;
   }
 </style>
