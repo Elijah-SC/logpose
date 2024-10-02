@@ -48,6 +48,12 @@ function initializeMap() {
 
   // Enable default UI interactions
   const ui = H.ui.UI.createDefault(map, defaultLayers);
+
+  // Add marker
+  const icon = new H.map.Icon('https://cdn-icons-png.flaticon.com/128/14090/14090489.png');
+
+  const boiseMarker = new H.map.Marker({ lat: coords.value.latitude, lng: coords.value.longitude }, { icon: icon });
+  map.addObject(boiseMarker);
 }
 </script>
 
