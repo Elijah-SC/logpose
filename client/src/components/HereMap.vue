@@ -1,18 +1,22 @@
-<!-- eslint-disable no-undef -->
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, computed } from 'vue';
+  import H from '@here/maps-api-for-javascript';
 
   const mapContainer = ref('');
   const apiKey = 'eWA19joj95t3z3zNFgJdHrnjpC2fTFdPt6f1jCRRijU'; // Enter API KEY here
+  const coordinates = ref({
+    lng: '',
+    lat: '',
+  })
 
   onMounted(() => {
     initializeMap();
   })
 
   function clickListener(map) {
-    map.addEventListener('tap', function (evt) {
-    const coord = map.screenToGeo(evt.currentPointer.viewportX,
-            evt.currentPointer.viewportY);
+    map.addEventListener('tap', (e) => {
+    const coord = map.screenToGeo(e.currentPointer.viewportX,
+            e.currentPointer.viewportY);
             console.log('Click');
     console.log('Clicked at ' + Math.abs(coord.lat.toFixed(4)) +
         ((coord.lat > 0) ? 'N' : 'S') +
@@ -23,9 +27,7 @@
 
   function initializeMap() {
     // Initialize the platform object needed to actually work with API
-    const platform = new H.service.Platform({
-      apikey: apiKey
-    });
+    const platform = new H.service.Platform({apikey: apiKey});
 
     // Obtain the default map types from the platform object
     const defaultLayers = platform.createDefaultLayers();
