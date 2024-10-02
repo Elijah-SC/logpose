@@ -14,6 +14,7 @@
     "@here/maps-api-for-javascript": "^1.58.0",
     "@mdi/font": "7.4.47",
     "@popperjs/core": "2.11.8",
+    "@types/heremaps": "^3.1.14",
     "axios": "1.7.4",
     "bootstrap": "5.3.3",
     "socket.io-client": "4.7.5",
