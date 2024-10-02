@@ -3,12 +3,15 @@
 </script>
 
 <template>
-  <h1>Test</h1>
+  <section class="container">
+    <div class="row justify-content-center">
+      <div class="col-9">
+        <HereMap />
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped lang="scss">
-  .map {
-    width: 9rem;
-    height: 9rem; 
-  }
+
 </style>
