@@ -4,23 +4,11 @@ import Pop from "@/utils/Pop.js";
 import { computed, onMounted, ref, watch } from 'vue';
 
 const mapContainer = ref('');
-const apiKey = 'eWA19joj95t3z3zNFgJdHrnjpC2fTFdPt6f1jCRRijU'; // Enter API KEY here
+const apiKey = ''; // Enter API KEY here
 
 onMounted(() => {
-  getCurrentLocation()
+  initializeMap();
 })
-
-const coords = ref(null)
-watch(coords, initializeMap)
-
-function getCurrentLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
-      coords.value = position.coords
-      logger.log(coords.value)
-    })
-  } else Pop.error(`browser does not support geolocation`)
-}
 
 function initializeMap() {
   // Initialize the platform object needed to actually work with API
@@ -47,21 +35,6 @@ function initializeMap() {
 
   // Enable default UI interactions
   const ui = H.ui.UI.createDefault(map, defaultLayers);
-  const LocationOfMarker = { lat: 43.136812, lng: -115.694474 };
-  clickListener(map)
-}
-
-
-function clickListener(map) {
-  map.addEventListener('tap', function (evt) {
-    const coord = map.screenToGeo(evt.currentPointer.viewportX,
-      evt.currentPointer.viewportY);
-    console.log('Click');
-    console.log('Clicked at ' + Math.abs(coord.lat.toFixed(4)) +
-      ((coord.lat > 0) ? 'N' : 'S') +
-      ' ' + Math.abs(coord.lng.toFixed(4)) +
-      ((coord.lng > 0) ? 'E' : 'W'));
-  });
 }
 </script>
 
