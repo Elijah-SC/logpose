@@ -3,11 +3,23 @@
   import { onMounted, ref } from 'vue';
 
   const mapContainer = ref('');
-  const apiKey = ''; // Enter API KEY here
+  const apiKey = 'eWA19joj95t3z3zNFgJdHrnjpC2fTFdPt6f1jCRRijU'; // Enter API KEY here
 
   onMounted(() => {
     initializeMap();
   })
+
+  function clickListener(map) {
+    map.addEventListener('tap', function (evt) {
+    const coord = map.screenToGeo(evt.currentPointer.viewportX,
+            evt.currentPointer.viewportY);
+            console.log('Click');
+    console.log('Clicked at ' + Math.abs(coord.lat.toFixed(4)) +
+        ((coord.lat > 0) ? 'N' : 'S') +
+        ' ' + Math.abs(coord.lng.toFixed(4)) +
+         ((coord.lng > 0) ? 'E' : 'W'));
+  });
+  }
 
   function initializeMap() {
     // Initialize the platform object needed to actually work with API
@@ -34,7 +46,13 @@
 
     // Enable default UI interactions
     const ui = H.ui.UI.createDefault(map, defaultLayers);
+
+    // Location Marker
+    const LocationOfMarker = { lat: 43.136812, lng: -115.694474 };
+
+    clickListener(map);
   }
+
 </script>
 
 
