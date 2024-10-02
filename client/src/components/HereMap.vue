@@ -1,10 +1,11 @@
 <script setup>
+
 import { logger } from "@/utils/Logger.js";
 import Pop from "@/utils/Pop.js";
 import { computed, onMounted, ref, watch } from 'vue';
 
 const mapContainer = ref('');
-const apiKey = ''; // Enter API KEY here
+const apiKey = 'eWA19joj95t3z3zNFgJdHrnjpC2fTFdPt6f1jCRRijU'; // Enter API KEY here
 
 onMounted(() => {
   getCurrentLocation()
