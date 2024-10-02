@@ -8,9 +8,5 @@
       "name": "server",
       "path": "server"
     },
-    {
-      "name": "logpose",
-      "path": "."
-    }
   ]
 }
