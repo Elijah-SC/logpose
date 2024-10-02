@@ -7,8 +7,20 @@ const mapContainer = ref('');
 const apiKey = ''; // Enter API KEY here
 
 onMounted(() => {
-  initializeMap();
+  getCurrentLocation()
 })
+
+const coords = ref(null)
+watch(coords, initializeMap)
+
+function getCurrentLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(position => {
+      coords.value = position.coords
+      logger.log(coords.value)
+    })
+  } else Pop.error(`browser does not support geolocation`)
+}
 
 function initializeMap() {
   // Initialize the platform object needed to actually work with API
