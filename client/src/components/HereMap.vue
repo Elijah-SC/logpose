@@ -56,7 +56,7 @@ function initializeMap() {
     // @ts-ignore
     defaultLayers.vector.normal.map,
     {
-      zoom: 19,
+      zoom: 15,
       center: { lat: coords.value.latitude, lng: coords.value.longitude } // Boise
     }
   );
@@ -69,7 +69,8 @@ function initializeMap() {
   const ui = H.ui.UI.createDefault(map, defaultLayers);
 
   // Add marker
-  const icon = new H.map.Icon('https://cdn-icons-png.flaticon.com/128/14090/14090489.png');
+  const svgMarkup = '<svg class="map-marker" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>map-marker</title><path  style="fill: blue;" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>';
+  const icon = new H.map.Icon(svgMarkup);
 
   // @ts-ignore
   const boiseMarker = new H.map.Marker({ lat: coords.value.latitude, lng: coords.value.longitude }, { icon: icon });
