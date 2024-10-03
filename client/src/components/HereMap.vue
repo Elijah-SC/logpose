@@ -8,7 +8,7 @@ const mapContainer = ref('');
 const apiKey = 'eWA19joj95t3z3zNFgJdHrnjpC2fTFdPt6f1jCRRijU'; // Enter API KEY here
 
 onMounted(() => {
-  getCurrentLocation()
+  getCurrentLocation();
 })
 
 const coords = ref(null)
@@ -17,10 +17,27 @@ watch(coords, initializeMap)
 function getCurrentLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
-      coords.value = position.coords
-      logger.log(coords.value)
+      coords.value = position.coords;
+      logger.log(coords.value);
     })
-  } else Pop.error(`browser does not support geolocation`)
+  }
+  else {
+    Pop.error('browser does not support geolocation');
+  }
+}
+
+function acquireCoordinates(map) {
+  map.addEventListener('tap', (e) => {
+    const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
+    logger.log(Math.abs(coord.lat.toFixed(4)) +
+      (coord.lat > 0 ? "N" : "S") +
+      " " +
+      Math.abs(coord.lng.toFixed(4)) +
+      (coord.lng > 0 ? "E" : "W"))
+
+    const pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
+    map.addObject(pinMarker);
+  })
 }
 
 function initializeMap() {
@@ -54,6 +71,8 @@ function initializeMap() {
 
   const boiseMarker = new H.map.Marker({ lat: coords.value.latitude, lng: coords.value.longitude }, { icon: icon });
   map.addObject(boiseMarker);
+
+  acquireCoordinates(map);
 }
 </script>
 
