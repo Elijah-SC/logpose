@@ -2,7 +2,13 @@ import { dbContext } from "../db/DbContext.js";
 
 class LocationsService {
   async getAllLocations(query) {
-    const locations = await dbContext.Locations.find().populate(`creator`, `-email -subs`)
+    const sortBy = query.sort
+    delete query.sort
+    const pageNumber = parseInt(query.page) || 1
+    const limitAmount = 20
+    const skipAmount = (pageNumber - 1) * limitAmount
+    delete query.page
+    const locations = await dbContext.Locations.find().sort(sortBy + `createdAt`).skip(skipAmount).limit(limitAmount).populate(`creator`, `-email -subs`)
     return locations
   }
   async findLocationById(locationId) {
