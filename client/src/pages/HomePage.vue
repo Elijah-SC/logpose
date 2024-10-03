@@ -110,6 +110,6 @@ section {
 }
 
 .h-100 {
-  height: 100%;
+  min-height: 85vh;
 }
 </style>

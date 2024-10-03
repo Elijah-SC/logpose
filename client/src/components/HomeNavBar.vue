@@ -32,7 +32,7 @@ import Login from './Login.vue';
 
 <style scoped>
 img {
-  height: 45px;
+  height: 8vh;
   border-radius: 10px;
   padding: 0 .6rem 0 .6rem;
 }
