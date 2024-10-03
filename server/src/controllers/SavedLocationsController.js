@@ -6,7 +6,6 @@ export class SavedLocationsController extends BaseController {
     constructor() {
         super('api/savedLocations')
         this.router
-            .get('', this.getLocationVisitor)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createSavedLocation)
             .put('/:locationId', this.updateSavedLocation)
@@ -30,15 +29,6 @@ export class SavedLocationsController extends BaseController {
             const locationId = request.params.locationId
             const userInfo = request.userInfo.Id
             const savedLocation = await savedLocationService.updateSavedLocation(locationId, userInfo, savedlocationData)
-            response.send(savedLocation)
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    async getLocationVisitor(request, response, next) {
-        try {
-            const savedLocation = await savedLocationService.getLocationVisitor()
             response.send(savedLocation)
         } catch (error) {
             next(error)
