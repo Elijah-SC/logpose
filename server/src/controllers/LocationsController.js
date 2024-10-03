@@ -47,7 +47,7 @@ export class LocationsController extends BaseController {
 
   async getLocationVisitor(request, response, next) {
     try {
-      const locationId = request.params.id
+      const locationId = request.params.locationId
       const savedLocation = await savedLocationService.getLocationVisitor(locationId)
       response.send(savedLocation)
     } catch (error) {
