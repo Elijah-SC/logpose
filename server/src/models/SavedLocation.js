@@ -19,7 +19,7 @@ SavedLocationSchema.virtual('creator', {
     justOne: true
 })
 
-SavedLocationSchema.virtual('Location', {
+SavedLocationSchema.virtual('location', {
     localField: 'locationId',
     ref: 'Location',
     foreignField: '_id',
