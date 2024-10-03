@@ -34,7 +34,9 @@ function initializeMap() {
 
   // instantiate & render map:
   const map = new H.Map(
+    // @ts-ignore
     mapContainer.value,
+    // @ts-ignore
     defaultLayers.vector.normal.map,
     {
       zoom: 19,
@@ -52,6 +54,7 @@ function initializeMap() {
   // Add marker
   const icon = new H.map.Icon('https://cdn-icons-png.flaticon.com/128/14090/14090489.png');
 
+  // @ts-ignore
   const boiseMarker = new H.map.Marker({ lat: coords.value.latitude, lng: coords.value.longitude }, { icon: icon });
   map.addObject(boiseMarker);
 }
