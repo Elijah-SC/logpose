@@ -13,7 +13,8 @@ export class LocationsController extends BaseController {
   }
   async getAllLocations(request, response, next) {
     try {
-      const locations = await locationsService.getAllLocations()
+      const query = request.query
+      const locations = await locationsService.getAllLocations(query)
       response.send(locations)
     } catch (e) {
       next(e)

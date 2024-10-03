@@ -47,10 +47,10 @@ export class SavedLocationsController extends BaseController {
 
     async createSavedLocation(request, response, next) {
         try {
-            const savedlocationData = request.body
+            const savedLocationData = request.body
             const user = request.userInfo
-            savedlocationData.creatorId = user.id
-            const savedLocation = await savedLocationService.createSavedLocation(savedlocationData)
+            savedLocationData.creatorId = user.id
+            const savedLocation = await savedLocationService.createSavedLocation(savedLocationData)
             response.send(savedLocation)
         }
         catch (error) {

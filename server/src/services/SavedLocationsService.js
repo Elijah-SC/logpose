@@ -27,8 +27,8 @@ class SavedLocationsService {
         return savedLocation
     }
 
-    async createSavedLocation(savedlocationData) {
-        const savedLocation = await dbContext.SavedLocations.create(savedlocationData)
+    async createSavedLocation(savedLocationData) {
+        const savedLocation = await dbContext.SavedLocations.create(savedLocationData)
         await savedLocation.populate('creator', 'picture name')
         await savedLocation.populate('location')
         return savedLocation
