@@ -17,13 +17,14 @@ class SavedLocationsService {
         savedLocation.save()
         return savedLocation
     }
+
     async getMySavedLocation(userId) {
         const savedLocation = await dbContext.SavedLocations.find({ creatorId: userId }).populate('location')
         return savedLocation
     }
 
-    async getLocationVisitor() {
-        const savedLocation = await dbContext.SavedLocations.find().populate('creator').populate('location')
+    async getLocationVisitor(locationId) {
+        const savedLocation = await dbContext.SavedLocations.find({ locationId: locationId }).populate('creator')
         return savedLocation
     }
 

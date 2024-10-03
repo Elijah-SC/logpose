@@ -1,12 +1,14 @@
 import { Auth0Provider } from "@bcwdev/auth0provider";
 import { locationsService } from "../services/LocationsService.js";
 import BaseController from "../utils/BaseController.js";
+import { savedLocationService } from "../services/SavedLocationsService.js";
 
 export class LocationsController extends BaseController {
   constructor() {
     super(`api/locations`);
     this.router
       .get(``, this.getAllLocations)
+      .get('/:locationId/savedLocations', this.getLocationVisitor)
       .get(`/:locationId`, this.getLocationsById)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post(``, this.createLocation)
@@ -40,6 +42,16 @@ export class LocationsController extends BaseController {
       response.send(location)
     } catch (e) {
       next(e);
+    }
+  }
+
+  async getLocationVisitor(request, response, next) {
+    try {
+      const locationId = request.params.id
+      const savedLocation = await savedLocationService.getLocationVisitor(locationId)
+      response.send(savedLocation)
+    } catch (error) {
+      next(error)
     }
   }
 }
