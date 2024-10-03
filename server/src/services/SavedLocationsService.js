@@ -2,9 +2,14 @@ import { dbContext } from "../db/DbContext.js"
 import { Forbidden } from "../utils/Errors.js"
 
 class SavedLocationsService {
-    deleteSavedLocation(locationId, userId) {
-        throw new Error("Method not implemented.")
+    async deleteSavedLocation(locationId, userId) {
+        const deleteSavedLocation = await dbContext.SavedLocations.findById(locationId)
+        if (!deleteSavedLocation) throw new Error('invalid')
+        if (userId != deleteSavedLocation.creatorId) throw new Forbidden(`not authorized can not update this ${locationId}`)
+        await deleteSavedLocation.deleteOne()
+        return deleteSavedLocation
     }
+
     async updateSavedLocation(locationId, userInfo, savedlocationData) {
         const savedLocation = await dbContext.SavedLocations.findById(locationId).populate('creator', 'picture name')
         if (userInfo != savedlocationData.creatorId) throw new Forbidden(`not authorized can not update this ${locationId}`)

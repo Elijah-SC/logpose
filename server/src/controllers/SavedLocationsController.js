@@ -4,18 +4,18 @@ import { savedLocationService } from "../services/SavedLocationsService.js";
 
 export class SavedLocationsController extends BaseController {
     constructor() {
-        super('api/savedlocations')
+        super('api/savedLocations')
         this.router
             .get('', this.getLocationVisitor)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createSavedLocation)
             .put('/:locationId', this.updateSavedLocation)
-            .delete('/:locationId', this.deleteSavedLocation)
+            .delete('/:savedLocationId', this.deleteSavedLocation)
     }
 
     async deleteSavedLocation(request, response, next) {
         try {
-            const locationId = request.params.locationId
+            const locationId = request.params.savedLocationId
             const userId = request.userInfo.id
             const savedLocation = await savedLocationService.deleteSavedLocation(locationId, userId)
             response.send(savedLocation)
