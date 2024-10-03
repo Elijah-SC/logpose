@@ -4,14 +4,28 @@ import BaseController from "../utils/BaseController.js";
 
 export class LocationsController extends BaseController {
   constructor() {
-    super("api/locations");
+    super(`api/locations`);
     this.router
-      .get("", this.getLocations)
+      .get(``, this.getAllLocations)
+      .get(`/:locationId`, this.getLocationsById)
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .post("", this.getLocations)
+      .post(``, this.createLocation)
+  }
+  getAllLocations(request, response, next) {
+
+  }
+  async getLocationsById(response, request, next) {
+    try {
+      const locationId = request.params.locationId
+      const location = await locationsService.findLocationById(locationId)
+      response.send(location)
+    } catch (e) {
+      next(e)
+    }
   }
 
-  async getLocations(request, response, next) {
+
+  async createLocation(request, response, next) {
     try {
       const userInfo = request.userInfo
       const body = request.body
