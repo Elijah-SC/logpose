@@ -9,7 +9,7 @@ export const LocationSchema = new Schema({
   latitude: { type: Number, min: -180, max: 180, required: true },
   category: {
     type: String,
-    enum: ["Wilderness", "Mountain", "Cycling", "Arctic"],
+    enum: ["Wilderness", "Mountains", "Cycling", "Views", "Hiking"],
   },
   creatorId: { type: Schema.ObjectId, required: true, ref: "Account" },
 });

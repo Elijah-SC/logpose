@@ -1,14 +1,20 @@
+import { locationsService } from "../services/LocationsService.js";
 import BaseController from "../utils/BaseController.js";
 
 export class LocationsController extends BaseController {
   constructor() {
     super("api/locations");
-    this.router.get("", this.getLocations);
+    this.router
+      .get("", this.getLocations);
   }
 
   async getLocations(request, response, next) {
     try {
-      console.log("getting locations");
+      const userInfo = request.userInfo
+      const body = request.body
+      body.creatorId = userInfo.id
+      const location = await locationsService.createLocation(body)
+      response.send(location)
     } catch (e) {
       next(e);
     }
