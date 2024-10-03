@@ -48,7 +48,9 @@ import HereMap from '@/components/HereMap.vue';
           <h2>Adventure awaits you</h2>
         </div>
         <div class="text-center">
-          <button class="btn btn-light rounded-pill px-3" type="button">Explore</button>
+          <router-link :to="{ name: 'Explore' }">
+            <button class="btn btn-light rounded-pill px-3" type="button">Explore</button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -58,9 +60,6 @@ import HereMap from '@/components/HereMap.vue';
 <style scoped lang="scss">
 .hero {
   min-height: 90dvh;
-  background-image: url(https://images.unsplash.com/photo-1621178734002-ad899f4fec71?q=80&w=2129&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
-  background-size: cover;
-  background-position: center;
 }
 
 section {
