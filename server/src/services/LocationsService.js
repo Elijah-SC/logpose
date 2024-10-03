@@ -1,6 +1,10 @@
 import { dbContext } from "../db/DbContext.js";
 
 class LocationsService {
+  async getAllLocations() {
+    const locations = await dbContext.Locations.find().populate(`creator`, `-email -subs`)
+    return locations
+  }
   async findLocationById(locationId) {
     const location = await dbContext.Locations.findById(locationId).populate(`creator`, `-email -subs`)
     return location

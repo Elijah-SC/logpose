@@ -11,10 +11,15 @@ export class LocationsController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post(``, this.createLocation)
   }
-  getAllLocations(request, response, next) {
-
+  async getAllLocations(request, response, next) {
+    try {
+      const locations = await locationsService.getAllLocations()
+      response.send(locations)
+    } catch (e) {
+      next(e)
+    }
   }
-  async getLocationsById(response, request, next) {
+  async getLocationsById(request, response, next) {
     try {
       const locationId = request.params.locationId
       const location = await locationsService.findLocationById(locationId)
