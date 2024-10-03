@@ -1,3 +1,4 @@
+import { Auth0Provider } from "@bcwdev/auth0provider";
 import { locationsService } from "../services/LocationsService.js";
 import BaseController from "../utils/BaseController.js";
 
@@ -5,7 +6,9 @@ export class LocationsController extends BaseController {
   constructor() {
     super("api/locations");
     this.router
-      .get("", this.getLocations);
+      .get("", this.getLocations)
+      .use(Auth0Provider.getAuthorizedUserInfo)
+      .post("", this.getLocations)
   }
 
   async getLocations(request, response, next) {
@@ -20,3 +23,4 @@ export class LocationsController extends BaseController {
     }
   }
 }
+
