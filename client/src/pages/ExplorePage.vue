@@ -1,11 +1,15 @@
 <script setup>
 import HereMap from "@/components/HereMap.vue";
+import Navbar from "@/components/Navbar.vue";
 
 
 </script>
 
 
 <template>
+  <header>
+    <Navbar />
+  </header>
 
   <body class="container-fluid">
     <div class="row">

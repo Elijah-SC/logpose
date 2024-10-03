@@ -1,12 +1,16 @@
 <script setup>
 import { computed } from 'vue';
 import { AppState } from '../AppState.js';
+import Navbar from "@/components/Navbar.vue";
 
 const account = computed(() => AppState.account)
 
 </script>
 
 <template>
+  <header>
+    <Navbar />
+  </header>
   <div class="about text-center">
     <div v-if="account">
       <h1>Welcome {{ account.name }}</h1>

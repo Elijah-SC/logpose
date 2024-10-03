@@ -1,10 +1,14 @@
 <script setup>
 import HereMap from '@/components/HereMap.vue';
+import HomeNavBar from "@/components/HomeNavBar.vue";
 </script>
 
 <template>
-  <section class="hero container-fluid d-flex justify-content-center align-items-center">
+  <section class="hero container-fluid justify-content-center align-items-center">
     <div class="row">
+      <HomeNavBar />
+    </div>
+    <div class="row h-100 d-flex flex-column justify-content-around">
       <div class="col-12">
         <div class="text-center text-light mb-5">
           <h1 class="mb-4">Find Your outside</h1>
@@ -101,5 +105,9 @@ section {
 .logo-piece-img {
   height: 250px;
   aspect-ratio: 1/1;
+}
+
+.h-100 {
+  height: 100%;
 }
 </style>
