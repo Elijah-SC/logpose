@@ -87,7 +87,8 @@ function initializeMap() {
 
 <style lang="scss" scoped>
 .map-container {
-  width: 600px;
+  width: 100%;
+  color: #333;
   height: 600px;
   border: 1px solid #333;
   margin: 1rem auto;
