@@ -2,12 +2,12 @@
 import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import HereMap from '@/components/HereMap.vue';
-import LocationCard from '@/components/globals/LocationCard.vue';
+// import LocationCard from '@/components/globals/LocationCard.vue';
 import { savedLocations } from '@/services/SavedLocationsService.js';
 import Pop from '@/utils/Pop.js';
 
 const account = computed(() => AppState.account)
-const locations = computed(() => AppState.locations)
+const visitors = computed(() => AppState.visitorSavedLocation)
 
 onMounted(() => {
   getMySavedLocation()
@@ -21,7 +21,6 @@ async function getMySavedLocation() {
     Pop.error(error);
   }
 }
-
 </script>
 
 <template>
@@ -30,7 +29,7 @@ async function getMySavedLocation() {
       <div class="container">
         <section class="row">
           <div class="col-md-3">
-            <img class="creator-img" :src="account.picture" alt="" />
+            <img class="creator-img" :src="account.picture" :alt="account.name" />
           </div>
           <div class="col-md-8">
             <h1>{{ account.name }}</h1>
@@ -41,7 +40,7 @@ async function getMySavedLocation() {
       <div class="container-fluid">
         <section class="row">
           <div class="col-md-12">
-            <H4 class="text-center">See where you have been</H4>
+            <h4 class="text-center">See where you have been</h4>
             <HereMap />
           </div>
         </section>
@@ -49,8 +48,8 @@ async function getMySavedLocation() {
       <div class="container">
         <section class="row">
           <h4 class="text-center">Where your planning to go</h4>
-          <div v-for="location in locations" :key="location.id" class="col-md-12">
-            <LocationCard :location="location" />
+          <div v-for="visitor in visitors" :key="visitor.id" class="col-md-4">
+            <LocationCard :location="visitor.location" />
           </div>
         </section>
       </div>
