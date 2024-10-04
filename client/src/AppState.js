@@ -9,11 +9,12 @@ export const AppState = reactive({
   account: null,
   /** @type {import('./models/Location.js').Location[]} */
   locations: [],
+  /** @type {Location[]} */
+  randomLocations: [],
   /** @type {import('./models/Location.js').Location} */
   activeLocation: null,
-    /** @type {import('./models/SavedLocation.js').LocationSaved[]} */
+  /** @type {import('./models/SavedLocation.js').LocationSaved[]} */
   visistorSavedLocation: [],
   /** @type {import('./models/SavedLocation.js').SavedLocationCreator[]} */
-  CreatorSavedLocation: []
-
+  CreatorSavedLocation: [],
 });
