@@ -5,14 +5,25 @@ import HereMap from "@/components/HereMap.vue";
 import { locationService } from "@/services/LocationService.js";
 import { logger } from "@/utils/Logger.js";
 import Pop from "@/utils/Pop.js";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 
 onMounted(() => getLocations())
 
 const locations = computed(() => AppState.locations)
+const currentLocation = ref(null)
 
-
+function getCurrentLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(position => {
+      currentLocation.value = position.coords;
+      console.log(currentLocation)
+    })
+  }
+  else {
+    Pop.error('browser does not support geolocation');
+  }
+}
 // @ts-ignore
 async function getLocations() {
   try {
