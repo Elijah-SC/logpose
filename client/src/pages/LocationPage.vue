@@ -1,5 +1,4 @@
 <script setup>
-// import { AppState } from '@/AppState.js';
 import { AppState } from '@/AppState.js';
 import Carousel from '@/components/Carousel.vue';
 import LocationMap from "@/components/LocationMap.vue";
@@ -123,7 +122,7 @@ async function createSavedLocation() {
       </div>
       <div class="col-md-6">
         <h3>People who have checked in</h3>
-        <div v-for="visitor in visitorProfile" :key="visitor.creator.id" class="p-2 bg-light visitor-container">
+        <div v-for="visitor in visitorProfile" :key="visitor.id" class="p-2 bg-light visitor-container">
           <div class="d-flex align-items-center border-start border-2 border-dark">
             <i class="fa-solid fa-certificate fa-lg mx-2" style="color: #B197FC;"></i>
             <img class="guy me-2" src="https://images.thedirect.com/media/article_full/free-guy.jpg" alt="Guy">
