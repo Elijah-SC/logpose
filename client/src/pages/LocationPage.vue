@@ -1,6 +1,8 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import Carousel from '@/components/Carousel.vue';
 import LocationMap from "@/components/LocationMap.vue";
+import LocationsCard from '@/components/LocationsCard.vue';
 import { locationService } from '@/services/LocationService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
 import { logger } from '@/utils/Logger.js';
@@ -9,15 +11,16 @@ import { computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const visitorProfile = computed(() => AppState.CreatorSavedLocation)
+const activeLocation = computed(() => AppState.activeLocation);
+const randomLocations = computed(() => AppState.randomLocations);
+const visitorProfile = computed(() => AppState.CreatorSavedLocation);
 
 watch(() => route.params.locationId, () => {
   getActiveLocation();
+  getRandomLocations();
 },
   { immediate: true }
 );
-
-const activeLocation = computed(() => AppState.activeLocation);
 
 
 // @ts-ignore
@@ -25,6 +28,16 @@ async function getActiveLocation() {
   try {
     const locationId = route.params.locationId;
     await locationService.getActiveLocation(locationId);
+  }
+  catch (e) {
+    Pop.error(e);
+    logger.error(e);
+  }
+}
+
+async function getRandomLocations() {
+  try {
+    await locationService.getRandomLocations();
   }
   catch (e) {
     Pop.error(e);
@@ -119,22 +132,10 @@ async function createSavedLocation() {
       </div>
     </div>
     <!-- TODO Replace with actual locations -->
-    <div class="row gx-3 gy-2 mt-2">
+    <div v-if="randomLocations" class="row gx-3 gy-2 mt-2">
       <h3 class="text-center">Discover new locations</h3>
-      <div class="col-md-4">
-        <LocationCard />
-      </div>
-      <div class="col-md-4">
-        <LocationCard />
-      </div>
-      <div class="col-md-4">
-        <LocationCard />
-      </div>
-      <div class="col-md-4">
-        <LocationCard />
-      </div>
-      <div class="col-md-4">
-        <LocationCard />
+      <div v-for="randomLocation in randomLocations" :key="randomLocation.id" class="col-md-4">
+        <LocationsCard :locationProp="randomLocation" />
       </div>
     </div>
   </section>

@@ -4,6 +4,18 @@ import { Location } from "@/models/Location.js";
 import { AppState } from "@/AppState.js";
 
 class LocationService {
+  async getRandomLocations() {
+    const response = await api.get("api/locations");
+    const randomLocations = [];
+    for (let i = 0; i < 3; ++i) {
+      const randomLocationIndex = Math.floor(
+        Math.random() * response.data.length
+      );
+      const acquiredLocation = response.data[randomLocationIndex];
+      randomLocations.push(acquiredLocation);
+    }
+    AppState.randomLocations = randomLocations;
+  }
   // @ts-ignore
   async getActiveLocation(locationId) {
     const response = await api.get(`api/locations/${locationId}`);
