@@ -1,7 +1,9 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import Carousel from '@/components/Carousel.vue';
 import SavedLocation from '@/components/globals/SavedLocation.vue';
 import HereMap from '@/components/HereMap.vue';
+import LocationCard from '@/components/LocationCard.vue';
 import LocationMap from "@/components/LocationMap.vue";
 import { locationService } from '@/services/LocationService.js';
 import { logger } from '@/utils/Logger.js';
@@ -34,9 +36,10 @@ async function getActiveLocation() {
 
 <template>
   <section v-if="activeLocation" class="container-fluid">
+
     <div class="row">
       <div class="col-12">
-        {{ activeLocation }}
+        <Carousel />
       </div>
       <div class="col-12">
         <LocationMap :location="activeLocation" />
@@ -103,6 +106,25 @@ async function getActiveLocation() {
             <p class="m-0">Guy</p>
           </div>
         </div>
+      </div>
+    </div>
+    <!-- TODO Replace with actual locations -->
+    <div class="row gx-3 gy-2 mt-2">
+      <h3 class="text-center">Discover new locations</h3>
+      <div class="col-md-4">
+        <LocationCard />
+      </div>
+      <div class="col-md-4">
+        <LocationCard />
+      </div>
+      <div class="col-md-4">
+        <LocationCard />
+      </div>
+      <div class="col-md-4">
+        <LocationCard />
+      </div>
+      <div class="col-md-4">
+        <LocationCard />
       </div>
     </div>
   </section>
