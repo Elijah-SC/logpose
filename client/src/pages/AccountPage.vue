@@ -1,26 +1,83 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
+import HereMap from '@/components/HereMap.vue';
+import LocationCard from '@/components/globals/LocationCard.vue';
+// import Pop from '@/utils/Pop.js';
 
 const account = computed(() => AppState.account)
+
+onMounted(() => {
+
+})
+
+// async function getMySavedLocation() {
+//   try {
+//     await save
+//   }
+//   catch (error) {
+//     Pop.error(error);
+//   }
+// }
 
 </script>
 
 <template>
-  <div class="about text-center">
+  <div class="about">
     <div v-if="account">
-      <h1>Welcome {{ account.name }}</h1>
-      <img class="rounded" :src="account.picture" alt="" />
-      <p>{{ account.email }}</p>
+      <div class="container">
+        <section class="row">
+          <div class="col-md-3">
+            <img class="creator-img" :src="account.picture" alt="" />
+          </div>
+          <div class="col-md-8">
+            <h1>{{ account.name }}</h1>
+            <p><i class="mdi mdi-shield-star fs-1"></i></p>
+          </div>
+        </section>
+      </div>
+      <div class="container-fluid">
+        <section class="row">
+          <div class="col-md-12">
+            <H4 class="text-center">See where you have been</H4>
+            <HereMap />
+          </div>
+        </section>
+      </div>
+      <div class="container">
+        <section class="row">
+          <h4 class="text-center">Where your planning to go</h4>
+          <div class="col-md-12">
+            <LocationCard />
+          </div>
+        </section>
+      </div>
     </div>
     <div v-else>
       <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
     </div>
   </div>
+  <footer>
+    <div class="container">
+      <section class="row">
+        <h4 class="text-center">Discover Something New</h4>
+        <div class="col-md-4">
+        </div>
+      </section>
+    </div>
+  </footer>
 </template>
 
 <style scoped lang="scss">
 img {
   max-width: 100px;
+}
+
+.creator-img {
+  height: 10dvh;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
 }
 </style>
