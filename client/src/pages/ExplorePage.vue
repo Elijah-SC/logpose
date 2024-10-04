@@ -9,7 +9,6 @@ import { computed, onMounted } from "vue";
 
 
 onMounted(() => getLocations())
-
 const locations = computed(() => AppState.locations)
 
 
@@ -26,9 +25,13 @@ async function getLocations() {
 
 
 <template>
-  <section class="container-fluid bg-light">
+  <section v-if="locations" class="container-fluid bg-light">
     <div class="row">
+
       <div class="order-1 order-md-0 col-md-4">
+        <div class="text-center">
+          <button type="button" class="btn btn-outline-dark">Create</button>
+        </div>
         <div class="row">
           <div v-for="location in locations" :key="location.id" class="col-12">
             <LocationCard :location="location" />
