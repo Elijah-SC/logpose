@@ -13,6 +13,7 @@ onMounted(() => getLocations())
 const locations = computed(() => AppState.locations)
 
 
+// @ts-ignore
 async function getLocations() {
   try {
     await locationService.getLocations()
@@ -43,10 +44,6 @@ async function getLocations() {
 
 
 <style lang="scss" scoped>
-.container-fluid {
-  height: 200vh;
-}
-
 .map {
   position: sticky;
   top: 40px;
