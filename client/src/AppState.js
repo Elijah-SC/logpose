@@ -9,6 +9,6 @@ export const AppState = reactive({
   account: null,
   /** @type {import('./models/Location.js').Location[]} */
   locations: [],
-  /**@type {Location} */
+  /** @type {import('./models/Location.js').Location} */
   activeLocation: null,
 });

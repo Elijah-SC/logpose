@@ -4,6 +4,7 @@ import { Location } from "@/models/Location.js";
 import { AppState } from "@/AppState.js";
 
 class LocationService {
+  // @ts-ignore
   async getActiveLocation(locationId) {
     const response = await api.get(`api/locations/${locationId}`);
     const acquiredLocation = new Location(response.data);
