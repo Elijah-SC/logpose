@@ -6,7 +6,10 @@
 <template>
 
   <body>
+    <div>
+      <img src="" alt="">
 
+    </div>
   </body>
 </template>
 
