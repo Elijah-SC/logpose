@@ -1,7 +1,23 @@
 <script setup>
 import HereMap from "@/components/HereMap.vue";
+import { locationService } from "@/services/LocationService.js";
+import { logger } from "@/utils/Logger.js";
+import Pop from "@/utils/Pop.js";
+import { onMounted } from "vue";
 
 
+onMounted(() => getLocations())
+
+
+
+async function getLocations() {
+  try {
+    await locationService.getLocations()
+  } catch (error) {
+    Pop.error(error)
+    logger.error(error)
+  }
+}
 </script>
 
 
