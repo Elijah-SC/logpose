@@ -5,7 +5,7 @@ import { onMounted, ref, watch } from 'vue';
 import H from '@here/maps-api-for-javascript';
 import { Location } from "@/models/Location.js";
 
-defineProps({
+const props = defineProps({
   location: { type: Location, required: true }
 })
 const mapContainer = ref('');
@@ -62,7 +62,7 @@ function initializeMap() {
     defaultLayers.vector.normal.map,
     {
       zoom: 15,
-      center: { lat: coords.value.latitude, lng: coords.value.longitude } // Boise
+      center: { lat: props.location.latitude, lng: props.location.longitude } // Boise
     }
   );
 
@@ -78,7 +78,7 @@ function initializeMap() {
   const icon = new H.map.Icon(svgMarkup);
 
   // @ts-ignore
-  const boiseMarker = new H.map.Marker({ lat: coords.value.latitude, lng: coords.value.longitude }, { icon: icon });
+  const boiseMarker = new H.map.Marker({ lat: props.location.latitude, lng: props.location.longitude }, { icon: icon });
   map.addObject(boiseMarker);
 
   // acquireCoordinates(map);

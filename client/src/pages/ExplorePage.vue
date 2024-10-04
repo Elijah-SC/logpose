@@ -35,7 +35,7 @@ async function getLocations() {
         </div>
       </div>
       <div class="order-0 order-md-2 col-md-8">
-        <HereMap />
+        <HereMap class="map" />
       </div>
     </div>
   </section>
@@ -45,5 +45,10 @@ async function getLocations() {
 <style lang="scss" scoped>
 .container-fluid {
   height: 200vh;
+}
+
+.map {
+  position: sticky;
+  top: 40px;
 }
 </style>
