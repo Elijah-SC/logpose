@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import SavedLocation from '@/components/globals/SavedLocation.vue';
 import HereMap from '@/components/HereMap.vue';
 import LocationMap from "@/components/LocationMap.vue";
 import { locationService } from '@/services/LocationService.js';
@@ -31,7 +32,6 @@ async function getActiveLocation() {
 }
 </script>
 
-
 <template>
   <section v-if="activeLocation" class="container-fluid">
     <div class="row">
@@ -45,6 +45,7 @@ async function getActiveLocation() {
       <!-- SECTION About Location -->
       <div class="col-md-6">
         <div>
+<<<<<<< HEAD
           <h3 class="text-center">About this location</h3>
           <p>{{ activeLocation.description }}</p>
         </div>
@@ -103,6 +104,14 @@ async function getActiveLocation() {
             <p class="m-0">Guy</p>
           </div>
         </div>
+=======
+          <h3>About this location</h3>
+          <p>{{ activeLocation?.description }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <SavedLocation />
+>>>>>>> b2b9d2d (added savedlocation component)
       </div>
     </div>
   </section>
