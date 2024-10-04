@@ -1,4 +1,5 @@
 <script setup>
+// import { AppState } from '@/AppState.js';
 import { AppState } from '@/AppState.js';
 import Carousel from '@/components/Carousel.vue';
 import LocationMap from "@/components/LocationMap.vue";
