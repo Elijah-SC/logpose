@@ -8,25 +8,53 @@ import Pop from "@/utils/Pop.js";
 import { computed, onMounted, ref } from "vue";
 
 
-onMounted(() => getLocations())
+onMounted(() => { getCurrentLocation() })
 
 const locations = computed(() => AppState.locations)
-const currentLocation = ref(null)
+const coords = ref({
+  longitude: null,
+  latitude: null,
+})
 
-function getCurrentLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
-      currentLocation.value = position.coords;
-      console.log(currentLocation)
+async function getCurrentLocation() {
+  try {
+    await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(position => {
+        coords.value.longitude = position.coords.longitude;
+        coords.value.latitude = position.coords.latitude;
+        console.log(`Current location is`, coords)
+        resolve()
+      }, resolve, { enableHighAccuracy: true })
     })
+
+    const geoPermissions = await navigator.permissions.query({ name: 'geolocation' })
+    logger.log('GEO PERMISSION', geoPermissions.state)
+    if (geoPermissions.state == 'prompt') {
+      logger.log('Waiting')
+    }
+    if (geoPermissions.state == 'denied') {
+      logger.log("Denied")
+      // handle default location
+      coords.value.latitude = 88
+      coords.value.longitude = -177
+      getLocations()
+    }
+
+    if (geoPermissions.state == 'granted') {
+      logger.log("Granted")
+      getLocations()
+    }
   }
-  else {
-    Pop.error('browser does not support geolocation');
+  catch (error) {
+    Pop.error('error')
   }
 }
 // @ts-ignore
 async function getLocations() {
   try {
+    const currentLocation = [coords.value.longitude, coords.value.latitude]
+    logger.log('Getting locations', currentLocation)
+    // console.log(`formatted currentLocation`, currentLocation)
     await locationService.getLocations()
   } catch (error) {
     Pop.error(error)
@@ -47,7 +75,7 @@ async function getLocations() {
         </div>
       </div>
       <div class="order-0 order-md-2 col-md-8">
-        <HereMap class="map" />
+        <HereMap v-if="coords.latitude && coords.longitude" :coords="coords" class="map" />
       </div>
     </div>
   </section>

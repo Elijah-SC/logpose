@@ -7,24 +7,27 @@ import H from '@here/maps-api-for-javascript';
 const mapContainer = ref('');
 const apiKey = 'eWA19joj95t3z3zNFgJdHrnjpC2fTFdPt6f1jCRRijU'; // Enter API KEY here
 
+const { coords } = defineProps({ coords: { type: Object, Default: { longitude: -177, latitude: 88 } } })
+
 onMounted(() => {
-  getCurrentLocation();
+  // getCurrentLocation();
+  initializeMap()
 })
 
-const coords = ref(null)
-watch(coords, initializeMap)
+// const coords = ref(null)
+// watch(coords, initializeMap)
 
-function getCurrentLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
-      coords.value = position.coords;
-      logger.log(coords.value);
-    })
-  }
-  else {
-    Pop.error('browser does not support geolocation');
-  }
-}
+// function getCurrentLocation() {
+//   if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(position => {
+//       coords.value = position.coords;
+//       logger.log(coords.value);
+//     })
+//   }
+//   else {
+//     Pop.error('browser does not support geolocation');
+//   }
+// }
 // NOTE function for finding location on click and making a pin there
 // function acquireCoordinates(map) {
 //   map.addEventListener('tap', (e) => {
@@ -57,7 +60,7 @@ function initializeMap() {
     defaultLayers.vector.normal.map,
     {
       zoom: 15,
-      center: { lat: coords.value.latitude, lng: coords.value.longitude } // Boise
+      center: { lat: coords.latitude, lng: coords.longitude } // Boise
     }
   );
 
@@ -73,7 +76,7 @@ function initializeMap() {
   const icon = new H.map.Icon(svgMarkup);
 
   // @ts-ignore
-  const boiseMarker = new H.map.Marker({ lat: coords.value.latitude, lng: coords.value.longitude }, { icon: icon });
+  const boiseMarker = new H.map.Marker({ lat: coords.latitude, lng: coords.longitude }, { icon: icon });
   map.addObject(boiseMarker);
 
   // acquireCoordinates(map);
