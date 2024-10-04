@@ -9,12 +9,12 @@ defineProps({
 
 
 <template>
-  <router-link :to="{ name: 'Location', params: { locationId: location.id } }">
+  <router-link :to="{ name: 'Location', params: { locationId: location?.id } }">
     <div class="my-2">
-      <img :src="location.coverImg" alt="location Cover Img">
+      <img :src="location?.coverImg" alt="location Cover Img">
       <div>
-        <h5>{{ location.name }}</h5>
-        <span>Long:{{ location.longitude }} Lat:{{ location.latitude }}</span>
+        <h5>{{ location?.name }}</h5>
+        <span>Long:{{ location?.longitude }} Lat:{{ location?.latitude }}</span>
       </div>
     </div>
   </router-link>

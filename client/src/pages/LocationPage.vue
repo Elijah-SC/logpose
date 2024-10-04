@@ -11,9 +11,8 @@ import { computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const activeLocation = computed(() => AppState.activeLocation);
-const randomLocations = computed(() => AppState.randomLocations);
-const visitorProfile = computed(() => AppState.CreatorSavedLocation);
+const visitorProfile = computed(() => AppState.visitors)
+
 
 watch(() => route.params.locationId, () => {
   getActiveLocation();
@@ -57,9 +56,8 @@ async function createSavedLocation() {
 </script>
 
 <template>
-  <section v-if="activeLocation" class="container-fluid">
-
-    <div class="row">
+  <div v-if="activeLocation" class="container-fluid">
+    <section class="row">
       <div class="col-12">
         <Carousel />
       </div>
@@ -130,7 +128,7 @@ async function createSavedLocation() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
     <!-- TODO Replace with actual locations -->
     <div v-if="randomLocations" class="row gx-3 gy-2 mt-2">
       <h3 class="text-center">Discover new locations</h3>
@@ -138,7 +136,7 @@ async function createSavedLocation() {
         <LocationsCard :locationProp="randomLocation" />
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 
