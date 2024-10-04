@@ -3,7 +3,11 @@ import { logger } from "@/utils/Logger.js";
 import Pop from "@/utils/Pop.js";
 import { onMounted, ref, watch } from 'vue';
 import H from '@here/maps-api-for-javascript';
+import { Location } from "@/models/Location.js";
 
+defineProps({
+  location: { type: Location, required: true }
+})
 const mapContainer = ref('');
 const apiKey = 'eWA19joj95t3z3zNFgJdHrnjpC2fTFdPt6f1jCRRijU'; // Enter API KEY here
 
@@ -25,20 +29,21 @@ function getCurrentLocation() {
     Pop.error('browser does not support geolocation');
   }
 }
+// NOTE  function for getting long and lat on click and making a marker there
 
-function acquireCoordinates(map) {
-  map.addEventListener('tap', (e) => {
-    const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
-    logger.log(Math.abs(coord.lat.toFixed(4)) +
-      (coord.lat > 0 ? "N" : "S") +
-      " " +
-      Math.abs(coord.lng.toFixed(4)) +
-      (coord.lng > 0 ? "E" : "W"))
+// function acquireCoordinates(map) {
+//   map.addEventListener('tap', (e) => {
+//     const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
+//     logger.log(Math.abs(coord.lat.toFixed(4)) +
+//       (coord.lat > 0 ? "N" : "S") +
+//       " " +
+//       Math.abs(coord.lng.toFixed(4)) +
+//       (coord.lng > 0 ? "E" : "W"))
 
-    const pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
-    map.addObject(pinMarker);
-  })
-}
+//     const pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
+//     map.addObject(pinMarker);
+//   })
+// }
 
 function initializeMap() {
   // Initialize the platform object needed to actually work with API
@@ -76,7 +81,7 @@ function initializeMap() {
   const boiseMarker = new H.map.Marker({ lat: coords.value.latitude, lng: coords.value.longitude }, { icon: icon });
   map.addObject(boiseMarker);
 
-  acquireCoordinates(map);
+  // acquireCoordinates(map);
 }
 </script>
 
