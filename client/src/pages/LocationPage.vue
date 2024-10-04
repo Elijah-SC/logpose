@@ -12,6 +12,8 @@ import { computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
+const activeLocation = computed(() => AppState.activeLocation);
+const randomLocations = computed(() => AppState.randomLocations);
 const visitorProfile = computed(() => AppState.visitors)
 
 
