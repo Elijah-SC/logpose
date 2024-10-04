@@ -3,22 +3,24 @@ import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import HereMap from '@/components/HereMap.vue';
 import LocationCard from '@/components/globals/LocationCard.vue';
-// import Pop from '@/utils/Pop.js';
+import { savedLocations } from '@/services/SavedLocationsService.js';
+import Pop from '@/utils/Pop.js';
 
 const account = computed(() => AppState.account)
+const locations = computed(() => AppState.locations)
 
 onMounted(() => {
-
+  getMySavedLocation()
 })
 
-// async function getMySavedLocation() {
-//   try {
-//     await save
-//   }
-//   catch (error) {
-//     Pop.error(error);
-//   }
-// }
+async function getMySavedLocation() {
+  try {
+    await savedLocations.getMySavedLocation()
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 
 </script>
 
@@ -47,8 +49,8 @@ onMounted(() => {
       <div class="container">
         <section class="row">
           <h4 class="text-center">Where your planning to go</h4>
-          <div class="col-md-12">
-            <LocationCard />
+          <div v-for="location in locations" :key="location.id" class="col-md-12">
+            <LocationCard :location="location" />
           </div>
         </section>
       </div>
