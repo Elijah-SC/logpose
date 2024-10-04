@@ -5,9 +5,10 @@ export class Location {
     this.description = data.description;
     this.coverImg = data.coverImg;
     this.directions = data.directions;
-    this.longitude = data.longitude;
-    this.latitude = data.latitude;
+    this.location = data.location
     this.category = data.category;
     this.creatorId = data.creatorId;
+    this.longitude = this.location.coordinates[0]
+    this.latitude = this.location.coordinates[1]
   }
 }
