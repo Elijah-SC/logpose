@@ -1,12 +1,5 @@
 <script setup>
 import { AppState } from '@/AppState.js';
-<<<<<<< HEAD
-import Carousel from '@/components/Carousel.vue';
-import SavedLocation from '@/components/globals/SavedLocation.vue';
-import HereMap from '@/components/HereMap.vue';
-import LocationCard from '@/components/LocationCard.vue';
-=======
->>>>>>> 01463b0 (add button function to location page)
 import LocationMap from "@/components/LocationMap.vue";
 import { locationService } from '@/services/LocationService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
