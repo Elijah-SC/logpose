@@ -33,7 +33,7 @@ class SavedLocationsService {
 
   async getLocationVisitor(locationId) {
     const savedLocation = await dbContext.SavedLocations.find({
-      locationId: locationId,
+      locationId: locationId, visited:true
     }).populate("creator");
     return savedLocation;
   }

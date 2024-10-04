@@ -1,7 +1,7 @@
-import { Creator } from "./Creator.js"
+import { Creator} from "./Creator.js"
 import { Location } from "./Location.js"
 
-export class SavedLocations{
+export class SavedLocation{
     constructor(data){
         this.id = data.id
         this.creatorId = data.creatorId
@@ -12,16 +12,16 @@ export class SavedLocations{
     }
 }
 
-export class SavedLocationCreator{
+export class SavedLocationCreator extends SavedLocation{
     constructor(data){
-        // super(data)
+        super(data)
         this.creator = new Creator(data.creator)
     }
 }
 
-export class LocationSaved{
+export class LocationSaved extends SavedLocation{
     constructor(data){
-        // super(data)
+        super(data)
         this.location = new Location(data.location)
     }
 }

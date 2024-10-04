@@ -10,7 +10,7 @@ export class AccountController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)
       .put('', this.editUserAccount)
-      .get('/:savedLocations', this.getMySavedLocation)
+      .get('/savedLocations', this.getMySavedLocation)
   }
 
   async getMySavedLocation(request, response, next) {

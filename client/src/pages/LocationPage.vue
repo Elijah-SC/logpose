@@ -13,7 +13,8 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
-const visitorProfile = computed(() => AppState.CreatorSavedLocation);
+const visitorProfile = computed(() => AppState.visitors)
+
 
 watch(() => route.params.locationId, () => {
   getActiveLocation();
@@ -57,9 +58,8 @@ async function createSavedLocation() {
 </script>
 
 <template>
-  <section v-if="activeLocation" class="container-fluid">
-
-    <div class="row">
+  <div v-if="activeLocation" class="container-fluid">
+    <section class="row">
       <div class="col-12">
         <Carousel />
       </div>
@@ -122,7 +122,7 @@ async function createSavedLocation() {
       </div>
       <div class="col-md-6">
         <h3>People who have checked in</h3>
-        <div v-for="visitor in visitorProfile" :key="visitor.creator.id" class="p-2 bg-light visitor-container">
+        <div v-for="visitor in visitorProfile" :key="visitor.id" class="p-2 bg-light visitor-container">
           <div class="d-flex align-items-center border-start border-2 border-dark">
             <i class="fa-solid fa-certificate fa-lg mx-2" style="color: #B197FC;"></i>
             <img class="guy me-2" src="https://images.thedirect.com/media/article_full/free-guy.jpg" alt="Guy">
@@ -130,7 +130,7 @@ async function createSavedLocation() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
     <!-- TODO Replace with actual locations -->
     <div v-if="randomLocations" class="row gx-3 gy-2 mt-2">
       <h3 class="text-center">Discover new locations</h3>
@@ -138,7 +138,7 @@ async function createSavedLocation() {
         <LocationsCard :locationProp="randomLocation" />
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 
