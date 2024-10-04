@@ -1,29 +1,24 @@
 <script setup>
 import HereMap from '@/components/HereMap.vue';
-import HomeNavBar from "@/components/HomeNavBar.vue";
 </script>
 
 <template>
-  <section class="hero container-fluid justify-content-center align-items-center">
-    <div class="row">
-      <HomeNavBar />
-    </div>
-    <div class="row h-100 d-flex flex-column justify-content-around">
-      <div class="col-12">
-        <div class="text-center text-light mb-5">
-          <h1 class="mb-4">Find Your outside</h1>
-          <h2>Explore Locations</h2>
-        </div>
-      </div>
+  <!-- SECTION Hero -->
+  <section class="container-fluid d-flex justify-content-center align-items-center position-relative hero">
+    <video class="vid" src="/src/assets/vid/Explore.mp4" autoplay loop playsinline muted></video>
+    <div class="text-center text-light mb-5 hero-msg">
+      <h1 class="mb-4">Find Your Outside</h1>
+      <h2>Explore Locations</h2>
     </div>
   </section>
 
-  <section class="container-fluid d-flex justify-content-center align-items-center about-section">
+  <!-- SECTION About & Explore logpose -->
+  <section class="container-fluid d-flex justify-content-center align-items-center explore py-2">
     <div class="row justify-content-center">
       <div class="col-9">
-        <div class="row text-light">
+        <div class="row gy-3">
           <div class="col-md-6">
-            <div>
+            <div class="text-light about-msgs">
               <h2 class="fw-bold about-msg-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis
                 perferendis
                 natus,
@@ -36,25 +31,23 @@ import HomeNavBar from "@/components/HomeNavBar.vue";
                 Beatae officia facilis unde, doloremque, qui enim molestias quam facere quae vitae eum ullam.</p>
             </div>
           </div>
-          <div class="col-md-6 h-100">
-            <div class="logpose-logo-piece-container">
+          <div class="col-md-6">
+            <div class="logpose-logo-piece-container h-100">
               <img class="logo-piece-img" src="/img/logpose-logo-piece.svg" alt="logo">
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="container-fluid explore-section d-flex justify-content-center align-items-center">
-    <div class="row">
-      <div class="col-12">
-        <div class="p-2 rounded bg-light explore-msg mb-3">
-          <h2>Adventure awaits you</h2>
-        </div>
-        <div class="text-center">
-          <router-link :to="{ name: 'Explore' }">
-            <button class="btn btn-light rounded-pill px-3" type="button">Explore</button>
-          </router-link>
+          <div class="col-md-6">
+            <div class="explore-msg">
+              <div class="p-1 rounded bg-light mb-3">
+                <h3>Adventure awaits you</h3>
+              </div>
+              <div class="text-center">
+                <router-link :to="{ name: 'Explore' }">
+                  <button class="btn btn-light rounded-pill px-3" type="button">Explore</button>
+                </router-link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -63,26 +56,26 @@ import HomeNavBar from "@/components/HomeNavBar.vue";
 
 <style scoped lang="scss">
 .hero {
+  min-height: 93dvh;
+}
+
+.explore {
   min-height: 100dvh;
   background-image: url(https://images.unsplash.com/photo-1621178734002-ad899f4fec71?q=80&w=2129&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
   background-size: cover;
-  background-position: center;
 }
 
-section {
-  &:not(.hero) {
-    min-height: 100dvh;
-  }
+.hero-msg {
+  background-color: rgba($color: #000000, $alpha: 0.3);
+  text-shadow: 1px 1px 7px #fffafa;
+  padding: .9rem;
+  border-radius: 10px;
 }
 
-.about-section {
-  background-color: #333;
-}
-
-.explore-section {
-  background-image: url(https://images.unsplash.com/photo-1519289455504-3510c41b7cc3?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
-  background-size: cover;
-  background-position: center;
+.about-msgs {
+  background-color: rgba($color: #000000, $alpha: 0.3);
+  padding: .9rem;
+  border-radius: 10px;
 }
 
 .about-msg-1 {
@@ -95,6 +88,7 @@ section {
 
 .explore-msg {
   max-width: fit-content;
+  margin: 0 auto;
 }
 
 .logpose-logo-piece-container {
@@ -109,7 +103,13 @@ section {
   aspect-ratio: 1/1;
 }
 
-.h-100 {
-  min-height: 85vh;
+.vid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: -1;
 }
 </style>

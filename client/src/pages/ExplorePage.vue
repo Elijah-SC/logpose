@@ -1,17 +1,12 @@
 <script setup>
 import HereMap from "@/components/HereMap.vue";
-import Navbar from "@/components/Navbar.vue";
 
 
 </script>
 
 
 <template>
-  <header>
-    <Navbar />
-  </header>
-
-  <body class="container-fluid">
+  <section class="container-fluid bg-light">
     <div class="row">
       <div class="order-1 order-md-0 col-md-4">
         location card sections
@@ -20,7 +15,7 @@ import Navbar from "@/components/Navbar.vue";
         <HereMap />
       </div>
     </div>
-  </body>
+  </section>
 </template>
 
 

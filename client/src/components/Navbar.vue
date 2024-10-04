@@ -3,7 +3,7 @@ import Login from './Login.vue';
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-white px-3 sticky-top">
+  <nav class="navbar navbar-expand-sm bg-light px-3 ">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <img class="ms-2" src="/img/logpose-logo.svg" alt="logo" />
     </router-link>
@@ -14,12 +14,12 @@ import Login from './Login.vue';
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav ms-auto">
         <li>
-          <router-link :to="{ name: 'About' }" class="btn btn-outline-dark text-dark lighten-30 selectable">
+          <router-link :to="{ name: 'About' }" class="btn btn-outline-dark lighten-30 selectable">
             About
           </router-link>
         </li>
         <li class="mx-3">
-          <router-link :to="{ name: 'Explore' }" class="btn btn-outline-dark text-dark lighten-30 selectable">
+          <router-link :to="{ name: 'Explore' }" class="btn btn-outline-dark lighten-30 selectable">
             Explore
           </router-link>
         </li>
