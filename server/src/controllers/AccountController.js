@@ -10,13 +10,13 @@ export class AccountController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)
       .put('', this.editUserAccount)
-      .get('/savedLocations', this.getMySavedLocation)
+      .get('/:savedLocations', this.getMySavedLocation)
   }
 
   async getMySavedLocation(request, response, next) {
     try {
-      const userId = request.userInfo.id
-      const savedLocation = await savedLocationService.getMySavedLocation(userId)
+      const creatorId = request.userInfo.id
+      const savedLocation = await savedLocationService.getMySavedLocation(creatorId)
       response.send(savedLocation)
     } catch (error) {
       next(error)
