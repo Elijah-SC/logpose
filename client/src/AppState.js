@@ -15,5 +15,4 @@ export const AppState = reactive({
   visistorSavedLocation: [],
   /** @type {import('./models/SavedLocation.js').SavedLocationCreator[]} */
   CreatorSavedLocation: []
-
 });

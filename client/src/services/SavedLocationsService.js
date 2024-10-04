@@ -11,10 +11,10 @@ class SavedLocations{
       AppState.CreatorSavedLocation.push(createdSavedLocation)
   }
 
-//   async getMySavedLocation() {
-//     const response = await api.get('api/account/savedLocations')
-//     logger.log('load the saved location', response.data)
-//   }
+  async getMySavedLocation() {
+    const response = await api.get('api/account/savedLocations')
+    logger.log('load the saved location', response.data)
+  }
 
 }
 export const savedLocations = new SavedLocations()

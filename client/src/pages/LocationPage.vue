@@ -1,17 +1,23 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+<<<<<<< HEAD
 import Carousel from '@/components/Carousel.vue';
 import SavedLocation from '@/components/globals/SavedLocation.vue';
 import HereMap from '@/components/HereMap.vue';
 import LocationCard from '@/components/LocationCard.vue';
+=======
+>>>>>>> 01463b0 (add button function to location page)
 import LocationMap from "@/components/LocationMap.vue";
 import { locationService } from '@/services/LocationService.js';
+import { savedLocations } from '@/services/SavedLocationsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
 import { computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
+const visitorProfile = computed(() => AppState.CreatorSavedLocation)
+
 watch(() => route.params.locationId, () => {
   getActiveLocation();
 },
@@ -30,6 +36,16 @@ async function getActiveLocation() {
   catch (e) {
     Pop.error(e);
     logger.error(e);
+  }
+}
+
+async function createSavedLocation() {
+  try {
+    const locationData = { locationId: route.params.locationId }
+    await savedLocations.createSavedLocation(locationData)
+  }
+  catch (error) {
+    Pop.error(error);
   }
 }
 </script>
@@ -58,7 +74,8 @@ async function getActiveLocation() {
           <h3 class="text-center">Directions</h3>
           <p>{{ activeLocation.directions }}</p>
           <div class="text-center">
-            <button type="button" class="btn btn-outline-dark rounded me-2">Log it</button>
+            <button @click="createSavedLocation()" type="button" class="btn btn-outline-dark rounded me-2">Log
+              it</button>
             <button type="button" class="btn btn-outline-dark rounded">Check in</button>
           </div>
         </div>
@@ -99,7 +116,7 @@ async function getActiveLocation() {
       </div>
       <div class="col-md-6">
         <h3>People who have checked in</h3>
-        <div class="p-2 bg-light visitor-container">
+        <div v-for="visitor in visitorProfile" :key="visitor.creator.id" class="p-2 bg-light visitor-container">
           <div class="d-flex align-items-center border-start border-2 border-dark">
             <i class="fa-solid fa-certificate fa-lg mx-2" style="color: #B197FC;"></i>
             <img class="guy me-2" src="https://images.thedirect.com/media/article_full/free-guy.jpg" alt="Guy">
