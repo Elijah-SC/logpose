@@ -1,13 +1,16 @@
 <script setup>
+import { AppState } from "@/AppState.js";
+import LocationCard from "@/components/globals/LocationCard.vue";
 import HereMap from "@/components/HereMap.vue";
 import { locationService } from "@/services/LocationService.js";
 import { logger } from "@/utils/Logger.js";
 import Pop from "@/utils/Pop.js";
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
 
 
 onMounted(() => getLocations())
 
+const locations = computed(() => AppState.locations)
 
 
 async function getLocations() {
@@ -25,7 +28,11 @@ async function getLocations() {
   <section class="container-fluid bg-light">
     <div class="row">
       <div class="order-1 order-md-0 col-md-4">
-        location card sections
+        <div class="row">
+          <div v-for="location in locations" :key="location.id" class="col-12">
+            <LocationCard :location="location" />
+          </div>
+        </div>
       </div>
       <div class="order-0 order-md-2 col-md-8">
         <HereMap />
@@ -35,4 +42,8 @@ async function getLocations() {
 </template>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container-fluid {
+  height: 200vh;
+}
+</style>

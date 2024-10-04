@@ -27,6 +27,11 @@ const routes = [
     component: loadPage("AccountPage"),
     beforeEnter: authGuard,
   },
+  {
+    path: "/location/:locationId",
+    name: "Location",
+    component: loadPage("LocationPage"),
+  }
 ];
 
 export const router = createRouter({

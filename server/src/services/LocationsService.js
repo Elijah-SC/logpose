@@ -5,7 +5,7 @@ class LocationsService {
     const sortBy = query.sort
     delete query.sort
     const pageNumber = parseInt(query.page) || 1
-    const limitAmount = 20
+    const limitAmount = 10
     const skipAmount = (pageNumber - 1) * limitAmount
     delete query.page
     const locations = await dbContext.Locations.find().sort(sortBy + `createdAt`).skip(skipAmount).limit(limitAmount).populate(`creator`, `-email -subs`)
