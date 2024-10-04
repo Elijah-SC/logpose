@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import HereMap from '@/components/HereMap.vue';
+import LocationMap from "@/components/LocationMap.vue";
 import { locationService } from '@/services/LocationService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
@@ -38,7 +39,7 @@ async function getActiveLocation() {
         {{ activeLocation }}
       </div>
       <div class="col-12">
-        <HereMap />
+        <LocationMap :location="activeLocation" />
       </div>
 
       <!-- SECTION About Location -->

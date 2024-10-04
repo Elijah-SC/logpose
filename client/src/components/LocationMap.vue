@@ -3,7 +3,11 @@ import { logger } from "@/utils/Logger.js";
 import Pop from "@/utils/Pop.js";
 import { onMounted, ref, watch } from 'vue';
 import H from '@here/maps-api-for-javascript';
+import { Location } from "@/models/Location.js";
 
+const props = defineProps({
+  location: { type: Location, required: true }
+})
 const mapContainer = ref('');
 const apiKey = 'eWA19joj95t3z3zNFgJdHrnjpC2fTFdPt6f1jCRRijU'; // Enter API KEY here
 
@@ -25,7 +29,8 @@ function getCurrentLocation() {
     Pop.error('browser does not support geolocation');
   }
 }
-// NOTE function for finding location on click and making a pin there
+// NOTE  function for getting long and lat on click and making a marker there
+
 // function acquireCoordinates(map) {
 //   map.addEventListener('tap', (e) => {
 //     const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
@@ -57,7 +62,7 @@ function initializeMap() {
     defaultLayers.vector.normal.map,
     {
       zoom: 15,
-      center: { lat: coords.value.latitude, lng: coords.value.longitude } // Boise
+      center: { lat: props.location.latitude, lng: props.location.longitude } // Boise
     }
   );
 
@@ -69,11 +74,11 @@ function initializeMap() {
   const ui = H.ui.UI.createDefault(map, defaultLayers);
 
   // Add marker
-  const svgMarkup = '<svg class="map-marker" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>map-marker</title><path  style="fill: red;" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>';
+  const svgMarkup = '<svg class="map-marker" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>map-marker</title><path  style="fill: blue;" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>';
   const icon = new H.map.Icon(svgMarkup);
 
   // @ts-ignore
-  const boiseMarker = new H.map.Marker({ lat: coords.value.latitude, lng: coords.value.longitude }, { icon: icon });
+  const boiseMarker = new H.map.Marker({ lat: props.location.latitude, lng: props.location.longitude }, { icon: icon });
   map.addObject(boiseMarker);
 
   // acquireCoordinates(map);
