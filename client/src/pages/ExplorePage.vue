@@ -41,7 +41,8 @@ async function getLocations() {
 
       <div class="order-1 order-md-0 col-md-4">
         <div class="text-center">
-          <button type="button" class="btn btn-outline-dark">Create</button>
+          <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+            data-bs-target="#location-form">Create</button>
         </div>
         <div class="row">
           <div v-for="location in locations" :key="location.id" class="col-12">

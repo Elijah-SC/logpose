@@ -1,4 +1,6 @@
 <script setup>
+import LocationForm from './components/LocationForm.vue';
+import ModalWrapper from './components/ModalWrapper.vue';
 import Navbar from './components/Navbar.vue';
 </script>
 
@@ -9,6 +11,9 @@ import Navbar from './components/Navbar.vue';
   <main>
     <router-view />
   </main>
+  <ModalWrapper id="location-form">
+    <LocationForm />
+  </ModalWrapper>
 </template>
 
 <style lang="scss">
