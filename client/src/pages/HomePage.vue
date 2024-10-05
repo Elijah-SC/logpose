@@ -1,5 +1,5 @@
 <script setup>
-import HereMap from '@/components/HereMap.vue';
+
 </script>
 
 <template>

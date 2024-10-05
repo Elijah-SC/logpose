@@ -4,6 +4,7 @@ import { Location } from "@/models/Location.js";
 import { AppState } from "@/AppState.js";
 
 class LocationService {
+  // @ts-ignore
   async getRandomLocations() {
     const response = await api.get("api/locations");
     const randomLocations = [];
@@ -11,7 +12,7 @@ class LocationService {
       const randomLocationIndex = Math.floor(
         Math.random() * response.data.length
       );
-      const acquiredLocation = response.data[randomLocationIndex];
+      const acquiredLocation = new Location(response.data[randomLocationIndex]);
       randomLocations.push(acquiredLocation);
     }
     AppState.randomLocations = randomLocations;
@@ -22,6 +23,7 @@ class LocationService {
     const acquiredLocation = new Location(response.data);
     AppState.activeLocation = acquiredLocation;
   }
+  // @ts-ignore
   async getLocations() {
     const response = await api.get(`api/locations`);
     logger.log(response.data);

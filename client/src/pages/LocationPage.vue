@@ -36,6 +36,7 @@ async function getActiveLocation() {
   }
 }
 
+// @ts-ignore
 async function getRandomLocations() {
   try {
     await locationService.getRandomLocations();
@@ -46,6 +47,7 @@ async function getRandomLocations() {
   }
 }
 
+// @ts-ignore
 async function createSavedLocation() {
   try {
     const locationData = { locationId: route.params.locationId }

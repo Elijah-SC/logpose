@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import HereMap from './HereMap.vue';
+import LocationMap from './LocationMap.vue';
 
 const locationCategories = ['hiking', 'skiing', 'snowboarding', 'wilderness'];
 const locationData = ref({
@@ -54,7 +55,8 @@ const locationData = ref({
         </div>
       </div>
       <div class="col-md-12">
-        <HereMap />
+        <!-- FIXME Still trying to figure for use my location checkbox -->
+        <!-- <HereMap /> -->
       </div>
     </form>
   </section>
