@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import HereMap from './HereMap.vue';
-import LocationMap from './LocationMap.vue';
+import TrueHereMap from './TrueHereMap.vue';
 
 const locationCategories = ['hiking', 'skiing', 'snowboarding', 'wilderness'];
 const locationData = ref({
@@ -10,37 +9,48 @@ const locationData = ref({
   directions: '',
   description: '',
   category: '',
+  useLocation: false,
 
 })
+
+defineProps({
+  coords: { type: Object, Default: { longitude: -177, latitude: 88 } }
+});
 </script>
 
 <template>
   <section class="container">
-    <form class="row">
+    <form class="row gy-3">
       <div v-if="locationData.coverImg" class="col-12">
         <h4>Image Preview</h4>
+        <div>
+          <img :src="locationData.coverImg" alt="Location Image">
+        </div>
       </div>
       <div class="col-md-6">
         <label class="form-label" for="locationName">Location Name</label>
-        <input class="form-control" id="locationName" name="locationName">
+        <input v-model="locationData.name" class="form-control" id="locationName" name="locationName">
       </div>
       <div class="col-md-6">
         <label class="form-label" for="locationCoverImg">Cover Image</label>
-        <input type="url" class="form-control" id="locationCoverImg" name="locaitonCoverImg">
+        <input v-model="locationData.coverImg" type="url" class="form-control" id="locationCoverImg"
+          name="locaitonCoverImg">
       </div>
       <div class="col-12">
         <label class="form-label" for="locationDirections">Directions</label>
-        <input class="form-control" id="locationDirections" name="locationDirections">
+        <input v-model="locationData.directions" class="form-control" id="locationDirections" name="locationDirections">
       </div>
       <div class="col-12">
         <label class="form-label" for="locationDescription">Description</label>
-        <textarea class="form-control" name="locationDescription" id="locationDescription" rows="5"></textarea>
+        <textarea v-model="locationData.description" class="form-control" name="locationDescription"
+          id="locationDescription" rows="5"></textarea>
       </div>
       <div class="col-md-12">
         <div class="d-flex align-items-center">
           <div class="w-75">
             <label class="form-label" for="locationCategories">Location Type</label>
-            <select class="form-control" name="locationCategories" id="locationCategories">
+            <select v-model="locationData.category" class="form-control" name="locationCategories"
+              id="locationCategories">
               <option disabled selected value="">Select location category</option>
               <option v-for="locationCategory in locationCategories" :key="locationCategory" :value="locationCategory">
                 {{
@@ -49,14 +59,14 @@ const locationData = ref({
           </div>
 
           <div class="w-25 mx-auto">
-            <label class="form-label" for="locationCheck">Use my location</label>
-            <input class="align-self-center" type="checkbox" name="locationCheck" id="locationCheck">
+            <input v-model="locationData.useLocation" class="align-self-center" type="checkbox" name="locationCheck"
+              id="locationCheck">
+            <label class="form-label ms-2" for="locationCheck">Use my location</label>
           </div>
         </div>
       </div>
       <div class="col-md-12">
-        <!-- FIXME Still trying to figure for use my location checkbox -->
-        <!-- <HereMap /> -->
+        <TrueHereMap :current-coordinates-prop="coords" />
       </div>
     </form>
   </section>
@@ -65,5 +75,13 @@ const locationData = ref({
 <style lang="scss" scoped>
 textarea {
   resize: none;
+}
+
+img {
+  height: 200px;
+  aspect-ratio: 1/1;
+  width: 50%;
+  object-fit: cover;
+  object-position: center;
 }
 </style>

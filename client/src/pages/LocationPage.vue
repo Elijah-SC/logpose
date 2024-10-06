@@ -1,8 +1,8 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import Carousel from '@/components/Carousel.vue';
-import LocationMap from "@/components/LocationMap.vue";
 import LocationsCard from '@/components/LocationsCard.vue';
+import TrueHereMap from '@/components/TrueHereMap.vue';
 import { locationService } from '@/services/LocationService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
 import { logger } from '@/utils/Logger.js';
@@ -66,7 +66,7 @@ async function createSavedLocation() {
         <Carousel />
       </div>
       <div class="col-12">
-        <LocationMap :location="activeLocation" />
+        <TrueHereMap :specificLocationProp="activeLocation" />
       </div>
 
       <!-- SECTION About Location -->

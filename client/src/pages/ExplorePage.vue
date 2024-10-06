@@ -1,9 +1,9 @@
 <script setup>
 import { AppState } from "@/AppState.js";
 import LocationCard from "@/components/globals/LocationCard.vue";
-import HereMap from "@/components/HereMap.vue";
 import LocationForm from "@/components/LocationForm.vue";
 import ModalWrapper from "@/components/ModalWrapper.vue";
+import TrueHereMap from "@/components/TrueHereMap.vue";
 import { locationService } from "@/services/LocationService.js";
 import { logger } from "@/utils/Logger.js";
 import Pop from "@/utils/Pop.js";
@@ -73,8 +73,9 @@ async function getLocations() {
         <div class="text-center">
           <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
             data-bs-target="#location-form">Create</button>
+          <!-- FIXME Have map actually load in Modal -->
           <ModalWrapper id="location-form">
-            <LocationForm />
+            <LocationForm v-if="coords.latitude && coords.longitude" :coords="coords" />
           </ModalWrapper>
         </div>
         <div class="row">
@@ -84,7 +85,7 @@ async function getLocations() {
         </div>
       </div>
       <div class="order-0 order-md-2 col-md-8">
-        <HereMap v-if="coords.latitude && coords.longitude" :coords="coords" class="map" />
+        <TrueHereMap v-if="coords.latitude && coords.longitude" :currentCoordinatesProp="coords" />
       </div>
     </div>
   </section>
