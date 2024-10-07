@@ -20,7 +20,7 @@ const visitorProfile = computed(() => AppState.visitors);
 watch(() => route.params.locationId, () => {
   getActiveLocation();
   getRandomLocations();
-  getAllVisitor()
+  getAllVisitor();
 },
   { immediate: true }
 );
@@ -73,10 +73,10 @@ async function getAllVisitor() {
   try {
     await locationService.getAllVisitor(route.params.locationId)
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
   }
-  
+
 }
 
 </script>
@@ -106,9 +106,9 @@ async function getAllVisitor() {
           <div class="text-center">
             <button @click="createSavedLocation()" type="button" class="btn btn-outline-dark rounded me-2">Log
               it</button>
-              <div v-if="visitorProfile">
-                <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">Check in</button>
-              </div>
+            <div v-if="visitorProfile">
+              <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">Check in</button>
+            </div>
           </div>
         </div>
       </div>

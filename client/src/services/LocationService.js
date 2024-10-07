@@ -6,15 +6,20 @@ import { SavedLocationCreator } from "@/models/SavedLocation.js";
 
 class LocationService {
   async getAllVisitor(locationId) {
-    const response = await api.get(`api/locations/${locationId}/savedLocations`)
-    logger.log('get visitor', response.data)
-    const locationVisitor = response.data.map(locationVisitor => new SavedLocationCreator(locationVisitor))
-    AppState.CreatorSavedLocation = locationVisitor
+    const response = await api.get(
+      `api/locations/${locationId}/savedLocations`
+    );
+    logger.log("get visitor", response.data);
+    const locationVisitor = response.data.map(
+      (locationVisitor) => new SavedLocationCreator(locationVisitor)
+    );
+    AppState.CreatorSavedLocation = locationVisitor;
   }
 
   // @ts-ignore
   async getRandomLocations() {
     const response = await api.get("api/locations");
+    console.log(response.data);
     const randomLocations = [];
     for (let i = 0; i < 3; ++i) {
       const randomLocationIndex = Math.floor(
@@ -35,8 +40,8 @@ class LocationService {
   async getLocations(currentLocation) {
     const response = await api.get(`api/locations`, {
       params: {
-        browserLocation: currentLocation
-      }
+        browserLocation: currentLocation,
+      },
     });
     logger.log(response.data);
     const newLocations = response.data.map(
