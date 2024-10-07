@@ -1,7 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import Carousel from '@/components/Carousel.vue';
-import LocationsCard from '@/components/LocationsCard.vue';
+import LocationsCard from '@/components/DiscoverLocCard.vue';
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { locationService } from '@/services/LocationService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
