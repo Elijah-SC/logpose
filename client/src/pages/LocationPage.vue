@@ -18,18 +18,18 @@ const visitorProfile = computed(() => AppState.visitors);
 // TODO reference the hasTicket functionality in tower
 const visit = ref(false);
 
-// const locationVisitor = computed(() => {
-//   if (AppState.identity == null) return false
-//   const visited = AppState.CreatorSavedLocation.find(visitor => visitor.creatorId == AppState.account?.id)
-//   if (!visited) return false
-//   return true
-// })
+const locationVisitor = computed(() => {
+  if (AppState.identity == null) return false
+  const visited = AppState.CreatorSavedLocation.find(visitor => visitor.creatorId == AppState.account?.id)
+  if (!visited) return false
+  return true
+})
 
-// const canLogIn = computed(()=> {
-//   if(locationVisitor.value) return false
-//   if(AppState.visitors?.visited == true) return false
-//   return true
-// })
+const canLogIn = computed(() => {
+  if (locationVisitor.value) return false
+  if (AppState.visitors?.visited == true) return false
+  return true
+})
 
 
 watch(() => route.params.locationId, () => {
@@ -77,7 +77,6 @@ async function checkIn() {
   try {
     visit.value = !visit.value;
     await savedLocations.checkIn(route.params.locationId, { visited: visit.value })
-
   }
   catch (error) {
     Pop.error(error);
@@ -118,12 +117,15 @@ async function getAllVisitor() {
           <h3 class="text-center">Directions</h3>
           <p>{{ activeLocation.directions }}</p>
           <div class="text-center">
-            <button @click="createSavedLocation()" type="button" class="btn btn-outline-dark rounded me-2">
-              Log it
-            </button>
             <div>
-              <button @click="checkIn(activeLocation.id)" type="button" class="btn btn-outline-dark rounded">Check
-                in</button>
+              <button @click="createSavedLocation()" type="button" class="btn btn-outline-dark rounded me-2">
+                Log it
+              </button>
+            </div>
+            <div>
+              <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">
+                Check in
+              </button>
             </div>
           </div>
         </div>
