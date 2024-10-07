@@ -73,12 +73,11 @@ async function getAllVisitor() {
     await savedLocations.getAllVisitor(route.params.locationId)
   }
   catch (error) {
-  catch (error) {
-      Pop.error(error);
-    }
-
-
+    Pop.error(error);
   }
+
+
+}
 
 </script>
 
