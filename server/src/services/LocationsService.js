@@ -10,7 +10,7 @@ class LocationsService {
     const limitAmount = 10
     const skipAmount = (pageNumber - 1) * limitAmount
     delete query.page
-    const locations = await dbContext.Locations.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: browserLocation }, $maxDistance: 160934 } } }).sort(sortBy + `createdAt`).skip(skipAmount).limit(limitAmount).populate(`creator`, `-email -subs`)
+    const locations = await dbContext.Locations.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: browserLocation }, $maxDistance: 40075000 } } }).sort(sortBy + `createdAt`).skip(skipAmount).limit(limitAmount).populate(`creator`, `-email -subs`)
     return locations
   }
   async findLocationById(locationId) {
