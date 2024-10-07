@@ -2,14 +2,12 @@ import { logger } from "@/utils/Logger.js";
 import { api } from "./AxiosService.js";
 import { Location } from "@/models/Location.js";
 import { AppState } from "@/AppState.js";
-import { SavedLocationCreator } from "@/models/SavedLocation.js";
 
 class LocationService {
-  async getAllVisitor(locationId) {
+  async checkIn(locationId) {
     const response = await api.get(`api/locations/${locationId}/savedLocations`)
-    logger.log('get visitor', response.data)
-    const locationVisitor = response.data.map(locationVisitor => new SavedLocationCreator(locationVisitor))
-    AppState.CreatorSavedLocation = locationVisitor
+    logger.log('check in at location', response.data)
+    // AppState.visitors.visited = true;
   }
 
   // @ts-ignore

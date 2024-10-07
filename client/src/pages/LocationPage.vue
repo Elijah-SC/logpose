@@ -13,9 +13,21 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
-const visitorProfile = computed(() => AppState.visitors);
+const visitorProfile = computed(() => AppState.CreatorSavedLocation);
 
+const locationVisitor = computed(()=> {
+  if(AppState.identity == null) return false
+  const visited = AppState.CreatorSavedLocation.find(visitor => visitor.creatorId == AppState.account?.id)
+  if(!visited)return false
+  return true
+})
 
+const canLogIn = computed(()=> {
+  if(AppState.identity == null) return false
+  if(locationVisitor.value) return false
+  if(AppState.visitors.visited == true) return false
+  return true
+})
 
 watch(() => route.params.locationId, () => {
   getActiveLocation();
@@ -24,7 +36,6 @@ watch(() => route.params.locationId, () => {
 },
   { immediate: true }
 );
-
 
 // @ts-ignore
 async function getActiveLocation() {
@@ -62,7 +73,7 @@ async function createSavedLocation() {
 
 async function checkIn() {
   try {
-    await savedLocations.checkIn(route.params.locationId)
+    await locationService.checkIn(route.params.locationId)
   }
   catch (error) {
     Pop.error(error);
@@ -71,12 +82,12 @@ async function checkIn() {
 
 async function getAllVisitor() {
   try {
-    await locationService.getAllVisitor(route.params.locationId)
+    await savedLocations.getAllVisitor(route.params.locationId)
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
   }
-  
+
 }
 
 </script>
@@ -106,9 +117,9 @@ async function getAllVisitor() {
           <div class="text-center">
             <button @click="createSavedLocation()" type="button" class="btn btn-outline-dark rounded me-2">Log
               it</button>
-              <div v-if="visitorProfile">
-                <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">Check in</button>
-              </div>
+            <div>
+              <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">Check in</button>
+            </div>
           </div>
         </div>
       </div>
@@ -151,8 +162,8 @@ async function getAllVisitor() {
         <div v-for="visitor in visitorProfile" :key="visitor.id" class="p-2 bg-light visitor-container">
           <div class="d-flex align-items-center border-start border-2 border-dark">
             <i class="fa-solid fa-certificate fa-lg mx-2" style="color: #B197FC;"></i>
-            <img class="guy me-2" src="https://images.thedirect.com/media/article_full/free-guy.jpg" alt="Guy">
-            <p class="m-0">Guy</p>
+            <img class="guy me-2" :src="visitor.creator.picture" :alt="visitor.creator.name">
+            <p class="m-0">{{ visitor.creator.name }}</p>
           </div>
         </div>
       </div>
