@@ -33,8 +33,6 @@ class SavedLocationsService {
       await savedLocation.save();
     }
 
-    // if (userId != savedlocationData.creatorId)
-    //   throw new Forbidden(`not authorized can not update this ${locationId}`);
     return savedLocation;
   }
 
