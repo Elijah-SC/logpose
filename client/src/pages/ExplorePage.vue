@@ -56,8 +56,7 @@ async function getLocations() {
   try {
     const currentLocation = [coords.value.longitude, coords.value.latitude]
     logger.log('Getting locations', currentLocation)
-    // console.log(`formatted currentLocation`, currentLocation)
-    await locationService.getLocations()
+    await locationService.getLocations(currentLocation)
   } catch (error) {
     Pop.error(error)
     logger.error(error)
@@ -86,6 +85,9 @@ async function getLocations() {
       </div>
       <div class="order-0 order-md-2 col-md-8">
         <TrueHereMap v-if="coords.latitude && coords.longitude" :currentCoordinatesProp="coords" />
+        <div v-else class="loading d-flex justify-content-center align-items-center mt">
+          <h1>Loading Map</h1><i class="mdi mdi-loading mdi-spin"></i>
+        </div>
       </div>
     </div>
   </section>
@@ -96,5 +98,17 @@ async function getLocations() {
 .map {
   position: sticky;
   top: 30px;
+}
+
+section {
+  min-height: 100vh;
+}
+
+.loading {
+  font-size: 100px;
+}
+
+.mt {
+  margin-top: 30vh;
 }
 </style>

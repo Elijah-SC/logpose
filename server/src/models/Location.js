@@ -18,7 +18,7 @@ export const LocationSchema = new Schema({
   location: { type: GeoPoint, default: christmasIsland, validate: { validator: validateLatLong } },
   category: {
     type: String,
-    enum: ["Wilderness", "Mountains", "Cycling", "Views", "Hiking", "Caves", "Skiing", "HotSprings", "Stargazing", "Swimming"],
+    enum: ["Wilderness", "Mountains", "Cycling", "Views", "Hiking", "Caves", "Skiing", "HotSprings", "Stargazing", "Swimming", "Adventure"],
   },
   creatorId: { type: Schema.ObjectId, required: true, ref: "Account" },
 }, { timestamps: true, toJSON: { virtuals: true } });

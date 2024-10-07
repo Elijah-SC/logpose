@@ -24,8 +24,12 @@ class LocationService {
     AppState.activeLocation = acquiredLocation;
   }
   // @ts-ignore
-  async getLocations() {
-    const response = await api.get(`api/locations`);
+  async getLocations(currentLocation) {
+    const response = await api.get(`api/locations`, {
+      params: {
+        browserLocation: currentLocation
+      }
+    });
     logger.log(response.data);
     const newLocations = response.data.map(
       (locationData) => new Location(locationData)

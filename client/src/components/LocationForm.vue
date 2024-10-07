@@ -2,13 +2,14 @@
 import { ref } from 'vue';
 import TrueHereMap from './TrueHereMap.vue';
 
-const locationCategories = ['hiking', 'skiing', 'snowboarding', 'wilderness'];
+const locationCategories = ["Wilderness", "Mountains", "Cycling", "Views", "Hiking", "Caves", "Skiing", "HotSprings", "Stargazing", "Swimming", "Adventure"];
 const locationData = ref({
   name: '',
   coverImg: '',
   directions: '',
   description: '',
   category: '',
+  location: { "type": "Point", "coordinates": [0, 0] },
   useLocation: false,
 
 })
