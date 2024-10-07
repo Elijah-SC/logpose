@@ -5,6 +5,7 @@ import { savedLocations } from '@/services/SavedLocationsService.js';
 import Pop from '@/utils/Pop.js';
 import LocationsCard from '@/components/LocationsCard.vue';
 import TrueHereMap from '@/components/TrueHereMap.vue';
+import { logger } from '@/utils/Logger.js';
 
 const account = computed(() => AppState.account)
 const visitors = computed(() => AppState.visitorSavedLocation)
@@ -25,12 +26,16 @@ async function getMySavedLocation() {
 
 async function deleteLocation(visitorLocationId) {
   try {
+    const wantsToDelete = await Pop.confirm('Are you sure you want delete')
+
+    if (!wantsToDelete) return
     await savedLocations.deleteLocation(visitorLocationId)
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
+    logger.log(error)
   }
-  
+
 }
 
 </script>
@@ -63,8 +68,8 @@ async function deleteLocation(visitorLocationId) {
           <div v-for="visitor in visitors" :key="visitor.id" class="col-md-4">
             <LocationCard :location="visitor.location" />
             <div>
-            <button @click="deleteLocation(visitor.id)" class="btn btn-success">Delete</button>
-          </div>
+              <button @click="deleteLocation(visitor.id)" class="btn btn-success">Delete</button>
+            </div>
           </div>
         </section>
       </div>

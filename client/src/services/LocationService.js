@@ -19,7 +19,7 @@ class LocationService {
   // @ts-ignore
   async getRandomLocations() {
     const response = await api.get("api/locations");
-    console.log(response.data);
+    logger.log(response.data);
     const randomLocations = [];
     for (let i = 0; i < 3; ++i) {
       const randomLocationIndex = Math.floor(

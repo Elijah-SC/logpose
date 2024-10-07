@@ -4,6 +4,11 @@ import { LocationSaved, SavedLocationCreator} from "@/models/SavedLocation.js"
 import { AppState } from "@/AppState.js"
 
 class SavedLocations{
+  async checkIn(locationData, value) {
+    const response = await api.put(`api/savedLocations/${locationData}`,value)
+    logger.log('visit location', response.data)
+   
+  }
   
   async getAllVisitor(locationId) {
     const response = await api.get(`api/locations/${locationId}/savedLocations`)
