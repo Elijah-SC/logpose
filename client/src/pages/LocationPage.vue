@@ -1,7 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import Carousel from '@/components/Carousel.vue';
-import LocationsCard from '@/components/DiscoverLocCard.vue';
+import DiscoverLocCard from '@/components/DiscoverLocCard.vue';
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { locationService } from '@/services/LocationService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
@@ -179,7 +179,7 @@ async function getAllVisitor() {
     <div v-if="randomLocations" class="row gx-3 gy-2 mt-2">
       <h3 class="text-center">Discover new locations</h3>
       <div v-for="randomLocation in randomLocations" :key="randomLocation.id" class="col-md-4">
-        <LocationsCard :locationProp="randomLocation" />
+        <DiscoverLocCard :locationProp="randomLocation" />
       </div>
     </div>
   </div>

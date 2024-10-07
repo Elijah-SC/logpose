@@ -3,7 +3,6 @@ import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
 import Pop from '@/utils/Pop.js';
-import LocationsCard from '@/components/DiscoverLocCard.vue';
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { logger } from '@/utils/Logger.js';
 import DiscoverLocCard from "@/components/DiscoverLocCard.vue";
@@ -96,6 +95,7 @@ async function getRandomLocations() {
       <div v-if="randomLocations" class="row gx-3 gy-2 mt-2">
         <h3 class="text-center">Discover new locations</h3>
         <div v-for="randomLocation in randomLocations" :key="randomLocation.id" class="col-md-4">
+          <DiscoverLocCard :locationProp="randomLocation" />
           <DiscoverLocCard :locationProp="randomLocation" />
         </div>
       </div>

@@ -6,7 +6,6 @@ defineProps({
 }) 
 </script>
 
-
 <template>
   <router-link :to="{ name: 'Location', params: { locationId: locationProp?.id } }">
     <div class="card mb-3">
