@@ -27,8 +27,8 @@ export class SavedLocationsController extends BaseController {
         try {
             const savedlocationData = request.body
             const locationId = request.params.locationId
-            const userInfo = request.userInfo.Id
-            const savedLocation = await savedLocationService.updateSavedLocation(locationId, userInfo, savedlocationData)
+            const userId = request.userInfo.id
+            const savedLocation = await savedLocationService.updateSavedLocation(locationId, userId, savedlocationData)
             response.send(savedLocation)
         } catch (error) {
             next(error)
