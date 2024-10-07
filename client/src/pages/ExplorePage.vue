@@ -88,9 +88,9 @@ function handleMapClick(payload) {
       </div>
       <div class="order-0 order-md-2 col-md-8">
         <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude"
-          :currentCoordinatesProp="coords" />
+          :currentCoordinatesProp="coords" class="map" />
         <div v-else class="loading d-flex justify-content-center align-items-center mt">
-          <h1>Loading Map</h1><i class="mdi mdi-loading mdi-spin"></i>
+          <h1>Loading Map</h1><i class="mdi mdi-earth mdi-spin"></i>
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@ function handleMapClick(payload) {
 <style lang="scss" scoped>
 .map {
   position: sticky;
-  top: 30px;
+  top: 12vh;
 }
 
 section {
@@ -113,6 +113,6 @@ section {
 }
 
 .mt {
-  margin-top: 30vh;
+  margin-top: 20vh;
 }
 </style>

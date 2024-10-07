@@ -1,22 +1,15 @@
 import { logger } from "@/utils/Logger.js"
 import { api } from "./AxiosService.js"
-import { LocationSaved} from "@/models/SavedLocation.js"
+import { LocationSaved, SavedLocationCreator} from "@/models/SavedLocation.js"
 import { AppState } from "@/AppState.js"
 
 class SavedLocations{
-  getAllVisitor(locationId) {
-    throw new Error('Method not implemented.')
-  }
-  // async getAllVisitor(locationId) {
-  //   const response = await api.get(`api/locations/${locationId}/savedLocations`)
-  //   logger.log('get visitor', response.data)
-  //   const locationVisitor = response.data.map(locationVisitor => new SavedLocationCreator(locationVisitor))
-  //   AppState.CreatorSavedLocation = locationVisitor
-  // }
-
-  async checkIn(locationId) {
-  const response = await api.delete(`api/savedLocation/${locationId}`)
-  logger.log('check in at location', response.data)
+  
+  async getAllVisitor(locationId) {
+    const response = await api.get(`api/locations/${locationId}/savedLocations`)
+    logger.log('get visitor', response.data)
+    const locationVisitor = response.data.map(locationVisitor => new SavedLocationCreator(locationVisitor))
+    AppState.CreatorSavedLocation = locationVisitor
   }
 
  async deleteLocation(visitorLocationId) {

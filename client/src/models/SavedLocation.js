@@ -26,7 +26,6 @@ export class LocationSaved extends SavedLocation{
     }
 }
 
-
 // const data = {
 //     "creatorId": "66febdc7a90e1d9ada5792dd",
 //     "locationId": "66ff1c905f021719496d0290",

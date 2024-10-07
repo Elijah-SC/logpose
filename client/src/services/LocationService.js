@@ -2,7 +2,6 @@ import { logger } from "@/utils/Logger.js";
 import { api } from "./AxiosService.js";
 import { Location } from "@/models/Location.js";
 import { AppState } from "@/AppState.js";
-import { SavedLocationCreator } from "@/models/SavedLocation.js";
 
 class LocationService {
   async getAllVisitor(locationId) {
