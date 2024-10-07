@@ -25,7 +25,6 @@ watch(() => route.params.locationId, () => {
   { immediate: true }
 );
 
-
 // @ts-ignore
 async function getActiveLocation() {
   try {
@@ -62,7 +61,7 @@ async function createSavedLocation() {
 
 async function checkIn() {
   try {
-    await savedLocations.checkIn(route.params.locationId)
+    await locationService.checkIn(route.params.locationId)
   }
   catch (error) {
     Pop.error(error);
@@ -71,13 +70,15 @@ async function checkIn() {
 
 async function getAllVisitor() {
   try {
-    await locationService.getAllVisitor(route.params.locationId)
+    await savedLocations.getAllVisitor(route.params.locationId)
   }
   catch (error) {
-    Pop.error(error);
-  }
+  catch (error) {
+      Pop.error(error);
+    }
 
-}
+
+  }
 
 </script>
 
@@ -151,8 +152,8 @@ async function getAllVisitor() {
         <div v-for="visitor in visitorProfile" :key="visitor.id" class="p-2 bg-light visitor-container">
           <div class="d-flex align-items-center border-start border-2 border-dark">
             <i class="fa-solid fa-certificate fa-lg mx-2" style="color: #B197FC;"></i>
-            <img class="guy me-2" src="https://images.thedirect.com/media/article_full/free-guy.jpg" alt="Guy">
-            <p class="m-0">Guy</p>
+            <img class="guy me-2" :src="visitor.creator.picture" :alt="visitor.creator.name">
+            <p class="m-0">{{ visitor.creator.name }}</p>
           </div>
         </div>
       </div>
