@@ -47,7 +47,7 @@ defineProps({
 
 <style lang="scss" scoped>
 img {
-  height: 300px;
+  height: 500px;
   aspect-ratio: 1/1;
   object-fit: cover;
   object-position: center;
