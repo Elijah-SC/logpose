@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import TrueHereMap from './TrueHereMap.vue';
+import { logger } from '@/utils/Logger.js';
 
 const locationCategories = ['hiking', 'skiing', 'snowboarding', 'wilderness'];
 const locationData = ref({
@@ -16,6 +17,10 @@ const locationData = ref({
 defineProps({
   coords: { type: Object, Default: { longitude: -177, latitude: 88 } }
 });
+
+function handleMapClick(payload) {
+  logger.log('Form map click', payload)
+}
 </script>
 
 <template>
@@ -66,7 +71,7 @@ defineProps({
         </div>
       </div>
       <div class="col-md-12">
-        <TrueHereMap :current-coordinates-prop="coords" />
+        <TrueHereMap @clickedMap="handleMapClick" :current-coordinates-prop="coords" />
       </div>
     </form>
   </section>

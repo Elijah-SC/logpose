@@ -63,6 +63,10 @@ async function getLocations() {
     logger.error(error)
   }
 }
+
+function handleMapClick(payload) {
+  console.log('clicked the map', payload)
+}
 </script>
 
 
@@ -85,7 +89,8 @@ async function getLocations() {
         </div>
       </div>
       <div class="order-0 order-md-2 col-md-8">
-        <TrueHereMap v-if="coords.latitude && coords.longitude" :currentCoordinatesProp="coords" />
+        <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude"
+          :currentCoordinatesProp="coords" />
       </div>
     </div>
   </section>
