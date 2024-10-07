@@ -13,12 +13,14 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
-const visitorProfile = computed(() => AppState.visitors)
+const visitorProfile = computed(() => AppState.visitors);
+
 
 
 watch(() => route.params.locationId, () => {
   getActiveLocation();
   getRandomLocations();
+  getAllVisitor()
 },
   { immediate: true }
 );
@@ -57,6 +59,26 @@ async function createSavedLocation() {
     Pop.error(error);
   }
 }
+
+async function checkIn() {
+  try {
+    await savedLocations.checkIn(route.params.locationId)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
+async function getAllVisitor() {
+  try {
+    await locationService.getAllVisitor(route.params.locationId)
+  }
+  catch (error){
+    Pop.error(error);
+  }
+  
+}
+
 </script>
 
 <template>
@@ -84,7 +106,9 @@ async function createSavedLocation() {
           <div class="text-center">
             <button @click="createSavedLocation()" type="button" class="btn btn-outline-dark rounded me-2">Log
               it</button>
-            <button type="button" class="btn btn-outline-dark rounded">Check in</button>
+              <div v-if="visitorProfile">
+                <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">Check in</button>
+              </div>
           </div>
         </div>
       </div>
