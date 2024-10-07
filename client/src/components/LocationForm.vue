@@ -120,14 +120,16 @@ async function postLocation() {
       <div class="col-12">
         <h3>Select a location from the map or use your location</h3>
         <div class="d-flex align-items-center justify-content-around">
-          <div>
+          <div class="flex-grow-1">
             <div>
-              <label for="Longitude">Longitude</label>
-              <input type="number" min="-180" max="180" v-model="locationData.location.coordinates[0]" required>
+              <label class="m3-3" for="Longitude loc-box">Longitude</label>
+              <input class="form-control" type="number" min="-180" max="180"
+                v-model="locationData.location.coordinates[0]" step="any" required>
             </div>
             <div>
-              <label for="Latitude">Latitude</label>
-              <input type="number" min="-90" max="90" v-model="locationData.location.coordinates[1]" required>
+              <label class="m3-3" for="Latitude loc-box">Latitude</label>
+              <input class="form-control" type="number" min="-90" max="90"
+                v-model="locationData.location.coordinates[1]" step="any" required>
             </div>
           </div>
           <div class="d-flex">
@@ -163,5 +165,9 @@ img {
 .check-box {
   height: 25px;
   width: 25px;
+}
+
+.loc-box {
+  width: 15vw;
 }
 </style>
