@@ -55,8 +55,8 @@ function initializeMap() {
 
 function initializeExploreMap(map) {
   // disable wheel zoom on the map
-  // var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map))
-  // behavior.disable(H.mapevents.Behavior.WHEELZOOM)
+  //var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map))
+  //behavior.disable(H.mapevents.Behavior.WHEELZOOM)
 
   map.setCenter({ lat: props.currentCoordinatesProp.latitude, lng: props.currentCoordinatesProp.longitude }); // Current Coordinates
   map.setZoom(13);

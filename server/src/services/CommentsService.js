@@ -5,18 +5,18 @@ class CommentsService {
   async deleteComment(userId, commentId) {
     const deletedComment = await dbContext.Comments.findById(commentId);
     if (deletedComment === null) {
+      throw new Error(`There is no comment with id of ${commentId}`);
     }
+
+    await deletedComment.deleteOne();
+    return "Comment Deleted";
   }
   async updateComment(userId, commentId, commentData) {
     const updatedComment = await dbContext.Comments.findById(commentId);
     if (updatedComment === null) {
-      throw new Error("There is no comment with id of", commentId);
+      throw new Error(`There is no comment with id of ${commentId}`);
     }
-    console.log(userId);
-    console.log(updatedComment.creatorId);
-    if (updatedComment.creatorId !== userId) {
-      throw new Forbidden("You cannot update a comment that isn't yours");
-    }
+
     updatedComment.body = commentData.body ?? updatedComment.body;
     await updatedComment.save();
     return updatedComment;
