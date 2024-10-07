@@ -4,47 +4,43 @@ import BaseController from "../utils/BaseController.js";
 
 export class PicturesController extends BaseController {
   constructor() {
-    super("api/pictures");
+    super("/api/pictures");
     this.router
-      .get('', this.getPictures)
+      .get("", this.getPictures)
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('', this.createPicture)
-      .delete('/:pictureId', this.deletePicture)
-
+      .post("", this.createPicture)
+      .delete("/:pictureId", this.deletePicture);
   }
 
   async deletePicture(request, response, next) {
     try {
-      const pictureId = request.params.pictureId
-      const userId = request.userInfo.id
-      const picture = await picturesService.deletePicture(pictureId, userId)
-      response.send(picture)
+      const pictureId = request.params.pictureId;
+      const userId = request.userInfo.id;
+      const picture = await picturesService.deletePicture(pictureId, userId);
+      response.send(picture);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
-
   async createPicture(request, response, next) {
     try {
-      const pictureData = request.body
-      const userInfo = request.userInfo
-      pictureData.creatorId = userInfo.id
-      const picture = await picturesService.createPicture(pictureData)
-      response.send(picture)
+      const pictureData = request.body;
+      const userInfo = request.userInfo;
+      pictureData.creatorId = userInfo.id;
+      const picture = await picturesService.createPicture(pictureData);
+      response.send(picture);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
   async getPictures(request, response, next) {
     try {
-      const picture = await picturesService.getPictures()
-      response.send(picture)
+      const picture = await picturesService.getPictures();
+      response.send(picture);
     } catch (e) {
       next(e);
     }
   }
 }
-
-
