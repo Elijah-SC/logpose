@@ -40,6 +40,10 @@ function initializeMap() {
   else if (route.name === 'Location') {
     initializeLocationMap(map);
   }
+  else if (route.name === 'Account') {
+    initializeAccountMap(map);
+  }
+
 
   // Enable the event system for pan/zoom interactions
   const mapEvents = new H.mapevents.MapEvents(map);
@@ -65,11 +69,6 @@ function initializeExploreMap(map) {
   map.addEventListener('tap', (e) => {
     const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
     emit('clickedMap', { lat: coord.lat, lng: coord.lng })
-    console.log(Math.abs(coord.lat.toFixed(4)) +
-      (coord.lat > 0 ? "N" : "S") +
-      " " +
-      Math.abs(coord.lng.toFixed(4)) +
-      (coord.lng > 0 ? "E" : "W"))
 
     // pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
     // map.addObject(pinMarker);
@@ -85,6 +84,13 @@ function initializeLocationMap(map) {
   map.setCenter({ lat: props.specificLocationProp.latitude, lng: props.specificLocationProp.longitude }); // Specific location on the map
   map.setZoom(13);
   const specificLocationMarker = new H.map.Marker({ lat: props.specificLocationProp.latitude, lng: props.specificLocationProp.longitude });
+  map.addObject(specificLocationMarker);
+}
+
+function initializeAccountMap(map) {
+  map.setCenter({ lat: 43.6150, lng: -116.2023 });
+  map.setZoom(13);
+  const specificLocationMarker = new H.map.Marker({ lat: 43.6150, lng: -116.2023 });
   map.addObject(specificLocationMarker);
 }
 
