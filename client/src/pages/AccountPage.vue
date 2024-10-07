@@ -3,7 +3,7 @@ import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
 import Pop from '@/utils/Pop.js';
-import LocationsCard from '@/components/LocationsCard.vue';
+import LocationsCard from '@/components/DiscoverLocCard.vue';
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { logger } from '@/utils/Logger.js';
 

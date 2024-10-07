@@ -1,13 +1,16 @@
 import { logger } from "@/utils/Logger.js";
 import { api } from "./AxiosService.js";
-import { LocationSaved, SavedLocationCreator } from "@/models/SavedLocation.js";
+import { LocationSaved, SavedLocation, SavedLocationCreator } from "@/models/SavedLocation.js";
 import { AppState } from "@/AppState.js";
 
-class SavedLocations{
+class SavedLocations {
   async checkIn(locationId, value) {
     const response = await api.put(`api/savedLocations/${locationId}`, value)
     logger.log('visit location', response.data)
-   
+
+    const visited = new SavedLocation(response.data)
+    AppState.locationVisitor.push(visited)
+    AppState.visitors
   }
 
   async getAllVisitor(locationId) {
@@ -35,10 +38,8 @@ class SavedLocations{
   async getMySavedLocation() {
     const response = await api.get("account/savedLocations");
     logger.log("load the saved location", response.data);
-    const myLocation = response.data.map(
-      (locations) => new LocationSaved(locations)
-    );
-    AppState.visitorSavedLocation = myLocation;
+    const myLocations = response.data.map(locations => new LocationSaved(locations));
+    AppState.visitorSavedLocation = myLocations;
   }
 
   async createSavedLocation(locationData) {
