@@ -36,8 +36,8 @@ async function getCurrentLocation() {
     if (geoPermissions.state === 'denied') {
       logger.log("Denied")
       // handle default location
-      coords.value.latitude = 88
-      coords.value.longitude = -177
+      coords.value.latitude = 30
+      coords.value.longitude = -40
       getLocations()
     }
 

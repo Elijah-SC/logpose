@@ -9,7 +9,7 @@ const hMap = ref(null);
 const route = useRoute();
 const props = defineProps({
   specificLocationProp: { type: Location },
-  currentCoordinatesProp: { type: Object, Default: { latitude: 88, longitude: -177 } }
+  currentCoordinatesProp: { type: Object, Default: { latitude: 34, longitude: 39 } }
 })
 
 const emit = defineEmits(['clickedMap'])
@@ -54,6 +54,10 @@ function initializeMap() {
 }
 
 function initializeExploreMap(map) {
+  // disable wheel zoom on the map
+  // var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map))
+  // behavior.disable(H.mapevents.Behavior.WHEELZOOM)
+
   map.setCenter({ lat: props.currentCoordinatesProp.latitude, lng: props.currentCoordinatesProp.longitude }); // Current Coordinates
   map.setZoom(13);
   const currentLocationMarker = new H.map.Marker({ lat: props.currentCoordinatesProp.latitude, lng: props.currentCoordinatesProp.longitude });
@@ -73,6 +77,11 @@ function initializeExploreMap(map) {
 }
 
 function initializeLocationMap(map) {
+  // disable wheel zoom on the map
+  // var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map))
+  // behavior.disable(H.mapevents.Behavior.WHEELZOOM)
+
+
   map.setCenter({ lat: props.specificLocationProp.latitude, lng: props.specificLocationProp.longitude }); // Specific location on the map
   map.setZoom(13);
   const specificLocationMarker = new H.map.Marker({ lat: props.specificLocationProp.latitude, lng: props.specificLocationProp.longitude });
