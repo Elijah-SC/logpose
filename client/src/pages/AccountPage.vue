@@ -6,6 +6,8 @@ import Pop from '@/utils/Pop.js';
 import LocationsCard from '@/components/DiscoverLocCard.vue';
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { logger } from '@/utils/Logger.js';
+import DiscoverLocCard from "@/components/DiscoverLocCard.vue";
+import { locationService } from "@/services/LocationService.js";
 
 const account = computed(() => AppState.account)
 const visitors = computed(() => AppState.visitorSavedLocation)
@@ -13,6 +15,7 @@ const randomLocations = computed(() => AppState.randomLocations);
 
 onMounted(() => {
   getMySavedLocation()
+  getRandomLocations()
 })
 
 async function getMySavedLocation() {
@@ -36,6 +39,16 @@ async function deleteLocation(visitorLocationId) {
     logger.log(error)
   }
 
+}
+
+async function getRandomLocations() {
+  try {
+    await locationService.getRandomLocations();
+  }
+  catch (e) {
+    Pop.error(e);
+    logger.error(e);
+  }
 }
 
 </script>
@@ -83,7 +96,7 @@ async function deleteLocation(visitorLocationId) {
       <div v-if="randomLocations" class="row gx-3 gy-2 mt-2">
         <h3 class="text-center">Discover new locations</h3>
         <div v-for="randomLocation in randomLocations" :key="randomLocation.id" class="col-md-4">
-          <LocationsCard :locationProp="randomLocation" />
+          <DiscoverLocCard :locationProp="randomLocation" />
         </div>
       </div>
     </div>
