@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import H from '@here/maps-api-for-javascript';
 import { Location } from '@/models/Location.js';
+import { logger } from '@/utils/Logger.js';
 
 const hMap = ref(null);
 const route = useRoute();
@@ -10,6 +11,8 @@ const props = defineProps({
   specificLocationProp: { type: Location },
   currentCoordinatesProp: { type: Object, Default: { latitude: 88, longitude: -177 } }
 })
+
+const emit = defineEmits(['clickedMap'])
 
 onMounted(() => initializeMap())
 
@@ -31,6 +34,7 @@ function initializeMap() {
   );
 
   if (route.name === 'Explore') {
+    logger.log('init explore')
     initializeExploreMap(map);
   }
   else if (route.name === 'Location') {
@@ -56,6 +60,7 @@ function initializeExploreMap(map) {
   map.addObject(currentLocationMarker);
   map.addEventListener('tap', (e) => {
     const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
+    emit('clickedMap', { lat: coord.lat, lng: coord.lng })
     console.log(Math.abs(coord.lat.toFixed(4)) +
       (coord.lat > 0 ? "N" : "S") +
       " " +
