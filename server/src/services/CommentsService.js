@@ -7,7 +7,9 @@ class CommentsService {
     if (deletedComment === null) {
       throw new Error(`There is no comment with id of ${commentId}`);
     }
-
+    if (userId != deletedComment.creatorId) {
+      throw new Forbidden("You cannot delete a comment that isn't yours");
+    }
     await deletedComment.deleteOne();
     return "Comment Deleted";
   }
@@ -16,7 +18,9 @@ class CommentsService {
     if (updatedComment === null) {
       throw new Error(`There is no comment with id of ${commentId}`);
     }
-
+    if (userId != updatedComment.creatorId) {
+      throw new Forbidden("You cannot update a comment that isn't yours");
+    }
     updatedComment.body = commentData.body ?? updatedComment.body;
     await updatedComment.save();
     return updatedComment;
