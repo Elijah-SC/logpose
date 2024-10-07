@@ -115,7 +115,7 @@ async function getCurrentLocation() {
         </div>
       </div>
       <div class="col-md-12">
-        <TrueHereMap @clickedMap="handleMapClick" :current-coordinates-prop="coords" />
+        <TrueHereMap @clickedMap="handleMapClick" :currentCoordinatesProp="coords" />
       </div>
     </form>
   </section>

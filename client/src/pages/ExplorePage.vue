@@ -76,7 +76,6 @@ function handleMapClick(payload) {
         <div class="text-center">
           <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
             data-bs-target="#location-form">Create</button>
-          <!-- FIXME Have map actually load in Modal -->
           <ModalWrapper id="location-form">
             <LocationForm v-if="coords.latitude && coords.longitude" :coords="coords" />
           </ModalWrapper>
