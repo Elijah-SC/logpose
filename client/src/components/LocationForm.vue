@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import TrueHereMap from './TrueHereMap.vue';
 import { logger } from '@/utils/Logger.js';
+import Pop from "@/utils/Pop.js";
+import { Logger } from "sass";
 
 const locationCategories = ["Wilderness", "Mountains", "Cycling", "Views", "Hiking", "Caves", "Skiing", "HotSprings", "Stargazing", "Swimming", "Adventure"];
 const locationData = ref({
@@ -20,7 +22,40 @@ defineProps({
 });
 
 function handleMapClick(payload) {
+  locationData.value.useLocation = false
   logger.log('Form map click', payload)
+  locationData.value.location.coordinates[0] = payload.lng
+  locationData.value.location.coordinates[1] = payload.lat
+}
+async function getCurrentLocation() {
+  if (locationData.value.useLocation == false) return
+  logger.log(`Using current location`, locationData.value.useLocation)
+  try {
+    // @ts-ignore
+    await new Promise((resolve, reject) => {
+      logger.log(`Getting Location`)
+      navigator.geolocation.getCurrentPosition(position => {
+        logger.log(`have location`)
+        locationData.value.location.coordinates[0] = position.coords.longitude;
+        locationData.value.location.coordinates[1] = position.coords.latitude;
+        resolve()
+      }, resolve, { enableHighAccuracy: true })
+    })
+
+    const geoPermissions = await navigator.permissions.query({ name: 'geolocation' })
+    logger.log('GEO PERMISSION', geoPermissions.state)
+    if (geoPermissions.state === 'prompt') {
+      logger.log('Waiting')
+    }
+    if (geoPermissions.state === 'denied') {
+      logger.log("Denied")
+      Pop.toast(`you need to allow location access to use your location`)
+    }
+  }
+  catch (e) {
+    Pop.error(e)
+    logger.log(e);
+  }
 }
 </script>
 
@@ -63,11 +98,19 @@ function handleMapClick(payload) {
                   locationCategory }}</option>
             </select>
           </div>
-
-          <div class="w-25 mx-auto">
-            <input v-model="locationData.useLocation" class="align-self-center" type="checkbox" name="locationCheck"
-              id="locationCheck">
+        </div>
+      </div>
+      <div class="col-12">
+        <h3>Select a location from the map</h3>
+        <div class="d-flex">
+          <div>
+            <p class="mb-0">longitude: {{ locationData.location.coordinates[0] }}</p>
+            <p class="mb-0">Latitude: {{ locationData.location.coordinates[1] }}</p>
+          </div>
+          <div class="w-25 mx-auto d-flex">
             <label class="form-label ms-2" for="locationCheck">Use my location</label>
+            <input @change="getCurrentLocation" v-model="locationData.useLocation" class="check-box" type="checkbox"
+              name="locationCheck" id="locationCheck">
           </div>
         </div>
       </div>
@@ -89,5 +132,10 @@ img {
   width: 50%;
   object-fit: cover;
   object-position: center;
+}
+
+.check-box {
+  height: 100px;
+  width: 100px;
 }
 </style>

@@ -67,8 +67,8 @@ function initializeExploreMap(map) {
       Math.abs(coord.lng.toFixed(4)) +
       (coord.lng > 0 ? "E" : "W"))
 
-    const pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
-    map.addObject(pinMarker);
+    // pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
+    // map.addObject(pinMarker);
   });
 }
 
