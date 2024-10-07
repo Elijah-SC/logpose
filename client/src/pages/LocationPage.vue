@@ -88,10 +88,6 @@ async function getAllVisitor() {
   catch (error) {
     Pop.error(error);
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> 665fde1 (added a compute to location page)
 }
 
 </script>
