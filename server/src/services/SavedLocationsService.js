@@ -1,5 +1,5 @@
 import { dbContext } from "../db/DbContext.js";
-import { Forbidden } from "../utils/Errors.js";
+import { BadRequest, Forbidden } from "../utils/Errors.js";
 
 class SavedLocationsService {
   async deleteSavedLocation(locationId, userId) {
@@ -13,14 +13,28 @@ class SavedLocationsService {
     return deleteSavedLocation;
   }
 
-  async updateSavedLocation(locationId, userInfo, savedlocationData) {
-    const savedLocation = await dbContext.SavedLocations.findById(
-      locationId
+  async updateSavedLocation(locationId, userId, savedlocationData) {
+    let savedLocation = await dbContext.SavedLocations.findOne({
+      locationId,
+      creatorId: userId
+    }
     ).populate("creator", "picture name");
-    if (userInfo != savedlocationData.creatorId)
-      throw new Forbidden(`not authorized can not update this ${locationId}`);
-    savedLocation.visited = savedlocationData.visited ?? savedLocation.visited;
-    await savedLocation.save();
+
+    if (!savedLocation) {
+      // TODO create a savedLocation
+      savedLocation = await dbContext.SavedLocations.create({
+        locationId,
+        creatorId:userId,
+        visited: savedlocationData.visited ?? savedLocation.visited
+      })
+
+    } else {
+      savedLocation.visited = savedlocationData.visited ?? savedLocation.visited;
+      await savedLocation.save();
+    }
+
+    // if (userId != savedlocationData.creatorId)
+    //   throw new Forbidden(`not authorized can not update this ${locationId}`);
     return savedLocation;
   }
 
@@ -33,7 +47,7 @@ class SavedLocationsService {
 
   async getLocationVisitor(locationId) {
     const savedLocation = await dbContext.SavedLocations.find({
-      locationId: locationId, visited:true
+      locationId: locationId, visited: true
     }).populate("creator");
     return savedLocation;
   }

@@ -15,14 +15,15 @@ const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
 const visitorProfile = computed(() => AppState.visitors);
 
+// TODO reference the hasTicket functionality in tower
 const visit = ref(false);
 
-const locationVisitor = computed(() => {
-  if (AppState.identity == null) return false
-  const visited = AppState.CreatorSavedLocation.find(visitor => visitor.creatorId == AppState.account?.id)
-  if (!visited) return false
-  return true
-})
+// const locationVisitor = computed(() => {
+//   if (AppState.identity == null) return false
+//   const visited = AppState.CreatorSavedLocation.find(visitor => visitor.creatorId == AppState.account?.id)
+//   if (!visited) return false
+//   return true
+// })
 
 // const canLogIn = computed(()=> {
 //   if(locationVisitor.value) return false
@@ -72,10 +73,11 @@ async function createSavedLocation() {
   }
 }
 
-async function checkIn(locationId) {
+async function checkIn() {
   try {
-    await savedLocations.checkIn(locationId, visit.value)
     visit.value = !visit.value;
+    await savedLocations.checkIn(route.params.locationId, { visited: visit.value })
+
   }
   catch (error) {
     Pop.error(error);
