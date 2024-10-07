@@ -1,11 +1,10 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
-import HereMap from '@/components/HereMap.vue';
-// import LocationCard from '@/components/globals/LocationCard.vue';
 import { savedLocations } from '@/services/SavedLocationsService.js';
 import Pop from '@/utils/Pop.js';
 import LocationsCard from '@/components/LocationsCard.vue';
+import TrueHereMap from '@/components/TrueHereMap.vue';
 
 const account = computed(() => AppState.account)
 const visitors = computed(() => AppState.visitorSavedLocation)
@@ -23,6 +22,17 @@ async function getMySavedLocation() {
     Pop.error(error);
   }
 }
+
+async function deleteLocation(visitorLocationId) {
+  try {
+    await savedLocations.deleteLocation(visitorLocationId)
+  }
+  catch (error){
+    Pop.error(error);
+  }
+  
+}
+
 </script>
 
 <template>
@@ -43,7 +53,7 @@ async function getMySavedLocation() {
         <section class="row">
           <div class="col-md-12">
             <h4 class="text-center">See where you have been</h4>
-            <HereMap />
+            <TrueHereMap />
           </div>
         </section>
       </div>
@@ -52,6 +62,9 @@ async function getMySavedLocation() {
           <h4 class="text-center">Where your planning to go</h4>
           <div v-for="visitor in visitors" :key="visitor.id" class="col-md-4">
             <LocationCard :location="visitor.location" />
+            <div>
+            <button @click="deleteLocation(visitor.id)" class="btn btn-success">Delete</button>
+          </div>
           </div>
         </section>
       </div>

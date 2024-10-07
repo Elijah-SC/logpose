@@ -2,8 +2,16 @@ import { logger } from "@/utils/Logger.js";
 import { api } from "./AxiosService.js";
 import { Location } from "@/models/Location.js";
 import { AppState } from "@/AppState.js";
+import { SavedLocationCreator } from "@/models/SavedLocation.js";
 
 class LocationService {
+  async getAllVisitor(locationId) {
+    const response = await api.get(`api/locations/${locationId}/savedLocations`)
+    logger.log('get visitor', response.data)
+    const locationVisitor = response.data.map(locationVisitor => new SavedLocationCreator(locationVisitor))
+    AppState.CreatorSavedLocation = locationVisitor
+  }
+
   // @ts-ignore
   async getRandomLocations() {
     const response = await api.get("api/locations");
