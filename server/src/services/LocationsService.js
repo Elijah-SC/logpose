@@ -2,7 +2,7 @@ import { dbContext } from "../db/DbContext.js";
 
 class LocationsService {
   async getAllLocations(query) {
-    const browserLocation = query.browserLocation
+    const browserLocation = query.browserLocation || [34, 39]
     delete query.browserLocation
     delete query.sort
     const pageNumber = parseInt(query.page) || 1

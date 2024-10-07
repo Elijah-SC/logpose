@@ -73,10 +73,10 @@ async function getAllVisitor() {
   try {
     await locationService.getAllVisitor(route.params.locationId)
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
   }
-  
+
 }
 
 </script>
@@ -85,7 +85,7 @@ async function getAllVisitor() {
   <div v-if="activeLocation" class="container-fluid">
     <section class="row">
       <div class="col-12">
-        <Carousel />
+        <Carousel :location="activeLocation" />
       </div>
       <div class="col-12">
         <TrueHereMap :specificLocationProp="activeLocation" />
@@ -106,9 +106,9 @@ async function getAllVisitor() {
           <div class="text-center">
             <button @click="createSavedLocation()" type="button" class="btn btn-outline-dark rounded me-2">Log
               it</button>
-              <div v-if="visitorProfile">
-                <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">Check in</button>
-              </div>
+            <div v-if="visitorProfile">
+              <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">Check in</button>
+            </div>
           </div>
         </div>
       </div>

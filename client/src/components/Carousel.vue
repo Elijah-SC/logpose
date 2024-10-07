@@ -1,5 +1,10 @@
 <script setup>
+import { Location } from "@/models/Location.js";
 
+
+defineProps({
+  location: { type: Location, required: true }
+})
 </script>
 
 
@@ -15,9 +20,7 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/CargoNet_Di_12_Euro_4000_L%C3%B8nsdal_-_Bolna.jpg/640px-CargoNet_Di_12_Euro_4000_L%C3%B8nsdal_-_Bolna.jpg"
-          class="d-block w-100" alt="...">
+        <img :src="location?.coverImg" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item">
         <img src="https://thumbs.dreamstime.com/b/heavy-rain-outside-created-artificial-intelligence-320885240.jpg"
