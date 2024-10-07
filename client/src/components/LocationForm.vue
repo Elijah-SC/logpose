@@ -4,8 +4,13 @@ import TrueHereMap from './TrueHereMap.vue';
 import { logger } from '@/utils/Logger.js';
 import Pop from "@/utils/Pop.js";
 import { Logger } from "sass";
-
+import { locationService } from "@/services/LocationService.js";
+import { useRoute, useRouter } from "vue-router";
+import { Modal } from "bootstrap";
+const route = useRoute()
+const router = useRouter()
 const locationCategories = ["Wilderness", "Mountains", "Cycling", "Views", "Hiking", "Caves", "Skiing", "HotSprings", "Stargazing", "Swimming", "Adventure"];
+const useLocation = ref(false)
 const locationData = ref({
   name: '',
   coverImg: '',
@@ -13,23 +18,21 @@ const locationData = ref({
   description: '',
   category: '',
   location: { "type": "Point", "coordinates": [0, 0] },
-  useLocation: false,
-
 })
 
+
 defineProps({
-  coords: { type: Object, Default: { longitude: -177, latitude: 88 } }
+  coords: { type: Object, Default: { longitude: 34, latitude: 39 } }
 });
 
 function handleMapClick(payload) {
-  locationData.value.useLocation = false
+  useLocation.value = false
   logger.log('Form map click', payload)
   locationData.value.location.coordinates[0] = payload.lng
   locationData.value.location.coordinates[1] = payload.lat
 }
 async function getCurrentLocation() {
-  if (locationData.value.useLocation == false) return
-  logger.log(`Using current location`, locationData.value.useLocation)
+  if (useLocation.value == false) return
   try {
     // @ts-ignore
     await new Promise((resolve, reject) => {
@@ -49,7 +52,8 @@ async function getCurrentLocation() {
     }
     if (geoPermissions.state === 'denied') {
       logger.log("Denied")
-      Pop.toast(`you need to allow location access to use your location`)
+      Pop.toast(`You need to Allow Location permission if you want to create a location using your browser location`, "warning", "center")
+      useLocation.value = false
     }
   }
   catch (e) {
@@ -57,11 +61,22 @@ async function getCurrentLocation() {
     logger.log(e);
   }
 }
+async function postLocation() {
+  try {
+    const newLocation = await locationService.postLocation(locationData.value)
+    Pop.toast(`Location created`, `success`, `top`)
+    Modal.getOrCreateInstance('#location-form').hide()
+    router.push({ name: 'Location', params: { locationId: newLocation?.id } })
+  } catch (error) {
+    Pop.error(error)
+    logger.log(error)
+  }
+}
 </script>
 
 <template>
   <section class="container">
-    <form class="row gy-3">
+    <form @submit.prevent="postLocation()" class="row gy-3">
       <div v-if="locationData.coverImg" class="col-12">
         <h4>Image Preview</h4>
         <div>
@@ -70,28 +85,30 @@ async function getCurrentLocation() {
       </div>
       <div class="col-md-6">
         <label class="form-label" for="locationName">Location Name</label>
-        <input v-model="locationData.name" class="form-control" id="locationName" name="locationName">
+        <input v-model="locationData.name" class="form-control" id="locationName" name="locationName" minlength="3"
+          maxlength="50">
       </div>
       <div class="col-md-6">
         <label class="form-label" for="locationCoverImg">Cover Image</label>
         <input v-model="locationData.coverImg" type="url" class="form-control" id="locationCoverImg"
-          name="locaitonCoverImg">
+          name="locationCoverImg" min="10" maxlength="1000" required>
       </div>
       <div class="col-12">
         <label class="form-label" for="locationDirections">Directions</label>
-        <input v-model="locationData.directions" class="form-control" id="locationDirections" name="locationDirections">
+        <input v-model="locationData.directions" class="form-control" id="locationDirections" name="locationDirections"
+          min="25" maxlength="1000" required>
       </div>
       <div class="col-12">
         <label class="form-label" for="locationDescription">Description</label>
         <textarea v-model="locationData.description" class="form-control" name="locationDescription"
-          id="locationDescription" rows="5"></textarea>
+          id="locationDescription" rows="5" required minlength="25" maxlength="1000"></textarea>
       </div>
       <div class="col-md-12">
         <div class="d-flex align-items-center">
           <div class="w-75">
             <label class="form-label" for="locationCategories">Location Type</label>
             <select v-model="locationData.category" class="form-control" name="locationCategories"
-              id="locationCategories">
+              id="locationCategories" required>
               <option disabled selected value="">Select location category</option>
               <option v-for="locationCategory in locationCategories" :key="locationCategory" :value="locationCategory">
                 {{
@@ -101,21 +118,30 @@ async function getCurrentLocation() {
         </div>
       </div>
       <div class="col-12">
-        <h3>Select a location from the map</h3>
-        <div class="d-flex">
+        <h3>Select a location from the map or use your location</h3>
+        <div class="d-flex align-items-center justify-content-around">
           <div>
-            <p class="mb-0">longitude: {{ locationData.location.coordinates[0] }}</p>
-            <p class="mb-0">Latitude: {{ locationData.location.coordinates[1] }}</p>
+            <div>
+              <label for="Longitude">Longitude</label>
+              <input type="number" min="-180" max="180" v-model="locationData.location.coordinates[0]" required>
+            </div>
+            <div>
+              <label for="Latitude">Latitude</label>
+              <input type="number" min="-90" max="90" v-model="locationData.location.coordinates[1]" required>
+            </div>
           </div>
-          <div class="w-25 mx-auto d-flex">
-            <label class="form-label ms-2" for="locationCheck">Use my location</label>
-            <input @change="getCurrentLocation" v-model="locationData.useLocation" class="check-box" type="checkbox"
+          <div class="d-flex">
+            <label class="form-label mb-0 me-2" for="locationCheck">Use my location</label>
+            <input @change="getCurrentLocation" v-model="useLocation" class="check-box" type="checkbox"
               name="locationCheck" id="locationCheck">
           </div>
         </div>
       </div>
       <div class="col-md-12">
         <TrueHereMap @clickedMap="handleMapClick" :currentCoordinatesProp="coords" />
+      </div>
+      <div class="w-100 text-end">
+        <button class="btn btn-success" type="submit">Submit</button>
       </div>
     </form>
   </section>
@@ -135,7 +161,7 @@ img {
 }
 
 .check-box {
-  height: 100px;
-  width: 100px;
+  height: 25px;
+  width: 25px;
 }
 </style>

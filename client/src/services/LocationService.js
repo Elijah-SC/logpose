@@ -5,6 +5,12 @@ import { AppState } from "@/AppState.js";
 import { SavedLocationCreator } from "@/models/SavedLocation.js";
 
 class LocationService {
+  async postLocation(postData) {
+    const response = await api.post(`api/locations`, postData)
+    const newLocation = new Location(response.data)
+    AppState.locations.push(newLocation)
+    return newLocation
+  }
   async getAllVisitor(locationId) {
     const response = await api.get(
       `api/locations/${locationId}/savedLocations`
