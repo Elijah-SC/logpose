@@ -8,7 +8,8 @@ export class CommentsController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post("", this.createComment)
-      .put("/:commentId");
+      .put("/:commentId", this.updateComment)
+      .delete("/:commentId", this.deleteComment);
   }
 
   async createComment(request, response, next) {
@@ -27,8 +28,26 @@ export class CommentsController extends BaseController {
       const userId = request.userInfo.id;
       const commentId = request.params.commentId;
       const commentData = request.body;
-      const updatedComment = await commentsService.updateComment(userId, commentId, commentData);
+      const updatedComment = await commentsService.updateComment(
+        userId,
+        commentId,
+        commentData
+      );
       response.send(updatedComment);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async deleteComment(request, response, next) {
+    try {
+      const userId = request.userInfo.id;
+      const commentId = request.params.commentId;
+      const deletedCommentMsg = await commentsService.deleteComment(
+        userId,
+        commentId
+      );
+      response.send(deletedCommentMsg);
     } catch (e) {
       next(e);
     }

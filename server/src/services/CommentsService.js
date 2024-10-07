@@ -2,11 +2,19 @@ import { dbContext } from "../db/DbContext.js";
 import { Forbidden } from "../utils/Errors.js";
 
 class CommentsService {
+  async deleteComment(userId, commentId) {
+    const deletedComment = await dbContext.Comments.findById(commentId);
+    if (deletedComment === null) {
+    }
+  }
   async updateComment(userId, commentId, commentData) {
     const updatedComment = await dbContext.Comments.findById(commentId);
     if (updatedComment === null) {
       throw new Error("There is no comment with id of", commentId);
-    } else if (updatedComment.creatorId !== userId) {
+    }
+    console.log(userId);
+    console.log(updatedComment.creatorId);
+    if (updatedComment.creatorId !== userId) {
       throw new Forbidden("You cannot update a comment that isn't yours");
     }
     updatedComment.body = commentData.body ?? updatedComment.body;

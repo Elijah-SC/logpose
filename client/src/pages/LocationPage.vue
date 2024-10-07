@@ -74,7 +74,7 @@ async function createSavedLocation() {
 
 async function checkIn(locationId) {
   try {
-    await savedLocations.checkIn(locationId,visit.value)
+    await savedLocations.checkIn(locationId, visit.value)
     visit.value = !visit.value;
   }
   catch (error) {
@@ -120,8 +120,8 @@ async function getAllVisitor() {
               Log it
             </button>
             <div>
-              <button @click="checkIn(activeLocation.id)" type="button"
-                class="btn btn-outline-dark rounded">Check in</button>
+              <button @click="checkIn(activeLocation.id)" type="button" class="btn btn-outline-dark rounded">Check
+                in</button>
             </div>
           </div>
         </div>

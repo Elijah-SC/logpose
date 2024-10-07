@@ -1,41 +1,54 @@
-import { logger } from "@/utils/Logger.js"
-import { api } from "./AxiosService.js"
-import { LocationSaved, SavedLocationCreator} from "@/models/SavedLocation.js"
-import { AppState } from "@/AppState.js"
+import { logger } from "@/utils/Logger.js";
+import { api } from "./AxiosService.js";
+import { LocationSaved, SavedLocationCreator } from "@/models/SavedLocation.js";
+import { AppState } from "@/AppState.js";
 
-class SavedLocations{
-  async checkIn(locationData, value) {
-    const response = await api.put(`api/savedLocations/${locationData}`,value)
-    logger.log('visit location', response.data)
-   
+class SavedLocations {
+  async checkIn(locationData, visit) {
+    const visited = { visited: visit };
+    const response = await api.put(
+      `api/savedLocations/${locationData}`,
+      visited
+    );
+    logger.log("visit location", response.data);
   }
-  
+
   async getAllVisitor(locationId) {
-    const response = await api.get(`api/locations/${locationId}/savedLocations`)
-    logger.log('get visitor', response.data)
-    const locationVisitor = response.data.map(locationVisitor => new SavedLocationCreator(locationVisitor))
-    AppState.CreatorSavedLocation = locationVisitor
+    const response = await api.get(
+      `api/locations/${locationId}/savedLocations`
+    );
+    logger.log("get visitor", response.data);
+    const locationVisitor = response.data.map(
+      (locationVisitor) => new SavedLocationCreator(locationVisitor)
+    );
+    AppState.CreatorSavedLocation = locationVisitor;
   }
 
- async deleteLocation(visitorLocationId) {
-   const response = await api.delete(`api/savedLocations/${visitorLocationId}`)
-   logger.log('delete location', response.data)
-   const indexToDeleteLocation = AppState.visitorSavedLocation.findIndex(location => location.id == visitorLocationId)
-   AppState.visitorSavedLocation.splice(indexToDeleteLocation,1)
+  async deleteLocation(visitorLocationId) {
+    const response = await api.delete(
+      `api/savedLocations/${visitorLocationId}`
+    );
+    logger.log("delete location", response.data);
+    const indexToDeleteLocation = AppState.visitorSavedLocation.findIndex(
+      (location) => location.id == visitorLocationId
+    );
+    AppState.visitorSavedLocation.splice(indexToDeleteLocation, 1);
   }
 
   async getMySavedLocation() {
-    const response = await api.get('account/savedLocations')
-    logger.log('load the saved location', response.data)
-    const myLocation = response.data.map(locations => new LocationSaved(locations))
-    AppState.visitorSavedLocation = myLocation
+    const response = await api.get("account/savedLocations");
+    logger.log("load the saved location", response.data);
+    const myLocation = response.data.map(
+      (locations) => new LocationSaved(locations)
+    );
+    AppState.visitorSavedLocation = myLocation;
   }
 
   async createSavedLocation(locationData) {
-      const response = await api.post('api/savedLocations', locationData)
-      logger.log('save locations', response.data)
-      const createdSavedLocation = new LocationSaved(response.data)
-      AppState.visitorSavedLocation.push(createdSavedLocation)
+    const response = await api.post("api/savedLocations", locationData);
+    logger.log("save locations", response.data);
+    const createdSavedLocation = new LocationSaved(response.data);
+    AppState.visitorSavedLocation.push(createdSavedLocation);
   }
 }
-export const savedLocations = new SavedLocations()
+export const savedLocations = new SavedLocations();
