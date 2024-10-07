@@ -61,8 +61,14 @@ function initializeExploreMap(map) {
   map.addEventListener('tap', (e) => {
     const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
     emit('clickedMap', { lat: coord.lat, lng: coord.lng })
-    const pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
-    map.addObject(pinMarker);
+    console.log(Math.abs(coord.lat.toFixed(4)) +
+      (coord.lat > 0 ? "N" : "S") +
+      " " +
+      Math.abs(coord.lng.toFixed(4)) +
+      (coord.lng > 0 ? "E" : "W"))
+
+    // pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
+    // map.addObject(pinMarker);
   });
 }
 

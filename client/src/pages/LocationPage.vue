@@ -7,7 +7,7 @@ import { locationService } from '@/services/LocationService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
-import { computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -15,19 +15,20 @@ const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
 const visitorProfile = computed(() => AppState.visitors);
 
+const visit = ref(false);
+
 const locationVisitor = computed(() => {
   if (AppState.identity == null) return false
   const visited = AppState.CreatorSavedLocation.find(visitor => visitor.creatorId == AppState.account?.id)
-  if(!visited) return false
+  if (!visited) return false
   return true
 })
 
-const canLogIn = computed(()=> {
-  if(AppState.identity == null) return false
-  if(locationVisitor.value) return false
-  if(AppState.visitors?.visited == true) return false
-  return true
-})
+// const canLogIn = computed(()=> {
+//   if(locationVisitor.value) return false
+//   if(AppState.visitors?.visited == true) return false
+//   return true
+// })
 
 
 watch(() => route.params.locationId, () => {
@@ -61,7 +62,6 @@ async function getRandomLocations() {
   }
 }
 
-// @ts-ignore
 async function createSavedLocation() {
   try {
     const locationData = { locationId: route.params.locationId }
@@ -72,9 +72,10 @@ async function createSavedLocation() {
   }
 }
 
-async function checkIn() {
+async function checkIn(locationId) {
   try {
-    await locationService.checkIn(route.params.locationId)
+    await savedLocations.checkIn(locationId,visit.value)
+    visit.value = !visit.value;
   }
   catch (error) {
     Pop.error(error);
@@ -115,11 +116,11 @@ async function getAllVisitor() {
           <h3 class="text-center">Directions</h3>
           <p>{{ activeLocation.directions }}</p>
           <div class="text-center">
-            <button :disabled="!canLogIn" @click="createSavedLocation()" type="button" class="btn btn-outline-dark rounded me-2">
+            <button @click="createSavedLocation()" type="button" class="btn btn-outline-dark rounded me-2">
               Log it
             </button>
             <div>
-              <button :disabled="locationVisitor" @click="checkIn()" type="button"
+              <button @click="checkIn(activeLocation.id)" type="button"
                 class="btn btn-outline-dark rounded">Check in</button>
             </div>
           </div>
