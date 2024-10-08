@@ -148,6 +148,7 @@ async function getAllVisitors() {
             </div>
           </form> -->
           <Comment />
+          <Comment />
 
           <!-- Account | User Comments -->
           <div class="d-flex justify-content-between">
