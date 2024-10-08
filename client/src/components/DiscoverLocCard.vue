@@ -3,12 +3,16 @@ import { Location } from '@/models/Location.js';
 
 defineProps({
   locationProp: { type: Location, required: true }
-}) 
+})
+
+function scrollTop() {
+  window.scrollTo(0, 0)
+}
 </script>
 
 <template>
   <router-link :to="{ name: 'Location', params: { locationId: locationProp?.id } }">
-    <div class="card mb-3">
+    <div @click="scrollTop()" class="card mb-3">
       <div class="row g-0">
         <div class="col-md-12">
           <img class="img-fluid h-100" :src="locationProp.coverImg" :alt="locationProp.name">
