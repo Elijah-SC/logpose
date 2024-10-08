@@ -47,12 +47,12 @@ class SavedLocations {
     AppState.visitorSavedLocation.splice(indexToDeleteLocation, 1);
   }
 
-  async getMySavedLocation() {
+  async getMySavedLocations() {
     const response = await api.get("account/savedLocations");
     const myLocations = response.data.map(
       (locations) => new LocationSaved(locations)
     );
-    AppState.visitorSavedLocation = myLocations;
+    AppState.wishToVisitLocations = myLocations;
   }
 
   async createSavedLocation(locationData) {
