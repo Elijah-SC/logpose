@@ -11,7 +11,7 @@ class LocationService {
     AppState.locations.push(newLocation)
     return newLocation
   }
-  async getAllVisitor(locationId) {
+  async getAllVisitors(locationId) {
     const response = await api.get(
       `api/locations/${locationId}/savedLocations`
     );
