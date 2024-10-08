@@ -4,6 +4,7 @@ import Carousel from '@/components/Carousel.vue';
 import DiscoverLocCard from '@/components/DiscoverLocCard.vue';
 import Comment from '@/components/globals/Comment.vue';
 import TrueHereMap from '@/components/TrueHereMap.vue';
+import { commentsService } from '@/services/CommentsService.js';
 import { locationService } from '@/services/LocationService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
 import { logger } from '@/utils/Logger.js';
@@ -14,7 +15,8 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
-const visitorProfile = computed(() => AppState.visitors);
+const visitorProfile = computed(() => AppState.locationVisitors);
+const comments = computed(() => AppState.comments)
 
 // TODO reference the hasTicket functionality in tower
 const visit = ref(false);
@@ -28,7 +30,7 @@ const locationVisitor = computed(() => {
 
 const canLogIn = computed(() => {
   if (locationVisitor.value == false) return false
-  if (AppState.visitors?.visited == true) return false
+  if (locationVisitor.value == true) return false
   return true
 })
 
@@ -37,6 +39,7 @@ watch(() => route.params.locationId, () => {
   getActiveLocation();
   getRandomLocations();
   getAllVisitors();
+  getAllComment();
 },
   { immediate: true }
 );
@@ -93,6 +96,24 @@ async function getAllVisitors() {
   }
 }
 
+async function getAllComment() {
+  try {
+    await commentsService.getAllComment(route.params.locationId)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
+async function deleteComment(commentId) {
+  try {
+    await commentsService.deleteComment(commentId)
+  }
+  catch (error){
+    Pop.error(error);
+  }
+}
+
 </script>
 
 <template>
@@ -131,6 +152,7 @@ async function getAllVisitors() {
           </div>
         </div>
       </div>
+
       <!-- NOTE Comments -->
       <div class="col-md-6">
         <div class="bg-light p-2 rounded">
@@ -141,29 +163,33 @@ async function getAllVisitors() {
             </div>
           </div>
           <!-- Create Comment -->
-          <!-- <form>
-            <textarea name="" id="" class="form-control" rows="7" placeholder="Leave a comment"></textarea>
-            <div class="text-end">
-              <button class="btn btn-outline-dark rounded mt-2">Send</button>
-            </div>
-          </form> -->
           <Comment />
-          <Comment />
-
           <!-- Account | User Comments -->
-          <div class="d-flex justify-content-between">
-            <div class="d-flex align-items-center">
-              <img class="guy me-2" src="https://images.thedirect.com/media/article_full/free-guy.jpg" alt="Guy">
-              <p class="m-0">Jake Walker</p>
+          <div v-for="comment in comments" :key="comment.id">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex align-items-center">
+                <img class="guy me-2" :src="comment.creator.picture" :alt="comment.creator.name">
+                <p class="m-0">{{ comment.creator.name }}</p>
+              </div>
+              <div class="dropdown mx-3 account-comment">
+                <i class="mdi mdi-dots-horizontal fs-4" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false"></i>
+                <ul class="dropdown-menu rounded-0">
+                  <li>
+                    <button  @click="editComment()" class="dropdown-item">Edit
+                    </button>
+                  </li>
+                  <hr/>
+                  <li>
+                    <button @click="deleteComment(comment.id)" class="dropdown-item">Delete
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <button class="account-comment" type="button">...</button>
-          </div>
-
-          <div>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Distinctio quo et, architecto deserunt
-              consectetur animi quam saepe ipsam ducimus aspernatur odio nostrum adipisci cupiditate eligendi ut
-              deleniti dolore error, quod alias possimus veritatis? Accusamus necessitatibus quia doloremque, dolorem
-              illum voluptate!</p>
+            <div>
+              <p>{{ comment.body }}</p>
+            </div>
           </div>
         </div>
       </div>
