@@ -23,4 +23,6 @@ export const AppState = reactive({
   visitors: null,
   /** @type {import('./models/SavedLocation.js').LocationSaved[]} */
   visitedLocations: [],
+  /** @type {import('./models/SavedLocation.js').LocationSaved[]} */
+  wishToVisitLocations: [],
 });
