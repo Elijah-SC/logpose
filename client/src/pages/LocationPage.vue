@@ -2,6 +2,7 @@
 import { AppState } from '@/AppState.js';
 import Carousel from '@/components/Carousel.vue';
 import DiscoverLocCard from '@/components/DiscoverLocCard.vue';
+import Comment from '@/components/globals/Comment.vue';
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { locationService } from '@/services/LocationService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
@@ -19,6 +20,7 @@ const visitorProfile = computed(() => AppState.visitors);
 const visit = ref(false);
 
 const locationVisitor = computed(() => {
+  debugger
   if (AppState.identity == null) return false
   const visited = AppState.CreatorSavedLocation.find(visitor => visitor.creatorId == AppState.account?.id)
   if (!visited) return false
@@ -26,7 +28,7 @@ const locationVisitor = computed(() => {
 })
 
 const canLogIn = computed(() => {
-  if (locationVisitor.value) return false
+  if (locationVisitor.value == false) return false
   if (AppState.visitors?.visited == true) return false
   return true
 })
@@ -123,7 +125,7 @@ async function getAllVisitor() {
               </button>
             </div>
             <div>
-              <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">
+              <button v-if="canLogIn" @click="checkIn()" type="button" class="btn btn-outline-dark rounded">
                 Check in
               </button>
             </div>
@@ -140,12 +142,13 @@ async function getAllVisitor() {
             </div>
           </div>
           <!-- Create Comment -->
-          <form>
+          <!-- <form>
             <textarea name="" id="" class="form-control" rows="7" placeholder="Leave a comment"></textarea>
             <div class="text-end">
               <button class="btn btn-outline-dark rounded mt-2">Send</button>
             </div>
-          </form>
+          </form> -->
+          <Comment/>
 
           <!-- Account | User Comments -->
           <div class="d-flex justify-content-between">
