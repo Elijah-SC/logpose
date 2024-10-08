@@ -19,9 +19,9 @@ class SavedLocations {
     );
     logger.log("get visitor", response.data);
     const locationVisitor = response.data.map(
-      (locationVisitor) => new SavedLocationCreator(locationVisitor)
+      (locationVisitor) => new SavedLocation(locationVisitor)
     );
-    AppState.CreatorSavedLocation = locationVisitor;
+    AppState.visitors = locationVisitor;
   }
 
   async deleteLocation(visitorLocationId) {
