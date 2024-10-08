@@ -11,7 +11,7 @@ import { locationService } from "@/services/LocationService.js";
 const account = computed(() => AppState.account)
 const randomLocations = computed(() => AppState.randomLocations);
 const visitedLocations = computed(() => AppState.visitedLocations);
-const wishToVisitLocations = computed(() => AppState.wishToVisitLocations);
+const wishToVisitLocations = computed(() => AppState.SavedLocations);
 
 onMounted(() => {
   getVisitedLocations();

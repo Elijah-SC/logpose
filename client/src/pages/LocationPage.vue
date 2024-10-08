@@ -21,7 +21,7 @@ const visit = ref(false);
 
 const locationVisitor = computed(() => {
   if (AppState.identity == null) return false
-  const visited = AppState.CreatorSavedLocation.find(visitor => visitor.creatorId == AppState.account?.id)
+  const visited = AppState.locationVisitors.find(visitor => visitor.creatorId == AppState.account?.id)
   if (!visited) return false
   return true
 })
@@ -36,7 +36,7 @@ const canLogIn = computed(() => {
 watch(() => route.params.locationId, () => {
   getActiveLocation();
   getRandomLocations();
-  getAllVisitor();
+  getAllVisitors();
 },
   { immediate: true }
 );
@@ -84,9 +84,9 @@ async function checkIn() {
   }
 }
 
-async function getAllVisitor() {
+async function getAllVisitors() {
   try {
-    await savedLocations.getAllVisitor(route.params.locationId)
+    await savedLocations.getAllVisitors(route.params.locationId)
   }
   catch (error) {
     Pop.error(error);
@@ -140,6 +140,14 @@ async function getAllVisitor() {
               <p>Latest | Popular</p>
             </div>
           </div>
+          <!-- Create Comment -->
+          <!-- <form>
+            <textarea name="" id="" class="form-control" rows="7" placeholder="Leave a comment"></textarea>
+            <div class="text-end">
+              <button class="btn btn-outline-dark rounded mt-2">Send</button>
+            </div>
+          </form> -->
+          <Comment />
           <Comment />
 
           <!-- Account | User Comments -->

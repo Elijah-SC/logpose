@@ -17,22 +17,22 @@ class SavedLocations {
   }
   async checkIn(locationId, value) {
     const response = await api.put(`api/savedLocations/${locationId}`, value);
-    logger.log("visit location", response.data);
+    // logger.log("visit location", response.data);
 
-    const visited = new SavedLocation(response.data);
-    AppState.locationVisitor.push(visited);
-    AppState.visitors;
+    const newVisitor = new SavedLocationCreator(response.data);
+    AppState.locationVisitors.push(newVisitor);
+    logger.log(`New Visitor`, newVisitor)
   }
 
-  async getAllVisitor(locationId) {
+  async getAllVisitors(locationId) {
     const response = await api.get(
       `api/locations/${locationId}/savedLocations`
     );
     logger.log("get visitor", response.data);
-    const locationVisitor = response.data.map(
+    const newLocationVisitors = response.data.map(
       (locationVisitor) => new SavedLocation(locationVisitor)
     );
-    AppState.visitors = locationVisitor;
+    AppState.visitors = newLocationVisitors;
     logger.log(AppState.visitors);
   }
 
@@ -41,10 +41,10 @@ class SavedLocations {
       `api/savedLocations/${visitorLocationId}`
     );
     logger.log("delete location", response.data);
-    const indexToDeleteLocation = AppState.visitorSavedLocation.findIndex(
+    const indexToDeleteLocation = AppState.SavedLocations.findIndex(
       (location) => location.id == visitorLocationId
     );
-    AppState.visitorSavedLocation.splice(indexToDeleteLocation, 1);
+    AppState.SavedLocations.splice(indexToDeleteLocation, 1);
   }
 
   async getMySavedLocations() {
@@ -52,14 +52,14 @@ class SavedLocations {
     const myLocations = response.data.map(
       (locations) => new LocationSaved(locations)
     );
-    AppState.wishToVisitLocations = myLocations;
+    AppState.SavedLocations = myLocations;
   }
 
   async createSavedLocation(locationData) {
     const response = await api.post("api/savedLocations", locationData);
     logger.log("save locations", response.data);
     const createdSavedLocation = new LocationSaved(response.data);
-    AppState.visitorSavedLocation.push(createdSavedLocation);
+    AppState.SavedLocations.push(createdSavedLocation);
   }
 }
 export const savedLocations = new SavedLocations();
