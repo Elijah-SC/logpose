@@ -72,9 +72,6 @@ function initializeMap() {
 }
 
 function initializeExploreMap(map) {
-  // disable wheel zoom on the map
-  //var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map))
-  //behavior.disable(H.mapevents.Behavior.WHEELZOOM)
 
   map.setCenter({ lat: props.currentCoordinatesProp.latitude, lng: props.currentCoordinatesProp.longitude }); // Current Coordinates
   map.setZoom(13);
@@ -87,10 +84,10 @@ function initializeExploreMap(map) {
     // pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
     // map.addObject(pinMarker);
 
-    // ** NOTE this resizes the map when you change the browser size **//
-    window.addEventListener('resize', function () {
-      map.getViewPort().resize();
-    });
+  });
+  // ** NOTE this resizes the map when you change the browser size **//
+  window.addEventListener('resize', function () {
+    map.getViewPort().resize();
   });
 }
 
@@ -104,7 +101,14 @@ function initializeLocationMap(map) {
   map.setZoom(13);
   const specificLocationMarker = new H.map.Marker({ lat: props.currentCoordinatesProp.latitude, lng: props.currentCoordinatesProp.longitude });
   map.addObject(specificLocationMarker);
+  map.addEventListener('tap', (e) => {
+    const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
+    emit('clickedMap', { lat: coord.lat, lng: coord.lng })
 
+    // pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
+    // map.addObject(pinMarker);
+
+  });
 
 
   // ** NOTE this resizes the map when you change the browser size **//

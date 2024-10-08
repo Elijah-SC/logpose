@@ -129,7 +129,8 @@ async function deleteComment(commentId) {
           :currentCoordinatesProp="{ longitude: activeLocation.longitude, latitude: activeLocation.latitude }" />
       </div>
       <ModalWrapper id="location-picker">
-        <LocationPickerDev :coords="{ longitude: activeLocation.longitude, latitude: activeLocation.latitude }" />
+        <LocationPickerDev :coords="{ longitude: activeLocation.longitude, latitude: activeLocation.latitude }"
+          :activeLocation="activeLocation" />
       </ModalWrapper>
       <!-- SECTION About Location -->
       <div class="col-md-6">
