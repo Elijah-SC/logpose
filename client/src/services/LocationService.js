@@ -38,6 +38,7 @@ class LocationService {
   }
   // @ts-ignore
   async getActiveLocation(locationId) {
+    AppState.activeLocation = null
     const response = await api.get(`api/locations/${locationId}`);
     const acquiredLocation = new Location(response.data);
     AppState.activeLocation = acquiredLocation;

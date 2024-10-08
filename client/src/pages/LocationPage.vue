@@ -111,13 +111,13 @@ async function deleteComment(commentId) {
   try {
     await commentsService.deleteComment(commentId)
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
   }
 }
 
 </script>
-<!-- FIXME - Location page doesn't get the correct location until you reload after changing to a new location page -->
+
 <template>
   <div v-if="activeLocation" class="container-fluid">
     <section class="row">
@@ -182,10 +182,10 @@ async function deleteComment(commentId) {
                   aria-expanded="false"></i>
                 <ul class="dropdown-menu rounded-0">
                   <li>
-                    <button  @click="editComment()" class="dropdown-item">Edit
+                    <button @click="editComment()" class="dropdown-item">Edit
                     </button>
                   </li>
-                  <hr/>
+                  <hr />
                   <li>
                     <button @click="deleteComment(comment.id)" class="dropdown-item">Delete
                     </button>
