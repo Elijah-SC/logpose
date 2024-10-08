@@ -14,7 +14,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
-const visitorProfile = computed(() => AppState.visitors);
+const visitorProfile = computed(() => AppState.locationVisitors);
 
 // TODO reference the hasTicket functionality in tower
 const visit = ref(false);
@@ -28,7 +28,7 @@ const locationVisitor = computed(() => {
 
 const canLogIn = computed(() => {
   if (locationVisitor.value == false) return false
-  if (AppState.visitors?.visited == true) return false
+  if (locationVisitor.value == true) return false
   return true
 })
 

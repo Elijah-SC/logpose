@@ -25,7 +25,8 @@ class SavedLocationsService {
         locationId,
         creatorId: userId,
         visited: savedlocationData.visited ?? savedLocation.visited,
-      });
+      })
+      await savedLocation.populate(`creator`, `-email -subs`)
     } else {
       savedLocation.visited =
         savedlocationData.visited ?? savedLocation.visited;
