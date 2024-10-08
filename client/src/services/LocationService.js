@@ -19,7 +19,7 @@ class LocationService {
     const locationVisitor = response.data.map(
       (locationVisitor) => new SavedLocationCreator(locationVisitor)
     );
-    AppState.CreatorSavedLocation = locationVisitor;
+    AppState.locationVisitors = locationVisitor;
   }
 
   // @ts-ignore

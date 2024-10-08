@@ -20,9 +20,8 @@ const visitorProfile = computed(() => AppState.visitors);
 const visit = ref(false);
 
 const locationVisitor = computed(() => {
-  debugger
   if (AppState.identity == null) return false
-  const visited = AppState.CreatorSavedLocation.find(visitor => visitor.creatorId == AppState.account?.id)
+  const visited = AppState.locationVisitors.find(visitor => visitor.creatorId == AppState.account?.id)
   if (!visited) return false
   return true
 })
@@ -37,7 +36,7 @@ const canLogIn = computed(() => {
 watch(() => route.params.locationId, () => {
   getActiveLocation();
   getRandomLocations();
-  getAllVisitor();
+  getAllVisitors();
 },
   { immediate: true }
 );
@@ -85,9 +84,9 @@ async function checkIn() {
   }
 }
 
-async function getAllVisitor() {
+async function getAllVisitors() {
   try {
-    await savedLocations.getAllVisitor(route.params.locationId)
+    await savedLocations.getAllVisitors(route.params.locationId)
   }
   catch (error) {
     Pop.error(error);
@@ -125,7 +124,7 @@ async function getAllVisitor() {
               </button>
             </div>
             <div>
-              <button v-if="canLogIn" @click="checkIn()" type="button" class="btn btn-outline-dark rounded">
+              <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">
                 Check in
               </button>
             </div>
@@ -148,7 +147,7 @@ async function getAllVisitor() {
               <button class="btn btn-outline-dark rounded mt-2">Send</button>
             </div>
           </form> -->
-          <Comment/>
+          <Comment />
 
           <!-- Account | User Comments -->
           <div class="d-flex justify-content-between">
