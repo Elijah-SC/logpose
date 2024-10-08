@@ -9,14 +9,14 @@ import DiscoverLocCard from "@/components/DiscoverLocCard.vue";
 import { locationService } from "@/services/LocationService.js";
 
 const account = computed(() => AppState.account)
-const visitors = computed(() => AppState.visitorSavedLocation)
 const randomLocations = computed(() => AppState.randomLocations);
 const visitedLocations = computed(() => AppState.visitedLocations);
+const wishToVisitLocations = computed(() => AppState.wishToVisitLocations);
 
 onMounted(() => {
-  getMySavedLocation()
-  getRandomLocations()
   getVisitedLocations();
+  getMySavedLocations();
+  getRandomLocations()
 })
 
 async function getVisitedLocations() {
@@ -29,9 +29,9 @@ async function getVisitedLocations() {
   }
 }
 
-async function getMySavedLocation() {
+async function getMySavedLocations() {
   try {
-    await savedLocations.getMySavedLocation()
+    await savedLocations.getMySavedLocations()
   }
   catch (error) {
     Pop.error(error);
@@ -89,10 +89,10 @@ async function getRandomLocations() {
       <div class="container">
         <section class="row">
           <h4 class="text-center">Where your planning to go</h4>
-          <div v-for="visitor in visitors" :key="visitor.id" class="col-md-4">
-            <LocationCard :location="visitor.location" />
+          <div v-for="wishToVisitLocation in wishToVisitLocations" :key="wishToVisitLocation.id" class="col-md-4">
+            <LocationCard :location="wishToVisitLocation.location" />
             <div>
-              <button @click="deleteLocation(visitor.id)" class="btn btn-success">Delete</button>
+              <button @click="deleteLocation(wishToVisitLocation.id)" class="btn btn-success">Delete</button>
             </div>
           </div>
         </section>

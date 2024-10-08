@@ -20,5 +20,7 @@ export const AppState = reactive({
   /** @type {import('./models/SavedLocation.js').SavedLocation} People who have check in to a location (for displaying the visitors on location page) */
   visitors: null,
   /** @type {import('./models/SavedLocation.js').LocationSaved[]} */
+  wishToVisitLocations: [],
+  /** @type {import('./models/SavedLocation.js').LocationSaved[]} */
   visitedLocations: [],
 });
