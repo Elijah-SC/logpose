@@ -57,6 +57,11 @@ function initializeMap() {
   // NOTE Disabled for now
   //const svgMarkup = '<svg class="map-marker" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>map-marker</title><path  style="fill: blue;" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>';
   //const icon = new H.map.Icon(svgMarkup);
+
+  // ** NOTE this resizes the map when you change the browser size **//
+  window.addEventListener('resize', function () {
+    map.getViewPort().resize();
+  });
 }
 
 function initializeExploreMap(map) {
@@ -74,6 +79,12 @@ function initializeExploreMap(map) {
 
     // pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
     // map.addObject(pinMarker);
+
+
+    // ** NOTE this resizes the map when you change the browser size **//
+    window.addEventListener('resize', function () {
+      map.getViewPort().resize();
+    });
   });
 }
 
@@ -87,12 +98,19 @@ function initializeLocationMap(map) {
   map.setZoom(13);
   const specificLocationMarker = new H.map.Marker({ lat: props.specificLocationProp.latitude, lng: props.specificLocationProp.longitude });
   map.addObject(specificLocationMarker);
+
+
+
+  // ** NOTE this resizes the map when you change the browser size **//
+  window.addEventListener('resize', function () {
+    map.getViewPort().resize();
+  });
 }
 
 function initializeAccountMap(map) {
   console.log(props.wishToVisitCoordinatesProp);
-  const visited = props.wishToVisitCoordinatesProp.filter(location => location.visited === true);
-  const notVisited = props.wishToVisitCoordinatesProp.filter(location => location.visited === false);
+  const visited = props.wishToVisitCoordinatesProp.filter(location => location.visited == true);
+  const notVisited = props.wishToVisitCoordinatesProp.filter(location => location.visited == false);
   console.log(visited);
   console.log(notVisited);
   props.visitedCoordinatesProp.forEach(visitedCoordinate => {
@@ -102,6 +120,12 @@ function initializeAccountMap(map) {
   })
   map.setCenter({ lat: 43.6150, lng: -116.2023 });
   map.setZoom(13);
+
+
+  // ** NOTE this resizes the map when you change the browser size **//
+  window.addEventListener('resize', function () {
+    map.getViewPort().resize();
+  });
 }
 
 </script>
