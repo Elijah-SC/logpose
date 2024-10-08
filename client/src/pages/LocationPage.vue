@@ -2,6 +2,7 @@
 import { AppState } from '@/AppState.js';
 import Carousel from '@/components/Carousel.vue';
 import DiscoverLocCard from '@/components/DiscoverLocCard.vue';
+import Comment from '@/components/globals/Comment.vue';
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { locationService } from '@/services/LocationService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
@@ -140,12 +141,13 @@ async function getAllVisitor() {
             </div>
           </div>
           <!-- Create Comment -->
-          <form>
+          <!-- <form>
             <textarea name="" id="" class="form-control" rows="7" placeholder="Leave a comment"></textarea>
             <div class="text-end">
               <button class="btn btn-outline-dark rounded mt-2">Send</button>
             </div>
-          </form>
+          </form> -->
+          <Comment/>
 
           <!-- Account | User Comments -->
           <div class="d-flex justify-content-between">
