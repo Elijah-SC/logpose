@@ -13,14 +13,14 @@ export const AppState = reactive({
   randomLocations: [],
   /** @type {import('./models/Location.js').Location} */
   activeLocation: null,
+  /** @type {import('./models/SavedLocation.js').LocationSaved[]} */
+  visitorSavedLocation: [],
   /** @type {import('./models/SavedLocation.js').SavedLocationCreator[]} */
   CreatorSavedLocation: [],
   /** @type {import('./models/SavedLocation.js').SavedLocation[]} */
   locationVisitor: [],
-  /** @type {import('./models/SavedLocation.js').SavedLocation} People who have check in to a location (for displaying the visitors on location page) */
+  /** @type {import('./models/SavedLocation.js').SavedLocation} */
   visitors: null,
-  /** @type {import('./models/SavedLocation.js').LocationSaved[]} */
-  wishToVisitLocations: [],
   /** @type {import('./models/SavedLocation.js').LocationSaved[]} */
   visitedLocations: [],
 });

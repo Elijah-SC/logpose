@@ -33,7 +33,7 @@ class SavedLocations {
       (locationVisitor) => new SavedLocation(locationVisitor)
     );
     AppState.visitors = locationVisitor;
-    console.log(AppState.visitors);
+    logger.log(AppState.visitors);
   }
 
   async deleteLocation(visitorLocationId) {
