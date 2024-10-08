@@ -141,13 +141,6 @@ async function getAllVisitor() {
               <p>Latest | Popular</p>
             </div>
           </div>
-          <!-- Create Comment -->
-          <!-- <form>
-            <textarea name="" id="" class="form-control" rows="7" placeholder="Leave a comment"></textarea>
-            <div class="text-end">
-              <button class="btn btn-outline-dark rounded mt-2">Send</button>
-            </div>
-          </form> -->
           <Comment/>
 
           <!-- Account | User Comments -->
