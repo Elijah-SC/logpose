@@ -3,6 +3,8 @@ import { AppState } from '@/AppState.js';
 import Carousel from '@/components/Carousel.vue';
 import DiscoverLocCard from '@/components/DiscoverLocCard.vue';
 import Comment from '@/components/globals/Comment.vue';
+import LocationPickerDev from "@/components/globals/LocationPickerDev.vue";
+import ModalWrapper from "@/components/ModalWrapper.vue";
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { locationService } from '@/services/LocationService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
@@ -94,7 +96,7 @@ async function getAllVisitors() {
 }
 
 </script>
-
+<!-- FIXME - Location page doesn't get the correct location until you reload after changing to a new location page -->
 <template>
   <div v-if="activeLocation" class="container-fluid">
     <section class="row">
@@ -102,9 +104,12 @@ async function getAllVisitors() {
         <Carousel :location="activeLocation" />
       </div>
       <div class="col-12">
-        <TrueHereMap :specificLocationProp="activeLocation" />
+        <TrueHereMap
+          :currentCoordinatesProp="{ longitude: activeLocation.longitude, latitude: activeLocation.latitude }" />
       </div>
-
+      <ModalWrapper id="location-picker">
+        <LocationPickerDev :coords="{ longitude: activeLocation.longitude, latitude: activeLocation.latitude }" />
+      </ModalWrapper>
       <!-- SECTION About Location -->
       <div class="col-md-6">
         <div>
@@ -124,7 +129,8 @@ async function getAllVisitors() {
               </button>
             </div>
             <div>
-              <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">
+              <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"
+                data-bs-target="#location-picker">
                 Check in
               </button>
             </div>
