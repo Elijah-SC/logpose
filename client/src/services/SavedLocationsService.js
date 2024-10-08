@@ -8,20 +8,13 @@ import {
 import { AppState } from "@/AppState.js";
 
 class SavedLocations {
-  async getVisitedLocations() {
-    const response = await api.get("api/savedLocations");
-    const visitedLocations = response.data.map(
-      (location) => new LocationSaved(location)
-    );
-    AppState.visitedLocations = visitedLocations;
-  }
   async checkIn(locationId, value) {
     const response = await api.put(`api/savedLocations/${locationId}`, value);
     // logger.log("visit location", response.data);
 
     const newVisitor = new SavedLocationCreator(response.data);
     AppState.locationVisitors.push(newVisitor);
-    logger.log(`New Visitor`, newVisitor)
+    logger.log(`New Visitor`, newVisitor);
   }
 
   async getAllVisitors(locationId) {

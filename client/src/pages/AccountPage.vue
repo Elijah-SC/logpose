@@ -10,24 +10,12 @@ import { locationService } from "@/services/LocationService.js";
 
 const account = computed(() => AppState.account)
 const randomLocations = computed(() => AppState.randomLocations);
-const visitedLocations = computed(() => AppState.visitedLocations);
-const wishToVisitLocations = computed(() => AppState.SavedLocations);
+const SavedLocations = computed(() => AppState.SavedLocations);
 
 onMounted(() => {
-  getVisitedLocations();
   getMySavedLocations();
   getRandomLocations()
 })
-
-async function getVisitedLocations() {
-  try {
-    await savedLocations.getVisitedLocations();
-  }
-  catch (e) {
-    Pop.error(e);
-    logger.error(e);
-  }
-}
 
 async function getMySavedLocations() {
   try {
@@ -80,20 +68,19 @@ async function getRandomLocations() {
       </div>
       <div class="container-fluid">
         <section class="row">
-          <div v-if="visitedLocations.length !== 0 && wishToVisitLocations.length !== 0" class="col-md-12">
+          <div v-if="SavedLocations.length !== 0" class="col-md-12">
             <h4 class="text-center">See where you have been</h4>
-            <TrueHereMap :wishToVisitCoordinatesProp="wishToVisitLocations"
-              :visitedCoordinatesProp="visitedLocations" />
+            <TrueHereMap :SavedLocationsCoordinatesProp="SavedLocations" />
           </div>
         </section>
       </div>
       <div class="container">
         <section class="row">
           <h4 class="text-center">Where your planning to go</h4>
-          <div v-for="wishToVisitLocation in wishToVisitLocations" :key="wishToVisitLocation.id" class="col-md-4">
-            <LocationCard :location="wishToVisitLocation.location" />
+          <div v-for="SavedLocation in SavedLocations" :key="SavedLocation.id" class="col-md-4">
+            <LocationCard :location="SavedLocation.location" />
             <div>
-              <button @click="deleteLocation(wishToVisitLocation.id)" class="btn btn-success">Delete</button>
+              <button @click="deleteLocation(SavedLocation.id)" class="btn btn-success">Delete</button>
             </div>
           </div>
         </section>

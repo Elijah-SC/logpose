@@ -8,22 +8,9 @@ export class SavedLocationsController extends BaseController {
     super("api/savedLocations");
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .get("", this.getVisitedLocations)
       .post("", this.createSavedLocation)
       .put("/:locationId", this.updateSavedLocation)
       .delete("/:savedLocationId", this.deleteSavedLocation);
-  }
-
-  async getVisitedLocations(req, res, next) {
-    try {
-      const userId = req.userInfo.id;
-      const visitedLocations = await savedLocationService.getVisitedLocations(
-        userId
-      );
-      res.send(visitedLocations);
-    } catch (e) {
-      next(e);
-    }
   }
 
   async deleteSavedLocation(request, response, next) {

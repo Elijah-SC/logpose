@@ -2,13 +2,6 @@ import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 
 class SavedLocationsService {
-  async getVisitedLocations(userId) {
-    const visitedLocations = await dbContext.SavedLocations.find({
-      creatorId: userId,
-      visited: true,
-    }).populate("location");
-    return visitedLocations;
-  }
   async deleteSavedLocation(locationId, userId) {
     const deleteSavedLocation = await dbContext.SavedLocations.findById(
       locationId
