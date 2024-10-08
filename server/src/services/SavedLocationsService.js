@@ -2,6 +2,13 @@ import { dbContext } from "../db/DbContext.js";
 import { BadRequest, Forbidden } from "../utils/Errors.js";
 
 class SavedLocationsService {
+  async getVisitedLocations(userId) {
+    const visitedLocations = await dbContext.SavedLocations.find({
+      creatorId: userId,
+      visited: true,
+    }).populate("location");
+    return visitedLocations;
+  }
   async deleteSavedLocation(locationId, userId) {
     const deleteSavedLocation = await dbContext.SavedLocations.findById(
       locationId
@@ -16,20 +23,19 @@ class SavedLocationsService {
   async updateSavedLocation(locationId, userId, savedlocationData) {
     let savedLocation = await dbContext.SavedLocations.findOne({
       locationId,
-      creatorId: userId
-    }
-    ).populate("creator", "picture name");
+      creatorId: userId,
+    }).populate("creator", "picture name");
 
     if (!savedLocation) {
       // TODO create a savedLocation
       savedLocation = await dbContext.SavedLocations.create({
         locationId,
-        creatorId:userId,
-        visited: savedlocationData.visited ?? savedLocation.visited
-      })
-
+        creatorId: userId,
+        visited: savedlocationData.visited ?? savedLocation.visited,
+      });
     } else {
-      savedLocation.visited = savedlocationData.visited ?? savedLocation.visited;
+      savedLocation.visited =
+        savedlocationData.visited ?? savedLocation.visited;
       await savedLocation.save();
     }
 
@@ -45,7 +51,8 @@ class SavedLocationsService {
 
   async getLocationVisitor(locationId) {
     const savedLocation = await dbContext.SavedLocations.find({
-      locationId: locationId, visited: true
+      locationId: locationId,
+      visited: true,
     }).populate("creator");
     return savedLocation;
   }

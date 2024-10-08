@@ -1,29 +1,29 @@
-import { Creator} from "./Creator.js"
-import { Location } from "./Location.js"
+import { Creator } from "./Creator.js";
+import { Location } from "./Location.js";
 
-export class SavedLocation{
-    constructor(data){
-        this.id = data.id
-        this.creatorId = data.creatorId
-        this.locationId = data.locationId
-        this.visited = data.visited
-        this.createAt = new Date(data.createAt)
-        this.updatedAt = new Date(data.updatedAt)
-    }
+export class SavedLocation {
+  constructor(data) {
+    this.id = data.id;
+    this.creatorId = data.creatorId;
+    this.locationId = data.locationId;
+    this.visited = data.visited;
+    this.createdAt = new Date(data.createdAt);
+    this.updatedAt = new Date(data.updatedAt);
+  }
 }
 
-export class SavedLocationCreator extends SavedLocation{
-    constructor(data){
-        super(data)
-        this.creator = new Creator(data.creator)
-    }
+export class SavedLocationCreator extends SavedLocation {
+  constructor(data) {
+    super(data);
+    this.creator = new Creator(data.creator);
+  }
 }
 
-export class LocationSaved extends SavedLocation{
-    constructor(data){
-        super(data)
-        this.location = new Location(data.location)
-    }
+export class LocationSaved extends SavedLocation {
+  constructor(data) {
+    super(data);
+    this.location = new Location(data.location);
+  }
 }
 
 // const data = {

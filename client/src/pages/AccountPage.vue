@@ -11,11 +11,23 @@ import { locationService } from "@/services/LocationService.js";
 const account = computed(() => AppState.account)
 const visitors = computed(() => AppState.visitorSavedLocation)
 const randomLocations = computed(() => AppState.randomLocations);
+const visitedLocations = computed(() => AppState.visitedLocations);
 
 onMounted(() => {
   getMySavedLocation()
   getRandomLocations()
+  getVisitedLocations();
 })
+
+async function getVisitedLocations() {
+  try {
+    await savedLocations.getVisitedLocations();
+  }
+  catch (e) {
+    Pop.error(e);
+    logger.error(e);
+  }
+}
 
 async function getMySavedLocation() {
   try {
@@ -68,9 +80,9 @@ async function getRandomLocations() {
       </div>
       <div class="container-fluid">
         <section class="row">
-          <div class="col-md-12">
+          <div v-if="visitedLocations.length !== 0" class="col-md-12">
             <h4 class="text-center">See where you have been</h4>
-            <TrueHereMap />
+            <TrueHereMap :visitedCoordinatesProp="visitedLocations" />
           </div>
         </section>
       </div>
@@ -95,7 +107,6 @@ async function getRandomLocations() {
       <div v-if="randomLocations" class="row gx-3 gy-2 mt-2">
         <h3 class="text-center">Discover new locations</h3>
         <div v-for="randomLocation in randomLocations" :key="randomLocation.id" class="col-md-4">
-          <DiscoverLocCard :locationProp="randomLocation" />
           <DiscoverLocCard :locationProp="randomLocation" />
         </div>
       </div>
