@@ -11,7 +11,8 @@ const route = useRoute();
 const props = defineProps({
   specificLocationProp: { type: Location },
   currentCoordinatesProp: { type: Object, Default: { latitude: 34, longitude: 39 } },
-  visitedCoordinatesProp: { type: Array }
+  visitedCoordinatesProp: { type: Array },
+  wishToVisitCoordinatesProp: { type: Array },
 })
 
 const emit = defineEmits(['clickedMap'])
@@ -45,7 +46,6 @@ function initializeMap() {
   else if (route.name === 'Account') {
     initializeAccountMap(map);
   }
-
 
   // Enable the event system for pan/zoom interactions
   const mapEvents = new H.mapevents.MapEvents(map);
@@ -90,13 +90,17 @@ function initializeLocationMap(map) {
 }
 
 function initializeAccountMap(map) {
-  console.log(props.visitedCoordinatesProp)
+  console.log(props.wishToVisitCoordinatesProp);
+  const visited = props.wishToVisitCoordinatesProp.filter(location => location.visited === true);
+  const notVisited = props.wishToVisitCoordinatesProp.filter(location => location.visited === false);
+  console.log(visited);
+  console.log(notVisited);
   props.visitedCoordinatesProp.forEach(visitedCoordinate => {
     // @ts-ignore
     const visitedLocationMarker = new H.map.Marker({ lat: visitedCoordinate.location.latitude, lng: visitedCoordinate.location.longitude });
     map.addObject(visitedLocationMarker);
   })
-  // map.setCenter({ lat: 43.6150, lng: -116.2023 });
+  map.setCenter({ lat: 43.6150, lng: -116.2023 });
   map.setZoom(13);
 }
 

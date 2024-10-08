@@ -80,9 +80,10 @@ async function getRandomLocations() {
       </div>
       <div class="container-fluid">
         <section class="row">
-          <div v-if="visitedLocations.length !== 0" class="col-md-12">
+          <div v-if="visitedLocations.length !== 0 && wishToVisitLocations.length !== 0" class="col-md-12">
             <h4 class="text-center">See where you have been</h4>
-            <TrueHereMap :visitedCoordinatesProp="visitedLocations" />
+            <TrueHereMap :wishToVisitCoordinatesProp="wishToVisitLocations"
+              :visitedCoordinatesProp="visitedLocations" />
           </div>
         </section>
       </div>

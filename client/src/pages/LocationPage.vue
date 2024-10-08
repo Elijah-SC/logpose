@@ -20,7 +20,6 @@ const visitorProfile = computed(() => AppState.visitors);
 const visit = ref(false);
 
 const locationVisitor = computed(() => {
-  debugger
   if (AppState.identity == null) return false
   const visited = AppState.CreatorSavedLocation.find(visitor => visitor.creatorId == AppState.account?.id)
   if (!visited) return false
@@ -125,7 +124,7 @@ async function getAllVisitor() {
               </button>
             </div>
             <div>
-              <button v-if="canLogIn" @click="checkIn()" type="button" class="btn btn-outline-dark rounded">
+              <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded">
                 Check in
               </button>
             </div>
@@ -141,7 +140,7 @@ async function getAllVisitor() {
               <p>Latest | Popular</p>
             </div>
           </div>
-          <Comment/>
+          <Comment />
 
           <!-- Account | User Comments -->
           <div class="d-flex justify-content-between">
