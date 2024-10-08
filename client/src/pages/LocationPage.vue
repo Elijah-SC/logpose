@@ -169,8 +169,8 @@ async function getAllVisitor() {
         <div v-for="visitor in visitorProfile" :key="visitor.id" class="p-2 bg-light visitor-container">
           <div class="d-flex align-items-center border-start border-2 border-dark">
             <i class="fa-solid fa-certificate fa-lg mx-2" style="color: #B197FC;"></i>
-            <img class="guy me-2" :src="visitor.creator.picture" :alt="visitor.creator.name">
-            <p class="m-0">{{ visitor.creator.name }}</p>
+            <img class="guy me-2" :src="visitor.creator?.picture" :alt="visitor.creator?.name">
+            <p class="m-0">{{ visitor.creator?.name }}</p>
           </div>
         </div>
       </div>

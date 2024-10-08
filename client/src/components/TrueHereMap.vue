@@ -4,12 +4,14 @@ import { useRoute } from 'vue-router';
 import H from '@here/maps-api-for-javascript';
 import { Location } from '@/models/Location.js';
 import { logger } from '@/utils/Logger.js';
+import { LocationSaved } from '@/models/SavedLocation.js';
 
 const hMap = ref(null);
 const route = useRoute();
 const props = defineProps({
   specificLocationProp: { type: Location },
-  currentCoordinatesProp: { type: Object, Default: { latitude: 34, longitude: 39 } }
+  currentCoordinatesProp: { type: Object, Default: { latitude: 34, longitude: 39 } },
+  visitedCoordinatesProp: { type: Array }
 })
 
 const emit = defineEmits(['clickedMap'])
@@ -88,10 +90,14 @@ function initializeLocationMap(map) {
 }
 
 function initializeAccountMap(map) {
-  map.setCenter({ lat: 43.6150, lng: -116.2023 });
+  console.log(props.visitedCoordinatesProp)
+  props.visitedCoordinatesProp.forEach(visitedCoordinate => {
+    // @ts-ignore
+    const visitedLocationMarker = new H.map.Marker({ lat: visitedCoordinate.location.latitude, lng: visitedCoordinate.location.longitude });
+    map.addObject(visitedLocationMarker);
+  })
+  // map.setCenter({ lat: 43.6150, lng: -116.2023 });
   map.setZoom(13);
-  const specificLocationMarker = new H.map.Marker({ lat: 43.6150, lng: -116.2023 });
-  map.addObject(specificLocationMarker);
 }
 
 </script>
