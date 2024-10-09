@@ -9,16 +9,8 @@ defineProps({
 <template>
   <div id="locationCarouselIndicator" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <div class="carousel-item active" data-bs-interval="3000">
         <img :src="location?.coverImg" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="https://thumbs.dreamstime.com/b/heavy-rain-outside-created-artificial-intelligence-320885240.jpg"
-          class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJDHPQg61WlYGkOYE-bW15jyXZzy8Pv-cXqg&s"
-          class="d-block w-100" alt="...">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#locationCarouselIndicator"
