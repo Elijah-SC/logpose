@@ -6,7 +6,7 @@ import { picturesService } from "@/services/PicturesService.js";
 import Pop from "@/utils/Pop.js";
 import { computed, ref } from "vue";
 
-const locationPicture = computed(()=> AppState.pictures)
+const locationPictures = computed(() => AppState.pictures)
 const showUrlInput = ref(false);
 
 defineProps({
@@ -50,9 +50,9 @@ async function createPicture() {
 <template>
   <div id="locationCarouselIndicator" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div v-for="locationPictures in locationPicture" :key="locationPictures.id" class="carousel-item"
+      <div v-for="locationPicture in locationPictures" :key="locationPicture.id" class="carousel-item active"
         data-bs-interval="3000">
-        <img :src="locationPictures.picture" class="d-block w-100" alt="...">
+        <img :src="locationPicture.picture" class="d-block w-100" :alt="locationPicture.id">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#locationCarouselIndicator"
