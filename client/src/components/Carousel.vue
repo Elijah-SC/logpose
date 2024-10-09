@@ -2,12 +2,12 @@
 import { AppState } from "@/AppState.js";
 import { Location } from "@/models/Location.js";
 import { picturesService } from "@/services/PicturesService.js";
-import { logger } from "@/utils/Logger.js";
+// import { logger } from "@/utils/Logger.js"
 import Pop from "@/utils/Pop.js";
 import { computed, ref } from "vue";
 
-const locationPicture = computed(() => AppState.pictures)
-
+const locationPicture = computed(()=> AppState.pictures)
+const showUrlInput = ref(false);
 
 defineProps({
   location: { type: Location, required: true }
@@ -17,8 +17,6 @@ const pictureData = ref({
   picture: '',
   locationId: null
 })
-
-const showUrlInput = ref(false);
 
 async function toggleUrlInput() {
   showUrlInput.value = !showUrlInput.value;
@@ -35,23 +33,15 @@ async function createPicture() {
   }
 }
 
-async function getAllPicture() {
-  try {
-    await picturesService.getAllPicture(route.params.locationId)
-  }
-  catch (error) {
-    Pop.error(error);
-  }
-}
 
-async function deletePicture() {
-  try {
-    await picturesService.deletePicture();
-  } catch (e) {
-    Pop.error(e);
-    logger.error(e);
-  }
-}
+// async function deletePicture() {
+//   try {
+//     await picturesService.deletePicture();
+//   } catch (e) {
+//     Pop.error(e);
+//     logger.error(e);
+//   }
+// }
 
 
 
