@@ -43,12 +43,11 @@ async function createPicture() {
 //   }
 // }
 
-
-
 </script>
 
 <template>
-  <div id="locationCarouselIndicator" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div v-if="locationPictures.length !== 0" id="locationCarouselIndicator" class="carousel slide carousel-fade"
+    data-bs-ride="carousel">
     <div class="carousel-inner">
       <div v-for="locationPicture in locationPictures" :key="locationPicture.id" class="carousel-item active"
         data-bs-interval="3000">
@@ -65,6 +64,11 @@ async function createPicture() {
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
+  </div>
+  <div v-else>
+    <img class="w-100"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Clouds_over_the_Atlantic_Ocean.jpg/1200px-Clouds_over_the_Atlantic_Ocean.jpg"
+      alt="">
   </div>
   <div class="container">
     <section class="row">
