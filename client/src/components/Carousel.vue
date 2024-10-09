@@ -4,21 +4,18 @@ import { Location } from "@/models/Location.js";
 import { picturesService } from "@/services/PicturesService.js";
 import { logger } from "@/utils/Logger.js";
 import Pop from "@/utils/Pop.js";
-import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { computed, ref } from "vue";
+
+const locationPicture = computed(() => AppState.pictures)
+
 
 defineProps({
   location: { type: Location, required: true }
 })
 
-onMounted(() => {
-  getAllPicture()
-})
-
-const route = useRoute()
-
 const pictureData = ref({
   picture: '',
+  locationId: null
 })
 
 const showUrlInput = ref(false);
@@ -63,8 +60,9 @@ async function deletePicture() {
 <template>
   <div id="locationCarouselIndicator" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active" data-bs-interval="3000">
-        <img :src="location?.coverImg" class="d-block w-100" alt="...">
+      <div v-for="locationPictures in locationPicture" :key="locationPictures.id" class="carousel-item"
+        data-bs-interval="3000">
+        <img :src="locationPictures.picture" class="d-block w-100" alt="...">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#locationCarouselIndicator"

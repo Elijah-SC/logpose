@@ -7,6 +7,8 @@ class PicturesService {
   async getAllPicture(locationId) {
     const response = await api.get(`api/pictures/${locationId}`);
     logger.log("get picture", response.data);
+    const pictureData = response.data.map(picture => new Picture(picture));
+    AppState.pictures = pictureData;
   }
 
   async createPicture(pictureData) {
