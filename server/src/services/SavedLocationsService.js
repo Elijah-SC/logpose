@@ -13,25 +13,11 @@ class SavedLocationsService {
     return deleteSavedLocation;
   }
 
-  async updateSavedLocation(locationId, userId, savedlocationData) {
-    let savedLocation = await dbContext.SavedLocations.findOne({
-      locationId,
-      creatorId: userId,
-    }).populate("creator", "picture name");
+  async updateSavedLocation(savedLocationData) {
+    let savedLocation = await dbContext.SavedLocations.findById(savedLocationData.id).populate("creator", "picture name");
+    savedLocation.visited = savedLocationData.visited ?? savedLocation.visited;
+    await savedLocation.save();
 
-    if (!savedLocation) {
-      // TODO create a savedLocation
-      savedLocation = await dbContext.SavedLocations.create({
-        locationId,
-        creatorId: userId,
-        visited: savedlocationData.visited ?? savedLocation.visited,
-      })
-      await savedLocation.populate(`creator`, `-email -subs`)
-    } else {
-      savedLocation.visited =
-        savedlocationData.visited ?? savedLocation.visited;
-      await savedLocation.save();
-    }
 
     return savedLocation;
   }
@@ -52,6 +38,8 @@ class SavedLocationsService {
   }
 
   async createSavedLocation(savedLocationData) {
+    const foundTicket = await dbContext.SavedLocations.findOne(savedLocationData)
+    if (foundTicket) throw new BadRequest(`location is already Saved by this User`)
     const savedLocation = await dbContext.SavedLocations.create(
       savedLocationData
     );
