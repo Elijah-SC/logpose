@@ -15,7 +15,7 @@ import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const account = computed(()=> AppState.account)
+const account = computed(() => AppState.account)
 const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
 const visitorProfile = computed(() => AppState.locationVisitors);
@@ -31,6 +31,13 @@ const locationVisitor = computed(() => {
   if (!visited) return false
   return true
 })
+
+// const isAttending = computed(() => {
+//   if (AppState.identity == null) return false
+//   const attendingEvent = AppState.eventAttendees.find(ticket => ticket.accountId == AppState.account?.id)
+//   if (!attendingEvent) return false
+//   return true
+// })
 
 
 watch(() => route.params.locationId, () => {
@@ -79,6 +86,7 @@ async function checkIn() {
   try {
     visit.value = !visit.value;
     await savedLocations.checkIn(route.params.locationId, { visited: visit.value })
+    Pop.success(`Checked in`)
   }
   catch (error) {
     Pop.error(error);
@@ -107,7 +115,7 @@ async function editComment(commentId) {
   try {
     await commentsService.editComment(commentId)
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
   }
 }
@@ -133,8 +141,7 @@ async function deleteComment(commentId) {
         <TrueHereMap :coordinatesProp="{ latitude: activeLocation.latitude, longitude: activeLocation.longitude }" />
       </div>
       <ModalWrapper id="location-picker">
-        <LocationPickerDev :coords="{ latitude: activeLocation.latitude, longitude: activeLocation.longitude }"
-          :activeLocation="activeLocation" />
+        <LocationPickerDev :activeLocation="activeLocation" @within-distance="checkIn()" />
       </ModalWrapper>
       <!-- SECTION About Location -->
       <div class="col-md-6">
@@ -155,7 +162,7 @@ async function deleteComment(commentId) {
               </button>
             </div>
             <div>
-              <button @click="checkIn()" type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"
+              <button type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"
                 data-bs-target="#location-picker">
                 Check in
               </button>
@@ -187,12 +194,13 @@ async function deleteComment(commentId) {
                   aria-expanded="false"></i>
                 <ul class="dropdown-menu rounded-0">
                   <li>
-                    <button  @click="editComment(comment.id)" class="dropdown-item">Edit
+                    <button @click="editComment(comment.id)" class="dropdown-item">Edit
                     </button>
                   </li>
                   <hr />
                   <li>
-                    <button :disabled="comment.creator.id != account?.id" @click="deleteComment(comment.id)" class="dropdown-item">Delete
+                    <button :disabled="comment.creator.id != account?.id" @click="deleteComment(comment.id)"
+                      class="dropdown-item">Delete
                     </button>
                   </li>
                 </ul>
