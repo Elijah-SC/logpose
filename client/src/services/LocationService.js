@@ -6,10 +6,10 @@ import { SavedLocationCreator } from "@/models/SavedLocation.js";
 
 class LocationService {
   async postLocation(postData) {
-    const response = await api.post(`api/locations`, postData)
-    const newLocation = new Location(response.data)
-    AppState.locations.push(newLocation)
-    return newLocation
+    const response = await api.post(`api/locations`, postData);
+    const newLocation = new Location(response.data);
+    AppState.locations.push(newLocation);
+    return newLocation;
   }
   async getAllVisitors(locationId) {
     const response = await api.get(
@@ -25,20 +25,24 @@ class LocationService {
   // @ts-ignore
   async getRandomLocations() {
     const response = await api.get("api/locations");
-    logger.log(response.data);
+    const locations = response.data.map((location) => new Location(location));
     const randomLocations = [];
-    for (let i = 0; i < 3; ++i) {
-      const randomLocationIndex = Math.floor(
-        Math.random() * response.data.length
-      );
-      const acquiredLocation = new Location(response.data[randomLocationIndex]);
-      randomLocations.push(acquiredLocation);
+    while (randomLocations.length < 3) {
+      const locationIndex = Math.floor(Math.random() * locations.length);
+      const randomLocation = locations[locationIndex];
+
+      if (
+        !randomLocations.some((location) => location.id === randomLocation.id)
+      ) {
+        randomLocations.push(randomLocation);
+      }
     }
+
     AppState.randomLocations = randomLocations;
   }
   // @ts-ignore
   async getActiveLocation(locationId) {
-    AppState.activeLocation = null
+    AppState.activeLocation = null;
     const response = await api.get(`api/locations/${locationId}`);
     const acquiredLocation = new Location(response.data);
     AppState.activeLocation = acquiredLocation;

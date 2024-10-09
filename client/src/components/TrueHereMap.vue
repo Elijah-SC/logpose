@@ -2,25 +2,13 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import H from '@here/maps-api-for-javascript';
-import { Location } from '@/models/Location.js';
-import { logger } from '@/utils/Logger.js';
-import { LocationSaved, SavedLocation } from '@/models/SavedLocation.js';
-
-// /**
-//  * @type {SavedLocation[]} SAVED_LOCATIONS
-//  */
-// const PLACEHOLDER = [];
-// PLACEHOLDER[0].
-
 
 const hMap = ref(null);
 const route = useRoute();
 const props = defineProps({
-  currentCoordinatesProp: { type: Object, Default: { latitude: 34, longitude: 39 } },
+  coordinatesProp: { type: Object, Default: { latitude: 34, longitude: 39 } },
   SavedLocationsCoordinatesProp: { type: Array },
 })
-
-// props.SavedLocationsCoordinatesProp[0]
 
 const emit = defineEmits(['clickedMap'])
 
@@ -44,7 +32,6 @@ function initializeMap() {
   );
 
   if (route.name === 'Explore') {
-    logger.log('init explore')
     initializeExploreMap(map);
   }
   else if (route.name === 'Location') {
@@ -66,28 +53,22 @@ function initializeMap() {
   // const icon = new H.map.Icon(svgMarkup);
 
   // ** NOTE this resizes the map when you change the browser size **//
-  window.addEventListener('resize', function () {
+  window.addEventListener('resize', () => {
     map.getViewPort().resize();
   });
 }
 
 function initializeExploreMap(map) {
-
-  map.setCenter({ lat: props.currentCoordinatesProp.latitude, lng: props.currentCoordinatesProp.longitude }); // Current Coordinates
+  map.setCenter({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }); // Current Coordinates
   map.setZoom(13);
-  const currentLocationMarker = new H.map.Marker({ lat: props.currentCoordinatesProp.latitude, lng: props.currentCoordinatesProp.longitude });
-  map.addObject(currentLocationMarker);
+
+  const pinMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude });
+  map.addObject(pinMarker);
+
   map.addEventListener('tap', (e) => {
     const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
     emit('clickedMap', { lat: coord.lat, lng: coord.lng })
-
-    // pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
-    // map.addObject(pinMarker);
-
-  });
-  // ** NOTE this resizes the map when you change the browser size **//
-  window.addEventListener('resize', function () {
-    map.getViewPort().resize();
+    pinMarker.setGeometry(coord);
   });
 }
 
@@ -96,24 +77,13 @@ function initializeLocationMap(map) {
   // var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map))
   // behavior.disable(H.mapevents.Behavior.WHEELZOOM)
 
-
-  map.setCenter({ lat: props.currentCoordinatesProp.latitude, lng: props.currentCoordinatesProp.longitude }); // Specific location on the map
+  map.setCenter({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }); // Specific location on the map
   map.setZoom(13);
-  const specificLocationMarker = new H.map.Marker({ lat: props.currentCoordinatesProp.latitude, lng: props.currentCoordinatesProp.longitude });
+  const specificLocationMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude });
   map.addObject(specificLocationMarker);
   map.addEventListener('tap', (e) => {
     const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
     emit('clickedMap', { lat: coord.lat, lng: coord.lng })
-
-    // pinMarker = new H.map.Marker({ lat: coord.lat, lng: coord.lng });
-    // map.addObject(pinMarker);
-
-  });
-
-
-  // ** NOTE this resizes the map when you change the browser size **//
-  window.addEventListener('resize', function () {
-    map.getViewPort().resize();
   });
 }
 
@@ -122,13 +92,11 @@ function initializeAccountMap(map) {
   const visitedLocations = props.SavedLocationsCoordinatesProp.filter(location => location.visited === true);
   // @ts-ignore
   const nonVisitedLocations = props.SavedLocationsCoordinatesProp.filter(location => location.visited === false);
-  console.log(visitedLocations);
-  console.log(nonVisitedLocations);
 
+  // NOTE Temporary only used to display locations that have been visited. Plan to make unqiue markers for visitedLocations & nonVisitedLocations
   const svgIcon = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
     <circle cx="12" cy="12" r="10" fill="#0000FF" />
 </svg>`;
-
   const icon = new H.map.Icon(svgIcon);
 
   visitedLocations.forEach(coord => {
@@ -144,16 +112,10 @@ function initializeAccountMap(map) {
   });
 
   map.setCenter({ lat: 43.6150, lng: -116.2023 });
-  map.setZoom(3);
-
-  // ** NOTE this resizes the map when you change the browser size **//
-  window.addEventListener('resize', function () {
-    map.getViewPort().resize();
-  });
+  map.setZoom(13);
 }
 
 </script>
-
 
 <template>
   <div ref="hMap" class="hMap"></div>

@@ -26,6 +26,16 @@ async function getMySavedLocations() {
   }
 }
 
+async function getRandomLocations() {
+  try {
+    await locationService.getRandomLocations();
+  }
+  catch (e) {
+    Pop.error(e);
+    logger.error(e);
+  }
+}
+
 async function deleteLocation(visitorLocationId) {
   try {
     const wantsToDelete = await Pop.confirm('Are you sure you want delete')
@@ -40,56 +50,45 @@ async function deleteLocation(visitorLocationId) {
 
 }
 
-async function getRandomLocations() {
-  try {
-    await locationService.getRandomLocations();
-  }
-  catch (e) {
-    Pop.error(e);
-    logger.error(e);
-  }
-}
-
 </script>
 
 <template>
-  <div class="about">
-    <div v-if="account">
-      <div class="container">
-        <section class="row">
-          <div class="col-md-3">
-            <img class="creator-img" :src="account.picture" :alt="account.name" />
+  <div v-if="account">
+    <section v-if="account" class="container">
+      <section class="row">
+        <div class="col-md-3">
+          <img class="creator-img" :src="account.picture" :alt="account.name" />
+        </div>
+        <div class="col-md-8">
+          <h1>{{ account.name }}</h1>
+          <p><i class="mdi mdi-shield-star fs-1"></i></p>
+        </div>
+      </section>
+    </section>
+    <section class="container-fluid">
+      <section class="row">
+        <div v-if="SavedLocations.length !== 0" class="col-md-12">
+          <h4 class="text-center">See where you have been</h4>
+          <TrueHereMap :SavedLocationsCoordinatesProp="SavedLocations" />
+        </div>
+      </section>
+    </section>
+    <section class="container">
+      <section class="row">
+        <h4 class="text-center">Where your planning to go</h4>
+        <div v-for="SavedLocation in SavedLocations" :key="SavedLocation.id" class="col-md-4">
+          <LocationCard :location="SavedLocation.location" />
+          <div>
+            <button @click="deleteLocation(SavedLocation.id)" class="btn btn-success">Delete</button>
           </div>
-          <div class="col-md-8">
-            <h1>{{ account.name }}</h1>
-            <p><i class="mdi mdi-shield-star fs-1"></i></p>
-          </div>
-        </section>
-      </div>
-      <div class="container-fluid">
-        <section class="row">
-          <div v-if="SavedLocations.length !== 0" class="col-md-12">
-            <h4 class="text-center">See where you have been</h4>
-            <TrueHereMap :SavedLocationsCoordinatesProp="SavedLocations" />
-          </div>
-        </section>
-      </div>
-      <div class="container">
-        <section class="row">
-          <h4 class="text-center">Where your planning to go</h4>
-          <div v-for="SavedLocation in SavedLocations" :key="SavedLocation.id" class="col-md-4">
-            <LocationCard :location="SavedLocation.location" />
-            <div>
-              <button @click="deleteLocation(SavedLocation.id)" class="btn btn-success">Delete</button>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-    <div v-else>
-      <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
-    </div>
+        </div>
+      </section>
+    </section>
   </div>
+  <div v-else>
+    <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
+  </div>
+
   <footer>
     <div class="container">
       <div v-if="randomLocations" class="row gx-3 gy-2 mt-2">

@@ -28,9 +28,10 @@ defineProps({
 function handleMapClick(payload) {
   useLocation.value = false
   logger.log('Form map click', payload)
-  locationData.value.location.coordinates[0] = payload.lng
   locationData.value.location.coordinates[1] = payload.lat
+  locationData.value.location.coordinates[0] = payload.lng
 }
+
 async function getCurrentLocation() {
   if (useLocation.value == false) return
   try {
@@ -140,7 +141,7 @@ async function postLocation() {
         </div>
       </div>
       <div class="col-md-12">
-        <TrueHereMap @clickedMap="handleMapClick" :currentCoordinatesProp="coords" />
+        <TrueHereMap @clickedMap="handleMapClick" :coordinatesProp="coords" />
       </div>
       <div class="w-100 text-end">
         <button class="btn btn-success" type="submit">Submit</button>

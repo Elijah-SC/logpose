@@ -12,8 +12,8 @@ import { computed, onMounted, ref } from "vue";
 onMounted(() => getCurrentLocation());
 const locations = computed(() => AppState.locations);
 const coords = ref({
-  longitude: null,
   latitude: null,
+  longitude: null,
 });
 
 // @ts-ignore
@@ -22,8 +22,8 @@ async function getCurrentLocation() {
     // @ts-ignore
     await new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(position => {
-        coords.value.longitude = position.coords.longitude;
         coords.value.latitude = position.coords.latitude;
+        coords.value.longitude = position.coords.longitude;
         resolve()
       }, resolve, { enableHighAccuracy: true })
     })
@@ -87,8 +87,8 @@ function handleMapClick(payload) {
         </div>
       </div>
       <div class="order-0 order-md-2 col-md-8">
-        <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude"
-          :currentCoordinatesProp="coords" class="map" />
+        <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude" :coordinatesProp="coords"
+          class="map" />
         <div v-else class="loading d-flex justify-content-center align-items-center mt">
           <h1>Loading Map</h1><i class="mdi mdi-earth mdi-spin"></i>
         </div>

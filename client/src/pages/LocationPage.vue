@@ -30,12 +30,6 @@ const locationVisitor = computed(() => {
   return true
 })
 
-const canLogIn = computed(() => {
-  if (locationVisitor.value == false) return false
-  if (locationVisitor.value == true) return false
-  return true
-})
-
 
 watch(() => route.params.locationId, () => {
   getActiveLocation();
@@ -116,6 +110,15 @@ async function deleteComment(commentId) {
   }
 }
 
+async function editComment(commentId) {
+  try {
+    await commentsService.editComment(commentId)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
 </script>
 
 <template>
@@ -125,11 +128,10 @@ async function deleteComment(commentId) {
         <Carousel :location="activeLocation" />
       </div>
       <div class="col-12">
-        <TrueHereMap
-          :currentCoordinatesProp="{ longitude: activeLocation.longitude, latitude: activeLocation.latitude }" />
+        <TrueHereMap :coordinatesProp="{ latitude: activeLocation.latitude, longitude: activeLocation.longitude }" />
       </div>
       <ModalWrapper id="location-picker">
-        <LocationPickerDev :coords="{ longitude: activeLocation.longitude, latitude: activeLocation.latitude }"
+        <LocationPickerDev :coords="{ latitude: activeLocation.latitude, longitude: activeLocation.longitude }"
           :activeLocation="activeLocation" />
       </ModalWrapper>
       <!-- SECTION About Location -->
