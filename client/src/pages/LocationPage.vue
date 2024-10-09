@@ -12,6 +12,7 @@ import { picturesService } from '@/services/PicturesService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
+import { Modal } from "bootstrap";
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -19,34 +20,27 @@ const route = useRoute();
 const account = computed(() => AppState.account)
 const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
-const visitorProfile = computed(() => AppState.locationVisitors);
+const locationVisitors = computed(() => AppState.locationVisitors.filter(visitor => visitor.visited));
 const comments = computed(() => AppState.comments)
 
-// TODO reference the hasTicket functionality in tower
-const visit = ref(false);
+
 const toggler = () => {
   toggle.value = !toggle.value;
 }
-const toggle = ref(false);
+const toggle = ref(null);
 const editableCommentData = ref({
   body: '',
 });
 
 
-const locationVisitor = computed(() => {
+const YouAreAVisitor = computed(() => {
   if (AppState.identity == null) return false
-  const visited = AppState.locationVisitors.find(visitor => visitor.creatorId == AppState.account?.id)
+  const visited = AppState.locationVisitors.find(visitor => visitor.creatorId == AppState.account?.id && visitor.visited)
   if (!visited) return false
   return true
 })
 
-// const isAttending = computed(() => {
-//   if (AppState.identity == null) return false
-//   const attendingEvent = AppState.eventAttendees.find(ticket => ticket.accountId == AppState.account?.id)
-//   if (!attendingEvent) return false
-//   return true
-// })
-
+const foundUserVisitedLocation = computed(() => AppState.locationVisitors.find(lv => lv.creatorId == AppState.account?.id))
 
 watch(() => route.params.locationId, () => {
   getActiveLocation();
@@ -70,6 +64,7 @@ async function getActiveLocation() {
   }
 }
 
+
 // @ts-ignore
 async function getRandomLocations() {
   try {
@@ -81,10 +76,11 @@ async function getRandomLocations() {
   }
 }
 
-async function createSavedLocation() {
+async function createSavedLocation(visited) {
   try {
-    const locationData = { locationId: route.params.locationId }
+    const locationData = { locationId: route.params.locationId, visited: visited }
     await savedLocations.createSavedLocation(locationData)
+    Pop.success(`locationSaved`)
   }
   catch (error) {
     Pop.error(error);
@@ -93,9 +89,7 @@ async function createSavedLocation() {
 
 async function checkIn() {
   try {
-    visit.value = !visit.value;
-    await savedLocations.checkIn(route.params.locationId, { visited: visit.value })
-    Pop.success(`Checked in`)
+    await savedLocations.checkIn({ visited: !foundUserVisitedLocation.value.visited, id: foundUserVisitedLocation.value.id }, foundUserVisitedLocation.value.id)
   }
   catch (error) {
     Pop.error(error);
@@ -154,6 +148,17 @@ async function deleteComment(commentId) {
   }
 }
 
+function handleCheckIn() {
+  Modal.getOrCreateInstance('#location-picker').hide()
+  Pop.success(`Checked in`)
+  if (foundUserVisitedLocation.value) {
+    checkIn()
+  }
+  else {
+    createSavedLocation(true)
+  }
+}
+
 </script>
 
 <template>
@@ -166,7 +171,7 @@ async function deleteComment(commentId) {
         <TrueHereMap :coordinatesProp="{ latitude: activeLocation.latitude, longitude: activeLocation.longitude }" />
       </div>
       <ModalWrapper id="location-picker">
-        <LocationPickerDev :activeLocation="activeLocation" @within-distance="checkIn()" />
+        <LocationPickerDev :activeLocation="activeLocation" @within-distance="handleCheckIn()" />
       </ModalWrapper>
       <!-- SECTION About Location -->
       <div class="col-md-6">
@@ -182,12 +187,14 @@ async function deleteComment(commentId) {
           <p>{{ activeLocation.directions }}</p>
           <div class="text-center">
             <div>
-              <button @click="createSavedLocation()" type="button" class="btn btn-outline-dark rounded me-2">
+              <button @click="createSavedLocation(false)" type="button" class="btn btn-outline-dark rounded me-2">
                 Log it
               </button>
             </div>
             <div>
-              <button type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"
+              <button v-if="YouAreAVisitor" @click="checkIn()" type="button" class="btn btn-outline-danger rounded">
+                Leave </button>
+              <button v-else type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"
                 data-bs-target="#location-picker">
                 Check in
               </button>
@@ -250,7 +257,7 @@ async function deleteComment(commentId) {
       </div>
       <div class="col-md-6">
         <h3>People who have checked in</h3>
-        <div v-for="visitor in visitorProfile" :key="visitor.id" class="p-2 bg-light visitor-container">
+        <div v-for="visitor in locationVisitors" :key="visitor.id" class="p-2 bg-light visitor-container">
           <div class="d-flex align-items-center border-start border-2 border-dark">
             <i class="fa-solid fa-certificate fa-lg mx-2" style="color: #B197FC;"></i>
             <img class="guy me-2" :src="visitor.creator?.picture" :alt="visitor.creator?.name">

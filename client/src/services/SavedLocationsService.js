@@ -8,12 +8,13 @@ import {
 import { AppState } from "@/AppState.js";
 
 class SavedLocations {
-  async checkIn(locationId, value) {
-    const response = await api.put(`api/savedLocations/${locationId}`, value);
+  async checkIn(updateData, savedLocationId) {
+    const response = await api.put(`api/savedLocations`, updateData);
     // logger.log("visit location", response.data);
-
     const newVisitor = new SavedLocationCreator(response.data);
-    AppState.locationVisitors.push(newVisitor);
+    const foundVisitorIndex = AppState.locationVisitors.findIndex(visitor => visitor.creatorId == savedLocationId)
+    AppState.locationVisitors.splice(foundVisitorIndex, 1, newVisitor)
+
     logger.log(`New Visitor`, newVisitor);
   }
 
@@ -50,8 +51,8 @@ class SavedLocations {
   async createSavedLocation(locationData) {
     const response = await api.post("api/savedLocations", locationData);
     logger.log("save locations", response.data);
-    const createdSavedLocation = new LocationSaved(response.data);
-    AppState.SavedLocations.push(createdSavedLocation);
+    const createdSavedLocation = new SavedLocationCreator(response.data);
+    AppState.locationVisitors.push(createdSavedLocation);
   }
 }
 export const savedLocations = new SavedLocations();

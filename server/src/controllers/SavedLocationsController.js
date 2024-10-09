@@ -9,7 +9,7 @@ export class SavedLocationsController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post("", this.createSavedLocation)
-      .put("/:locationId", this.updateSavedLocation)
+      .put("", this.updateSavedLocation)
       .delete("/:savedLocationId", this.deleteSavedLocation);
   }
 
@@ -29,14 +29,8 @@ export class SavedLocationsController extends BaseController {
 
   async updateSavedLocation(request, response, next) {
     try {
-      const savedlocationData = request.body;
-      const locationId = request.params.locationId;
-      const userId = request.userInfo.id;
-      const savedLocation = await savedLocationService.updateSavedLocation(
-        locationId,
-        userId,
-        savedlocationData
-      );
+      const savedLocationData = request.body;
+      const savedLocation = await savedLocationService.updateSavedLocation(savedLocationData);
       response.send(savedLocation);
     } catch (error) {
       next(error);
