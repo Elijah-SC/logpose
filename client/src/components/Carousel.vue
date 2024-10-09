@@ -26,10 +26,18 @@ async function createPicture() {
   try {
     pictureData.value.locationId = AppState.activeLocation.id
     await picturesService.createPicture(pictureData.value)
+    resetForm()
     Pop.confirm('Picture is create')
   }
   catch (error) {
     Pop.error(error);
+  }
+}
+
+function resetForm(){
+  pictureData.value = {
+    picture: '',
+    locationId: null
   }
 }
 
