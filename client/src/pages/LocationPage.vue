@@ -105,27 +105,16 @@ async function getAllComment() {
 
 async function editComment(commentId) {
   try {
-
     await commentsService.editComment(commentId)
   }
   catch (error){
     Pop.error(error);
   }
-  
 }
 
 async function deleteComment(commentId) {
   try {
     await commentsService.deleteComment(commentId)
-  }
-  catch (error) {
-    Pop.error(error);
-  }
-}
-
-async function editComment(commentId) {
-  try {
-    await commentsService.editComment(commentId)
   }
   catch (error) {
     Pop.error(error);
