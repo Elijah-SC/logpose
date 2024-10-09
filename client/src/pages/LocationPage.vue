@@ -15,7 +15,7 @@ import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const account = computed(()=> AppState.account)
+const account = computed(() => AppState.account)
 const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
 const visitorProfile = computed(() => AppState.locationVisitors);
@@ -23,6 +23,13 @@ const comments = computed(() => AppState.comments)
 
 // TODO reference the hasTicket functionality in tower
 const visit = ref(false);
+const toggler = () => {
+  toggle.value = !toggle.value;
+}
+const toggle = ref(false);
+const editableCommentData = ref({
+  body: '',
+});
 
 
 const locationVisitor = computed(() => {
@@ -105,9 +112,16 @@ async function getAllComment() {
 
 async function editComment(commentId) {
   try {
-    await commentsService.editComment(commentId)
+    const updateConfirmation = await Pop.confirm('Confirm Changes?');
+    if (!updateConfirmation) return;
+    const updatedCommentData = editableCommentData.value;
+    await commentsService.editComment(commentId, updatedCommentData);
+    toggle.value = !toggle.value;
+    editableCommentData.value = {
+      body: ''
+    }
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
   }
 }
@@ -178,27 +192,39 @@ async function deleteComment(commentId) {
           <!-- Account | User Comments -->
           <div v-for="comment in comments" :key="comment.id">
             <div class="d-flex justify-content-between">
-              <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center mb-2">
                 <img class="guy me-2" :src="comment.creator.picture" :alt="comment.creator.name">
                 <p class="m-0">{{ comment.creator.name }}</p>
               </div>
-              <div class="dropdown mx-3 account-comment">
+              <div v-if="account && account.id === comment.creatorId" class="dropdown mx-3 account-comment">
                 <i class="mdi mdi-dots-horizontal fs-4" type="button" data-bs-toggle="dropdown"
                   aria-expanded="false"></i>
                 <ul class="dropdown-menu rounded-0">
                   <li>
-                    <button  @click="editComment(comment.id)" class="dropdown-item">Edit
+                    <button @click="toggler" class="dropdown-item">Edit
                     </button>
                   </li>
                   <hr />
                   <li>
-                    <button :disabled="comment.creator.id != account?.id" @click="deleteComment(comment.id)" class="dropdown-item">Delete
+                    <button :disabled="comment.creator.id != account?.id" @click="deleteComment(comment.id)"
+                      class="dropdown-item">Delete
                     </button>
                   </li>
                 </ul>
               </div>
             </div>
-            <div>
+            <div v-if="toggle && account.id === comment.creatorId">
+              <form @submit.prevent="editComment(comment.id)">
+                <textarea rows="5" v-model="editableCommentData.body" placeholder="Editing Comment" class="form-control"
+                  name="body" id="body">
+                </textarea>
+                <div class="mt-2">
+                  <button @click="toggler()" type="button" class="btn btn-outline-dark">Cancel</button>
+                  <button class="btn btn-outline-dark ms-2">Finish Editing</button>
+                </div>
+              </form>
+            </div>
+            <div v-else>
               <p>{{ comment.body }}</p>
             </div>
           </div>
