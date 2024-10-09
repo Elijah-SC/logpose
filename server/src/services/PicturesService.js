@@ -8,7 +8,7 @@ class PicturesService {
     if (userId != pictureToDelete.creatorId)
       throw new Forbidden("not authorize can not delete");
     await pictureToDelete.deleteOne();
-    return pictureToDelete;
+    return "Picture deleted";
   }
 
   async createPicture(pictureData) {

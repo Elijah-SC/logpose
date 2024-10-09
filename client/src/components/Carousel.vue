@@ -2,6 +2,7 @@
 import { AppState } from "@/AppState.js";
 import { Location } from "@/models/Location.js";
 import { picturesService } from "@/services/PicturesService.js";
+import { logger } from "@/utils/Logger.js";
 import Pop from "@/utils/Pop.js";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
@@ -44,8 +45,18 @@ async function getAllPicture() {
   catch (error) {
     Pop.error(error);
   }
-
 }
+
+async function deletePicture() {
+  try {
+    await picturesService.deletePicture();
+  } catch (e) {
+    Pop.error(e);
+    logger.error(e);
+  }
+}
+
+
 
 </script>
 

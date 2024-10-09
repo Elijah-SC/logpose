@@ -16,8 +16,11 @@ export class PicturesController extends BaseController {
     try {
       const pictureId = request.params.pictureId;
       const userId = request.userInfo.id;
-      const picture = await picturesService.deletePicture(pictureId, userId);
-      response.send(picture);
+      const pictureDeletedMsg = await picturesService.deletePicture(
+        pictureId,
+        userId
+      );
+      response.send(pictureDeletedMsg);
     } catch (error) {
       next(error);
     }
