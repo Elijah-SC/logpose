@@ -10,7 +10,7 @@ defineProps({
   location: { type: Location, required: true }
 })
 
-onMounted(()=>{
+onMounted(() => {
   getAllPicture()
 })
 
@@ -18,10 +18,9 @@ const route = useRoute()
 
 const pictureData = ref({
   picture: '',
-  locationId: null
 })
 
-const showUrlInput = ref(false)
+const showUrlInput = ref(false);
 
 async function toggleUrlInput() {
   showUrlInput.value = !showUrlInput.value;
@@ -33,7 +32,7 @@ async function createPicture() {
     await picturesService.createPicture(pictureData.value)
     Pop.confirm('Picture is create')
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
   }
 }
@@ -42,10 +41,10 @@ async function getAllPicture() {
   try {
     await picturesService.getAllPicture(route.params.locationId)
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
   }
-  
+
 }
 
 </script>
@@ -72,7 +71,7 @@ async function getAllPicture() {
     <section class="row">
       <div class="col-md-6">
         <form @submit.prevent="createPicture()">
-          <i class="mdi mdi-image-multiple fs-1 text-success" type="button"  @click="toggleUrlInput()"></i>
+          <i class="mdi mdi-image-multiple fs-1 text-success" type="button" @click="toggleUrlInput()"></i>
           <input type="url" v-if="showUrlInput" v-model="pictureData.picture" required minlength="3" maxlength="500">
           <button class="btn btn-outline-success" v-if="showUrlInput">Submit</button>
         </form>

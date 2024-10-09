@@ -16,9 +16,9 @@ class PicturesService {
     return picture;
   }
 
-  async getPictures() {
-    const picture = await dbContext.Pictures.find();
-    return picture;
+  async getPictures(locationId) {
+    const pictures = await dbContext.Pictures.find({ locationId: locationId });
+    return pictures;
   }
 }
 
