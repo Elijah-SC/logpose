@@ -9,10 +9,15 @@ import { computed, ref } from "vue";
 
 const locationPictures = computed(() => AppState.pictures);
 
-const toggler = () => {
+const toggleCreate = () => {
   revealCreate.value = !revealCreate.value;
 }
+const toggleDelete = () => {
+  revealDelete.value = !revealDelete.value;
+}
+
 const revealCreate = ref(false);
+const revealDelete = ref(false);
 
 defineProps({
   location: { type: Location, required: true }
@@ -64,18 +69,22 @@ async function deletePicture() {
               Create | Delete
             </button>
             <ul class="dropdown-menu">
-              <li @click="toggler" class="dropdown-item selectable">Create Image <i class="fa-solid fa-plus"></i></li>
-              <li class="dropdown-item selectable">Delete Image <i class="fa-solid fa-trash"
+              <li @click="toggleCreate()" class="dropdown-item selectable">Create Image <i class="fa-solid fa-plus"></i>
+              </li>
+              <li @click="toggleDelete()" class="dropdown-item selectable">Delete Image <i class="fa-solid fa-trash"
                   style="color: #ff0000;"></i></li>
             </ul>
           </div>
-          <div v-if="revealCreate" class="create-design mt-3">
+          <div v-if="revealCreate" class="create-design mt-2">
             <form @submit.prevent="createPicture()">
               <label class="form-label" for="pictureUrl">Picture:</label>
               <input class="form-control" type="url" v-model="pictureData.picture" minlength="3" maxlength="500"
                 id="pictureUrl" name="pictureUrl" required>
               <button class="btn btn-outline-light mt-2">Submit</button>
             </form>
+          </div>
+          <div v-if="revealDelete" class="delete-design mt-2">
+
           </div>
         </div>
       </div>
@@ -107,7 +116,8 @@ img {
   object-position: center;
 }
 
-.create-design {
+.create-design,
+.delete-design {
   color: azure;
   padding: 1rem;
   background-color: rgba(0, 0, 0, 30%);
