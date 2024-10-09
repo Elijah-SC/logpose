@@ -22,7 +22,7 @@ class SavedLocations {
     const response = await api.get(
       `api/locations/${locationId}/savedLocations`
     );
-    logger.log("get visitor", response.data);
+    logger.log("got visitors", response.data);
     const newLocationVisitors = response.data.map(
       (locationVisitor) => new SavedLocationCreator(locationVisitor)
     );
