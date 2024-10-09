@@ -40,6 +40,11 @@ const YouAreAVisitor = computed(() => {
   return true
 })
 
+// const LocationSaved = computed(()=> {
+//   if (AppState.identity == null) return false
+//   const savedLocation = AppState
+// })
+
 const foundUserVisitedLocation = computed(() => AppState.locationVisitors.find(lv => lv.creatorId == AppState.account?.id))
 
 watch(() => route.params.locationId, () => {
@@ -187,7 +192,8 @@ function handleCheckIn() {
           <p>{{ activeLocation.directions }}</p>
           <div class="text-center">
             <div>
-              <button @click="createSavedLocation(false)" type="button" class="btn btn-outline-dark rounded me-2">
+              <button v-if="!foundUserVisitedLocation" @click="createSavedLocation(false)" type="button"
+                class="btn btn-outline-dark rounded me-2">
                 Log it
               </button>
             </div>
