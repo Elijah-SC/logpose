@@ -15,6 +15,7 @@ import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
+const account = computed(()=> AppState.account)
 const activeLocation = computed(() => AppState.activeLocation);
 const randomLocations = computed(() => AppState.randomLocations);
 const visitorProfile = computed(() => AppState.locationVisitors);
@@ -22,6 +23,7 @@ const comments = computed(() => AppState.comments)
 
 // TODO reference the hasTicket functionality in tower
 const visit = ref(false);
+
 
 const locationVisitor = computed(() => {
   if (AppState.identity == null) return false
@@ -99,6 +101,17 @@ async function getAllComment() {
   catch (error) {
     Pop.error(error);
   }
+}
+
+async function editComment(commentId) {
+  try {
+
+    await commentsService.editComment(commentId)
+  }
+  catch (error){
+    Pop.error(error);
+  }
+  
 }
 
 async function deleteComment(commentId) {
@@ -185,12 +198,12 @@ async function editComment(commentId) {
                   aria-expanded="false"></i>
                 <ul class="dropdown-menu rounded-0">
                   <li>
-                    <button @click="editComment()" class="dropdown-item">Edit
+                    <button  @click="editComment(comment.id)" class="dropdown-item">Edit
                     </button>
                   </li>
                   <hr />
                   <li>
-                    <button @click="deleteComment(comment.id)" class="dropdown-item">Delete
+                    <button :disabled="comment.creator.id != account?.id" @click="deleteComment(comment.id)" class="dropdown-item">Delete
                     </button>
                   </li>
                 </ul>

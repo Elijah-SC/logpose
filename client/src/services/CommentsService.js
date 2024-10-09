@@ -4,6 +4,10 @@ import { Comment } from "@/models/Comment.js"
 import { AppState } from "@/AppState.js"
 
 class CommentsService{
+ async editComment(commentId, value) {
+   const response = await api.put(`/api/comments/${commentId}`, value)
+   logger.log('edit the comment', response.data)
+  }
     async deleteComment(commentId) {
       const response = await api.delete(`/api/comments/${commentId}`)
       logger.log('delete comment', response.data)
