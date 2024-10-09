@@ -78,7 +78,7 @@ function initializeLocationMap(map) {
   // behavior.disable(H.mapevents.Behavior.WHEELZOOM)
 
   map.setCenter({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }); // Specific location on the map
-  map.setZoom(13);
+  map.setZoom(8);
   const specificLocationMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude });
   map.addObject(specificLocationMarker);
   map.addEventListener('tap', (e) => {
