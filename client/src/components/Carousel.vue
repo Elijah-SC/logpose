@@ -2,12 +2,17 @@
 import { AppState } from "@/AppState.js";
 import { Location } from "@/models/Location.js";
 import { picturesService } from "@/services/PicturesService.js";
+import { logger } from "@/utils/Logger.js";
 // import { logger } from "@/utils/Logger.js"
 import Pop from "@/utils/Pop.js";
 import { computed, ref } from "vue";
 
-const locationPictures = computed(() => AppState.pictures)
-const showUrlInput = ref(false);
+const locationPictures = computed(() => AppState.pictures);
+
+const toggler = () => {
+  revealCreate.value = !revealCreate.value;
+}
+const revealCreate = ref(false);
 
 defineProps({
   location: { type: Location, required: true }
@@ -16,32 +21,33 @@ defineProps({
 const pictureData = ref({
   picture: '',
   locationId: null
-})
-
-async function toggleUrlInput() {
-  showUrlInput.value = !showUrlInput.value;
-}
+});
 
 async function createPicture() {
   try {
     pictureData.value.locationId = AppState.activeLocation.id
-    await picturesService.createPicture(pictureData.value)
-    Pop.confirm('Picture is create')
+    await picturesService.createPicture(pictureData.value);
+    revealCreate.value = !revealCreate.value;
+    pictureData.value = {
+      picture: '',
+      locationId: null
+    }
   }
-  catch (error) {
-    Pop.error(error);
+  catch (e) {
+    Pop.error(e);
+    logger.error(e)
   }
 }
 
 
-// async function deletePicture() {
-//   try {
-//     await picturesService.deletePicture();
-//   } catch (e) {
-//     Pop.error(e);
-//     logger.error(e);
-//   }
-// }
+async function deletePicture() {
+  try {
+    await picturesService.deletePicture();
+  } catch (e) {
+    Pop.error(e);
+    logger.error(e);
+  }
+}
 
 </script>
 
@@ -49,9 +55,29 @@ async function createPicture() {
   <div v-if="locationPictures.length !== 0" id="locationCarouselIndicator" class="carousel slide carousel-fade"
     data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div v-for="locationPicture in locationPictures" :key="locationPicture.id" class="carousel-item active"
-        data-bs-interval="3000">
-        <img :src="locationPicture.picture" class="d-block w-100" :alt="locationPicture.id">
+      <div v-for="locationPicture in locationPictures" :key="locationPicture.id" class="carousel-item active">
+        <img :src="locationPicture.picture" class="d-block w-100 position-relative" :alt="locationPicture.id">
+        <div class="position-absolute top-0 start-50 end-50">
+          <div class="dropdown">
+            <button class="btn btn-outline-light dropdown-toggle mt-2" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Create | Delete
+            </button>
+            <ul class="dropdown-menu">
+              <li @click="toggler" class="dropdown-item selectable">Create Image <i class="fa-solid fa-plus"></i></li>
+              <li class="dropdown-item selectable">Delete Image <i class="fa-solid fa-trash"
+                  style="color: #ff0000;"></i></li>
+            </ul>
+          </div>
+          <div v-if="revealCreate" class="create-design mt-3">
+            <form @submit.prevent="createPicture()">
+              <label class="form-label" for="pictureUrl">Picture:</label>
+              <input class="form-control" type="url" v-model="pictureData.picture" minlength="3" maxlength="500"
+                id="pictureUrl" name="pictureUrl" required>
+              <button class="btn btn-outline-light mt-2">Submit</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#locationCarouselIndicator"
@@ -68,18 +94,7 @@ async function createPicture() {
   <div v-else>
     <img class="w-100"
       src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Clouds_over_the_Atlantic_Ocean.jpg/1200px-Clouds_over_the_Atlantic_Ocean.jpg"
-      alt="">
-  </div>
-  <div class="container">
-    <section class="row">
-      <div class="col-md-6">
-        <form @submit.prevent="createPicture()">
-          <i class="mdi mdi-image-multiple fs-1 text-success" type="button" @click="toggleUrlInput()"></i>
-          <input type="url" v-if="showUrlInput" v-model="pictureData.picture" required minlength="3" maxlength="500">
-          <button class="btn btn-outline-success" v-if="showUrlInput">Submit</button>
-        </form>
-      </div>
-    </section>
+      alt="Default">
   </div>
 </template>
 
@@ -90,5 +105,13 @@ img {
   aspect-ratio: 1/1;
   object-fit: cover;
   object-position: center;
+}
+
+.create-design {
+  color: azure;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 30%);
+  border-radius: 10px;
+  width: 300px;
 }
 </style>
