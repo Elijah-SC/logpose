@@ -6,7 +6,7 @@ export class PicturesController extends BaseController {
   constructor() {
     super("/api/pictures");
     this.router
-      .get("", this.getPictures)
+      .get("/:locationId", this.getPictures)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post("", this.createPicture)
       .delete("/:pictureId", this.deletePicture);
@@ -16,8 +16,11 @@ export class PicturesController extends BaseController {
     try {
       const pictureId = request.params.pictureId;
       const userId = request.userInfo.id;
-      const picture = await picturesService.deletePicture(pictureId, userId);
-      response.send(picture);
+      const pictureDeletedMsg = await picturesService.deletePicture(
+        pictureId,
+        userId
+      );
+      response.send(pictureDeletedMsg);
     } catch (error) {
       next(error);
     }
@@ -37,8 +40,9 @@ export class PicturesController extends BaseController {
 
   async getPictures(request, response, next) {
     try {
-      const picture = await picturesService.getPictures();
-      response.send(picture);
+      const locationId = request.params.locationId;
+      const pictures = await picturesService.getPictures(locationId);
+      response.send(pictures);
     } catch (e) {
       next(e);
     }

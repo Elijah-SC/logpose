@@ -19,4 +19,6 @@ export const AppState = reactive({
   locationVisitors: [],
   /** @type {import('./models/Comment.js').Comment[]} */
   comments: [],
+  /** @type {import('./models/Picture.js').Picture[]} */
+  pictures: [],
 });

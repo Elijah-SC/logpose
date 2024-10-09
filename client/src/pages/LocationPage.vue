@@ -8,6 +8,7 @@ import ModalWrapper from "@/components/ModalWrapper.vue";
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { commentsService } from '@/services/CommentsService.js';
 import { locationService } from '@/services/LocationService.js';
+import { picturesService } from '@/services/PicturesService.js';
 import { savedLocations } from '@/services/SavedLocationsService.js';
 import { logger } from '@/utils/Logger.js';
 import Pop from '@/utils/Pop.js';
@@ -46,6 +47,7 @@ watch(() => route.params.locationId, () => {
   getRandomLocations();
   getAllVisitors();
   getAllComment();
+  getAllPicture()
 },
   { immediate: true }
 );
@@ -88,6 +90,15 @@ async function createSavedLocation(visited) {
 async function checkIn() {
   try {
     await savedLocations.checkIn({ visited: !foundUserVisitedLocation.value.visited, id: foundUserVisitedLocation.value.id }, foundUserVisitedLocation.value.id)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
+async function getAllPicture() {
+  try {
+    await picturesService.getAllPicture(route.params.locationId)
   }
   catch (error) {
     Pop.error(error);
