@@ -1,32 +1,41 @@
-import { logger } from "@/utils/Logger.js"
-import { api } from "./AxiosService.js"
-import { Comment } from "@/models/Comment.js"
-import { AppState } from "@/AppState.js"
+import { logger } from "@/utils/Logger.js";
+import { api } from "./AxiosService.js";
+import { Comment } from "@/models/Comment.js";
+import { AppState } from "@/AppState.js";
 
-class CommentsService{
- async editComment(commentId, value) {
-   const response = await api.put(`/api/comments/${commentId}`, value)
-   logger.log('edit the comment', response.data)
+class CommentsService {
+  async editComment(commentId, updatedCommentData) {
+    const response = await api.put(
+      `api/comments/${commentId}`,
+      updatedCommentData
+    );
+    const updatedCommentIndex = AppState.comments.findIndex(
+      (comment) => comment.id === commentId
+    );
+    const updatedComment = new Comment(response.data);
+    AppState.comments.splice(updatedCommentIndex, 1, updatedComment);
   }
-    async deleteComment(commentId) {
-      const response = await api.delete(`/api/comments/${commentId}`)
-      logger.log('delete comment', response.data)
-      const indexToDeleteComment = AppState.comments.findIndex(comment => comment.id == commentId)
-      AppState.comments.splice(indexToDeleteComment,1)
-    }
+  async deleteComment(commentId) {
+    const response = await api.delete(`/api/comments/${commentId}`);
+    logger.log("delete comment", response.data);
+    const indexToDeleteComment = AppState.comments.findIndex(
+      (comment) => comment.id == commentId
+    );
+    AppState.comments.splice(indexToDeleteComment, 1);
+  }
 
-   async getAllComment(locationId) {
-      const response = await api.get(`/api/locations/${locationId}/comments`)
-      logger.log('get all comments',response.data)
-      const newComment = response.data.map(comments => new Comment(comments))
-      AppState.comments = newComment
-    }
+  async getAllComment(locationId) {
+    const response = await api.get(`/api/locations/${locationId}/comments`);
+    logger.log("get all comments", response.data);
+    const newComment = response.data.map((comments) => new Comment(comments));
+    AppState.comments = newComment;
+  }
 
-    async createComment(CommentData) {
-        const response = await api.post('/api/comments', CommentData)
-        logger.log('create comments', response.data)
-        const newComment = new Comment(response.data)
-        AppState.comments.push(newComment)
-    }
+  async createComment(CommentData) {
+    const response = await api.post("/api/comments", CommentData);
+    logger.log("create comments", response.data);
+    const newComment = new Comment(response.data);
+    AppState.comments.push(newComment);
+  }
 }
-export const commentsService = new CommentsService()
+export const commentsService = new CommentsService();

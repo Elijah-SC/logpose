@@ -22,6 +22,7 @@ class CommentsService {
       throw new Forbidden("You cannot update a comment that isn't yours");
     }
     updatedComment.body = commentData.body ?? updatedComment.body;
+    await updatedComment.populate("creator");
     await updatedComment.save();
     return updatedComment;
   }
