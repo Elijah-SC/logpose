@@ -80,6 +80,9 @@ function handleMapClick(payload) {
 
 
 <template>
+  <ModalWrapper id="location-form">
+    <LocationForm v-if="coords.latitude && coords.longitude" :coords="coords" />
+  </ModalWrapper>
   <header class="sticky-top">
     <Navbar />
   </header>
@@ -89,9 +92,6 @@ function handleMapClick(payload) {
         <div class="d-flex justify-content-around selectors bg-white py-2">
           <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
             data-bs-target="#location-form">Create</button>
-          <ModalWrapper id="location-form">
-            <LocationForm v-if="coords.latitude && coords.longitude" :coords="coords" />
-          </ModalWrapper>
           <div class="dropdown">
             <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
               aria-expanded="false">
@@ -153,6 +153,6 @@ section {
 
 .selectors {
   position: sticky;
-  top: 88px
+  top: 9.99%
 }
 </style>
