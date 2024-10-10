@@ -8,25 +8,23 @@ import Pop from "@/utils/Pop.js";
 import { computed, ref } from "vue";
 
 const locationPictures = computed(() => AppState.pictures);
-
-const toggleCreate = () => {
-  revealCreate.value = !revealCreate.value;
-}
-const toggleDelete = () => {
-  revealDelete.value = !revealDelete.value;
-}
-
-const revealCreate = ref(false);
-const revealDelete = ref(false);
+const account = computed(() => AppState.account);
 
 defineProps({
   location: { type: Location, required: true }
 })
 
+const revealCreate = ref(false);
+const activeIndex = ref(0);
+
 const pictureData = ref({
   picture: '',
   locationId: null
 });
+
+const toggleCreate = () => {
+  revealCreate.value = !revealCreate.value;
+}
 
 async function createPicture() {
   try {
@@ -45,46 +43,44 @@ async function createPicture() {
 }
 
 
-async function deletePicture() {
+async function deletePicture(locationPictureId) {
   try {
-    await picturesService.deletePicture();
+    const deleteConfirmation = await Pop.confirm('You sure you want to delete this photo?');
+    if (!deleteConfirmation) return
+    await picturesService.deletePicture(locationPictureId);
   } catch (e) {
     Pop.error(e);
     logger.error(e);
   }
 }
-
 </script>
 
 <template>
-  <div v-if="locationPictures.length !== 0" id="locationCarouselIndicator" class="carousel slide carousel-fade"
-    data-bs-ride="carousel">
+  <div v-if="locationPictures.length !== 0 && account" id="locationCarouselIndicator"
+    class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div v-for="locationPicture in locationPictures" :key="locationPicture.id" class="carousel-item active">
+      <div v-for="(locationPicture, index) in locationPictures" :key="locationPicture.id"
+        :class="['carousel-item', { active: index === activeIndex }]" data-bs-interval="3000">
         <img :src="locationPicture.picture" class="d-block w-100 position-relative" :alt="locationPicture.id">
-        <div class="position-absolute top-0 start-50 end-50">
-          <div class="dropdown">
-            <button class="btn btn-outline-light dropdown-toggle mt-2" type="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Create | Delete
+        <div
+          class="position-absolute w-100 h-100 top-0 start-0 d-flex flex-column align-items-center justify-content-between">
+          <div class="create-design mt-2">
+            <button @click="toggleCreate()" class="btn btn-outline-light" type="button">
+              <i class="fa-solid fa-camera fa-lg" style="color: #8ca6d5;"></i>
             </button>
-            <ul class="dropdown-menu">
-              <li @click="toggleCreate()" class="dropdown-item selectable">Create Image <i class="fa-solid fa-plus"></i>
-              </li>
-              <li @click="toggleDelete()" class="dropdown-item selectable">Delete Image <i class="fa-solid fa-trash"
-                  style="color: #ff0000;"></i></li>
-            </ul>
+            <div v-if="revealCreate">
+              <form @submit.prevent="createPicture()">
+                <label class="form-label" for="pictureUrl">Picture:</label>
+                <input class="form-control" type="url" v-model="pictureData.picture" minlength="3" maxlength="500"
+                  id="pictureUrl" name="pictureUrl" required>
+                <button class="btn btn-outline-light mt-2">Submit</button>
+              </form>
+            </div>
           </div>
-          <div v-if="revealCreate" class="create-design mt-2">
-            <form @submit.prevent="createPicture()">
-              <label class="form-label" for="pictureUrl">Picture:</label>
-              <input class="form-control" type="url" v-model="pictureData.picture" minlength="3" maxlength="500"
-                id="pictureUrl" name="pictureUrl" required>
-              <button class="btn btn-outline-light mt-2">Submit</button>
-            </form>
-          </div>
-          <div v-if="revealDelete" class="delete-design mt-2">
-
+          <div v-if="account.id === locationPicture.creatorId" class="delete-design mb-2">
+            <button @click="deletePicture(locationPicture.id)" class="btn btn-outline-light" type="button">
+              <i class="fa-solid fa-trash fa-lg" style="color: #dd0000;"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -120,8 +116,8 @@ img {
 .delete-design {
   color: azure;
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 30%);
+  background-color: rgba(0, 0, 0, 60%);
   border-radius: 10px;
-  width: 300px;
+  z-index: 999;
 }
 </style>

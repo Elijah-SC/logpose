@@ -12,10 +12,17 @@ class PicturesService {
   }
 
   async createPicture(pictureData) {
-    const response = await api.post("/api/pictures", pictureData);
+    const response = await api.post("api/pictures", pictureData);
     logger.log("create picture", response.data);
     const newPicture = new Picture(response.data);
     AppState.pictures.push(newPicture);
+  }
+  async deletePicture(locationPictureId) {
+    const response = await api.delete(`api/pictures/${locationPictureId}`);
+    const locationPictureIndex = AppState.pictures.findIndex(
+      (picture) => picture.id === locationPictureId
+    );
+    AppState.pictures.splice(locationPictureIndex, 1);
   }
 }
 export const picturesService = new PicturesService();
