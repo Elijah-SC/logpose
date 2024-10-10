@@ -7,8 +7,8 @@ const hMap = ref(null);
 const route = useRoute();
 let map = null;
 const props = defineProps({
-  coordinatesProp: { type: Object, Default: { latitude: 34, longitude: 39 } },
-  exploreCoordinatesProp: { type: Array },
+  coordinatesProp: { type: Object, default: () => { return { latitude: 34, longitude: 39 } } },
+  exploreCoordinatesProp: { type: Array, default: () => [] },
   SavedLocationsCoordinatesProp: { type: Array },
 })
 
@@ -81,14 +81,13 @@ function initializeExploreMap(map) {
 
   map.setCenter({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }); // Current Coordinates
   map.setZoom(13);
-  const pinMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }, { icon: icon });
+  const pinMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude });
   map.addObject(pinMarker);
 
   props.exploreCoordinatesProp.forEach(coord => {
     const pinMarker = new H.map.Marker({ lat: coord.latitude, lng: coord.longitude });
     map.addObject(pinMarker);
   })
-
 
 
   map.addEventListener('tap', (e) => {
@@ -127,7 +126,7 @@ function initializeAccountMap(map) {
 
   visitedLocations.forEach(coord => {
     // @ts-ignore
-    const visitedLocationMarker = new H.map.Marker({ lat: coord.location.latitude, lng: coord.location.longitude }, { icon: icon });
+    const visitedLocationMarker = new H.map.Marker({ lat: coord.location.latitude, lng: coord.location.longitude });
     map.addObject(visitedLocationMarker);
   });
 
