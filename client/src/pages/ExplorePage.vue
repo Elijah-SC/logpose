@@ -89,7 +89,7 @@ function handleMapClick(payload) {
   <section v-if="locations" class="container-fluid bg-white">
     <div class="row">
       <div class="order-1 order-md-0 col-md-4">
-        <div class="d-flex justify-content-around selectors bg-white py-2">
+        <div class="d-flex justify-content-around selectors bg-white">
           <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
             data-bs-target="#location-form">Create</button>
           <div class="dropdown">
@@ -112,7 +112,7 @@ function handleMapClick(payload) {
             </ul>
           </div>
         </div>
-        <div class="row">
+        <div class="row locations-column">
           <div v-for="location in locations" :key="location.id" class="col-12">
             <LocationCard :location="location" />
           </div>
@@ -136,9 +136,6 @@ function handleMapClick(payload) {
   top: 13.5vh;
 }
 
-section {
-  min-height: 100vh;
-}
 
 .loading {
   font-size: 100px;
@@ -150,6 +147,12 @@ section {
 
 .selectors {
   position: sticky;
-  top: 9.99%
+  top: 0;
+  padding: 10px;
+}
+
+.locations-column {
+  height: 580px;
+  overflow-y: auto;
 }
 </style>
