@@ -100,11 +100,11 @@ function handleMapClick(payload) {
             <ul class="dropdown-menu text-center">
               <li>
                 <div>
-                  <Form @submit.prevent="getLocations()">
+                  <form @submit.prevent="getLocations()">
                     <label for="Search Radius" class="me-2">Search Radius</label>
                     <input v-model="searchRadius" type="number" min="1" max="24901" placeholder="miles"
                       title="radius to see locations around you in miles">
-                  </Form>
+                  </form>
                 </div>
               </li>
               <li><button class="dropdown-item" @click="filterCategory = category" v-for="category in categories"
@@ -119,13 +119,8 @@ function handleMapClick(payload) {
         </div>
       </div>
       <div class="order-0 order-md-2 col-md-8">
-        <div class="w-100 text-end">
-
-        </div>
         <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude && locations.length !== 0"
           :exploreCoordinatesProp="locations" :coordinatesProp="coords" class="map" />
-        <TrueHereMap v-else-if="coords.latitude && coords.longitude && locations.length == 0" :coordinatesProp="coords"
-          class="map" />
         <div v-else class="loading d-flex justify-content-center align-items-center mt">
           <h1>Loading Map</h1><i class="mdi mdi-earth mdi-spin"></i>
         </div>
