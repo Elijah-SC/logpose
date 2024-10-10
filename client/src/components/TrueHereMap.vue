@@ -1,18 +1,28 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import H from '@here/maps-api-for-javascript';
 
 const hMap = ref(null);
 const route = useRoute();
+let map = null;
 const props = defineProps({
   coordinatesProp: { type: Object, Default: { latitude: 34, longitude: 39 } },
+  exploreCoordinatesProp: { type: Array },
+  categoryType: { type: String, default: '' },
   SavedLocationsCoordinatesProp: { type: Array },
 })
 
 const emit = defineEmits(['clickedMap'])
 
 onMounted(() => initializeMap())
+watch(() => props.exploreCoordinatesProp, disposeMap)
+
+function disposeMap() {
+  map.dispose();
+  map = null;
+  initializeMap();
+}
 
 function initializeMap() {
   // Initialize the platform object needed to actually work with API
@@ -24,7 +34,7 @@ function initializeMap() {
   const defaultLayers = platform.createDefaultLayers();
 
   // instantiate & render map:
-  const map = new H.Map(
+  map = new H.Map(
     // @ts-ignore
     hMap.value,
     // @ts-ignore
@@ -61,9 +71,15 @@ function initializeMap() {
 function initializeExploreMap(map) {
   map.setCenter({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }); // Current Coordinates
   map.setZoom(13);
-
   const pinMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude });
   map.addObject(pinMarker);
+
+  props.exploreCoordinatesProp.forEach(coord => {
+    const pinMarker = new H.map.Marker({ lat: coord.latitude, lng: coord.longitude });
+    map.addObject(pinMarker);
+  })
+
+
 
   map.addEventListener('tap', (e) => {
     const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);

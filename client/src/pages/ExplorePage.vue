@@ -10,11 +10,18 @@ import Pop from "@/utils/Pop.js";
 import { computed, onMounted, ref } from "vue";
 
 onMounted(() => getCurrentLocation());
-const locations = computed(() => AppState.locations);
+const locations = computed(() => {
+  if (filterCategory.value == 'All') {
+    return AppState.locations
+  }
+  return AppState.locations.filter(location => location.category == filterCategory.value)
+});
+const filterCategory = ref('All')
 const coords = ref({
   latitude: null,
   longitude: null,
 });
+const categories = ["All", "Wilderness", "Mountains", "Cycling", "Views", "Hiking", "Caves", "Skiing", "HotSprings", "Stargazing", "Swimming", "Adventure"]
 
 // @ts-ignore
 async function getCurrentLocation() {
@@ -87,8 +94,14 @@ function handleMapClick(payload) {
         </div>
       </div>
       <div class="order-0 order-md-2 col-md-8">
-        <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude" :coordinatesProp="coords"
-          class="map" />
+        <div class="d-flex jusitfy-content-between">
+          <button @click="filterCategory = category" v-for="category in categories" :key="category" type="button"
+            class="btn btn-outline-dark">
+            {{ category }}
+          </button>
+        </div>
+        <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude && locations.length !== 0"
+          :exploreCoordinatesProp="locations" :coordinatesProp="coords" class="map" />
         <div v-else class="loading d-flex justify-content-center align-items-center mt">
           <h1>Loading Map</h1><i class="mdi mdi-earth mdi-spin"></i>
         </div>
