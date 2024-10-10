@@ -124,8 +124,6 @@ function handleMapClick(payload) {
         </div>
         <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude && locations.length !== 0"
           :exploreCoordinatesProp="locations" :coordinatesProp="coords" class="map" />
-        <TrueHereMap v-else-if="coords.latitude && coords.longitude && locations.length == 0" :coordinatesProp="coords"
-          class="map" />
         <div v-else class="loading d-flex justify-content-center align-items-center mt">
           <h1>Loading Map</h1><i class="mdi mdi-earth mdi-spin"></i>
         </div>
