@@ -35,15 +35,9 @@ import Navbar from "@/components/Navbar.vue";
     </section>
 
     <div class="text-center">
-<<<<<<< HEAD
-      <h1>Contributors</h1>
-    </div>
-    <div class=" d-flex bg-light shadow rounded mb-2">
-=======
       <h1 class="jim-nightshade-regular">Contributors</h1>
     </div>
     <div class=" d-flex bg-light shadow rounded mb-3 col-md-8">
->>>>>>> 402fc8d (styling about page)
       <img class="contributor-img img-fluid mb-2 m-2"
         src="https://images.unsplash.com/photo-1557109077-4caf3851fd3f?q=80&w=1933&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="contributor name">
@@ -52,21 +46,13 @@ import Navbar from "@/components/Navbar.vue";
         <i class="mdi mdi-github fs-3"></i>
         <i class="mdi mdi-linkedin fs-3"></i>
       </div>
-<<<<<<< HEAD
-      <div class="align-self-center ms-4">
-=======
       <div class="align-self-center ms-4 karla">
->>>>>>> 402fc8d (styling about page)
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus tempore totam officiis velit voluptates
           assumenda doloribus labore corporis officia ut?</p>
       </div>
     </div>
 
-<<<<<<< HEAD
-    <div class=" d-flex bg-light shadow rounded mb-2">
-=======
     <div class=" d-flex flex-row-reverse bg-light shadow rounded mb-3 col-md-8 offset-4">
->>>>>>> 402fc8d (styling about page)
       <img class="contributor-img img-fluid mb-2 m-2"
         src="https://images.unsplash.com/photo-1557109077-4caf3851fd3f?q=80&w=1933&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="contributor name">
@@ -75,21 +61,13 @@ import Navbar from "@/components/Navbar.vue";
         <i class="mdi mdi-github fs-3"></i>
         <i class="mdi mdi-linkedin fs-3"></i>
       </div>
-<<<<<<< HEAD
-      <div class="align-self-center ms-4">
-=======
       <div class="align-self-center ms-4 karla">
->>>>>>> 402fc8d (styling about page)
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus tempore totam officiis velit voluptates
           assumenda doloribus labore corporis officia ut?</p>
       </div>
     </div>
 
-<<<<<<< HEAD
-    <div class=" d-flex bg-light shadow rounded mb-2">
-=======
     <div class=" d-flex bg-light shadow rounded mb-3 col-md-8">
->>>>>>> 402fc8d (styling about page)
       <img class="contributor-img img-fluid mb-2 m-2"
         src="https://images.unsplash.com/photo-1557109077-4caf3851fd3f?q=80&w=1933&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="contributor name">
@@ -98,11 +76,7 @@ import Navbar from "@/components/Navbar.vue";
         <i class="mdi mdi-github fs-3"></i>
         <i class="mdi mdi-linkedin fs-3"></i>
       </div>
-<<<<<<< HEAD
-      <div class="align-self-center ms-4">
-=======
       <div class="align-self-center ms-4 karla">
->>>>>>> 402fc8d (styling about page)
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus tempore totam officiis velit voluptates
           assumenda doloribus labore corporis officia ut?</p>
       </div>
