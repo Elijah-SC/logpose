@@ -5,6 +5,7 @@ import DiscoverLocCard from '@/components/DiscoverLocCard.vue';
 import Comment from '@/components/globals/Comment.vue';
 import LocationPickerDev from "@/components/globals/LocationPickerDev.vue";
 import ModalWrapper from "@/components/ModalWrapper.vue";
+import Navbar from "@/components/Navbar.vue";
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { commentsService } from '@/services/CommentsService.js';
 import { locationService } from '@/services/LocationService.js';
@@ -23,15 +24,14 @@ const randomLocations = computed(() => AppState.randomLocations);
 const locationVisitors = computed(() => AppState.locationVisitors.filter(visitor => visitor.visited));
 const comments = computed(() => AppState.comments)
 
-
 const toggler = () => {
   toggle.value = !toggle.value;
 }
+
 const toggle = ref(null);
 const editableCommentData = ref({
   body: '',
 });
-
 
 const YouAreAVisitor = computed(() => {
   if (AppState.identity == null) return false
@@ -69,7 +69,6 @@ async function getActiveLocation() {
   }
 }
 
-
 // @ts-ignore
 async function getRandomLocations() {
   try {
@@ -94,7 +93,10 @@ async function createSavedLocation(visited) {
 
 async function checkIn() {
   try {
-    await savedLocations.checkIn({ visited: !foundUserVisitedLocation.value.visited, id: foundUserVisitedLocation.value.id }, foundUserVisitedLocation.value.id)
+    await savedLocations.checkIn({
+      visited: !foundUserVisitedLocation.value.visited,
+      id: foundUserVisitedLocation.value.id
+    }, foundUserVisitedLocation.value.id)
   }
   catch (error) {
     Pop.error(error);
@@ -163,10 +165,12 @@ function handleCheckIn() {
     createSavedLocation(true)
   }
 }
-
 </script>
 
 <template>
+  <header class="sticky-top">
+    <Navbar />
+  </header>
   <div v-if="activeLocation" class="container-fluid">
     <section class="row">
       <div class="col-12">

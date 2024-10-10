@@ -3,9 +3,9 @@ import Login from './Login.vue';
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm bg-light px-3 ">
+  <nav class="navbar navbar-expand-sm navbar-dark px-3 sticky-top">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <img class="ms-2" src="/img/logpose-logo.svg" alt="logo" />
+      <img class="ms-2" src="/img/LogPose-WhiteText.svg" alt="logo" />
     </router-link>
     <button class="navbar-toggler btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,13 +13,13 @@ import Login from './Login.vue';
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav ms-auto text-center">
-        <li class="my-2">
-          <router-link :to="{ name: 'About' }" class="btn btn-outline-dark lighten-30 selectable">
+        <li>
+          <router-link :to="{ name: 'About' }" class="btn btn-outline-light text-light lighten-30 selectable">
             About
           </router-link>
         </li>
-        <li class="mx-3 my-2">
-          <router-link :to="{ name: 'Explore' }" class="btn btn-outline-dark lighten-30 selectable">
+        <li class="mx-3">
+          <router-link :to="{ name: 'Explore' }" class="btn btn-outline-light text-light lighten-30 selectable">
             Explore
           </router-link>
         </li>
@@ -32,7 +32,7 @@ import Login from './Login.vue';
 
 <style scoped>
 img {
-  height: 45px;
+  height: 65px;
   border-radius: 10px;
   padding: 0 .6rem 0 .6rem;
 }

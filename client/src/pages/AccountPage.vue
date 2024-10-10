@@ -7,6 +7,7 @@ import TrueHereMap from '@/components/TrueHereMap.vue';
 import { logger } from '@/utils/Logger.js';
 import DiscoverLocCard from "@/components/DiscoverLocCard.vue";
 import { locationService } from "@/services/LocationService.js";
+import Navbar from "@/components/Navbar.vue";
 
 const account = computed(() => AppState.account)
 const randomLocations = computed(() => AppState.randomLocations);
@@ -47,12 +48,13 @@ async function deleteLocation(visitorLocationId) {
     Pop.error(error);
     logger.log(error)
   }
-
 }
-
 </script>
 
 <template>
+  <header class="sticky-top">
+    <Navbar />
+  </header>
   <div v-if="account">
     <section v-if="account" class="container">
       <section class="row">
