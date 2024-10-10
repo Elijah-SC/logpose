@@ -1,43 +1,46 @@
 <script setup>
-import Navbar from "@/components/Navbar.vue";
-
-
 </script>
 
 <template>
-  <div class="about jim-nightshade-regular d-flex justify-content-center">
-    <div class="align-self-center">
-      <h4 class="fs-2">Home</h4>
+  <div class="about jim-nightshade-regular">
+    <div class="d-flex justify-content-center">
+      <div class="align-self-center">
+        <router-link :to="{ name: 'Home' }">
+          <h4 class="fs-2 m-2">Home</h4>
+        </router-link>
+      </div>
+      <div class="">
+        <img class="logposeLogImg" src="/img/logpose.svg" alt="logo" />
+      </div>
+      <div class="align-self-center">
+        <router-link :to="{ name: 'Account' }">
+          <h4 class="fs-2 m-2">Account</h4>
+        </router-link>
+      </div>
     </div>
-    <div class="">
-      <img class="ms-2 logposeLogImg" src="/img/logpose-logo.svg" alt="logo" />
+    <div class="text-center">
+      <router-link :to="{ name: 'Explore' }">
+        <h4 class="fs-2">Explore</h4>
+      </router-link>
     </div>
-    <div class="align-self-end">
-      <h4 class="fs-2">Explore</h4>
-    </div>
-    <div class="align-self-center">
-      <h4 class="fs-2">LogIn</h4>
-    </div>
+
   </div>
 
-
   <div class="container">
-    <section class="row">
-      <div class="text-center">
+    <section class="d-flex row about">
+      <div class="align-self-center text-center">
         <h1 class="jim-nightshade-regular">About</h1>
         <p class="karla">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, ea praesentium quidem aperiam accusantium
-          voluptates, eos corporis nisi deleniti laboriosam explicabo sequi quia quibusdam, vero quos dolor ullam alias
-          id possimus porro eveniet necessitatibus! Vitae aliquam saepe eveniet, vel harum adipisci rem iusto
-          voluptatem, officia soluta doloremque architecto tempora neque.
+          LogPose is a full-stack app designed to have users share interesting out-door locations they found with other
+          users. This app is designed to encourage exploration getting outside and exploring.
         </p>
       </div>
     </section>
 
-    <div class="text-center">
+    <div class="text-center mt-5 pt-5">
       <h1 class="jim-nightshade-regular">Contributors</h1>
     </div>
-    <div class=" d-flex bg-light shadow rounded mb-3 col-md-8">
+    <div class=" d-flex bg-light shadow rounded mb-3 col-md-8 mt-3">
       <img class="contributor-img img-fluid mb-2 m-2"
         src="https://images.unsplash.com/photo-1557109077-4caf3851fd3f?q=80&w=1933&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="contributor name">
@@ -48,11 +51,12 @@ import Navbar from "@/components/Navbar.vue";
       </div>
       <div class="align-self-center ms-4 karla">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus tempore totam officiis velit voluptates
-          assumenda doloribus labore corporis officia ut?</p>
+          assumenda doloribus labore corporis officia ut?
+        </p>
       </div>
     </div>
 
-    <div class=" d-flex flex-row-reverse bg-light shadow rounded mb-3 col-md-8 offset-4">
+    <div class=" d-flex flex-row-reverse bg-light shadow rounded mb-3 col-md-8 offset-4 mt-3">
       <img class="contributor-img img-fluid mb-2 m-2"
         src="https://images.unsplash.com/photo-1557109077-4caf3851fd3f?q=80&w=1933&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="contributor name">
@@ -63,11 +67,12 @@ import Navbar from "@/components/Navbar.vue";
       </div>
       <div class="align-self-center ms-4 karla">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus tempore totam officiis velit voluptates
-          assumenda doloribus labore corporis officia ut?</p>
+          assumenda doloribus labore corporis officia ut?
+        </p>
       </div>
     </div>
 
-    <div class=" d-flex bg-light shadow rounded mb-3 col-md-8">
+    <div class=" d-flex bg-light shadow rounded mb-3 col-md-8 mt-3">
       <img class="contributor-img img-fluid mb-2 m-2"
         src="https://images.unsplash.com/photo-1557109077-4caf3851fd3f?q=80&w=1933&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="contributor name">
@@ -77,14 +82,20 @@ import Navbar from "@/components/Navbar.vue";
         <i class="mdi mdi-linkedin fs-3"></i>
       </div>
       <div class="align-self-center ms-4 karla">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus tempore totam officiis velit voluptates
-          assumenda doloribus labore corporis officia ut?</p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus tempore totam officiis velit voluptates
+          assumenda doloribus labore corporis officia ut?
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.about {
+  height: var(--main-height);
+}
+
 .jim-nightshade-regular {
   font-family: "Jim Nightshade", cursive;
   font-weight: 400;
@@ -107,6 +118,7 @@ import Navbar from "@/components/Navbar.vue";
 }
 
 .logposeLogImg {
-  height: 60dvh;
+  height: calc(100vh - 30px - 60px);
+  width: calc(100vh - 32px - 64px);
 }
 </style>
