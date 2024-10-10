@@ -18,6 +18,7 @@ const locations = computed(() => {
   return AppState.locations.filter(location => location.category == filterCategory.value)
 });
 const filterCategory = ref('All')
+const searchRadius = ref(10)
 const coords = ref({
   latitude: null,
   longitude: null,
@@ -63,8 +64,9 @@ async function getCurrentLocation() {
 async function getLocations() {
   try {
     const currentLocation = [coords.value.longitude, coords.value.latitude]
+    const maxSearchRadius = 1609.34 * searchRadius.value
     logger.log('Getting locations', currentLocation)
-    await locationService.getLocations(currentLocation)
+    await locationService.getLocations(currentLocation, maxSearchRadius)
   } catch (error) {
     Pop.error(error)
     logger.error(error)
@@ -81,15 +83,21 @@ function handleMapClick(payload) {
   <header class="sticky-top">
     <Navbar />
   </header>
-  <section v-if="locations" class="container-fluid bg-light">
+  <section v-if="locations" class="container-fluid bg-white">
     <div class="row">
       <div class="order-1 order-md-0 col-md-4">
-        <div class="text-center">
+        <div class="d-flex justify-content-around">
           <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
             data-bs-target="#location-form">Create</button>
           <ModalWrapper id="location-form">
             <LocationForm v-if="coords.latitude && coords.longitude" :coords="coords" />
           </ModalWrapper>
+          <div>
+            <Form @submit.prevent="getLocations()">
+              <label for="Search Radius me-2">Search Radius</label>
+              <input v-model="searchRadius" type="number" min="1" max="24901" placeholder="miles">
+            </Form>
+          </div>
         </div>
         <div class="row">
           <div v-for="location in locations" :key="location.id" class="col-12">
