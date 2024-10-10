@@ -23,6 +23,7 @@ class PicturesService {
       (picture) => picture.id === locationPictureId
     );
     AppState.pictures.splice(locationPictureIndex, 1);
+    console.log(AppState.pictures);
   }
 }
 export const picturesService = new PicturesService();

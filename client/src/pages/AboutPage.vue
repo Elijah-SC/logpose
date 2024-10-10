@@ -30,13 +30,14 @@
       <div class="align-self-center text-center">
         <h1 class="jim-nightshade-regular">About</h1>
         <p class="karla">
-          LogPose is a full-stack app designed to have users share interesting out-door locations they found with other
-          users. This app is designed to encourage exploration getting outside and exploring.
+          LogPose is a full-stack app designed to have users share interesting out-door locations they have discover
+          with other
+          users. This app is designed to encourage people to get outside and explore new places.
         </p>
       </div>
     </section>
 
-    <div class="text-center mt-5 pt-5">
+    <div class="text-center">
       <h1 class="jim-nightshade-regular">Contributors</h1>
     </div>
     <div class=" d-flex bg-light shadow rounded mb-3 col-md-8 mt-3">
@@ -45,8 +46,8 @@
         alt="contributor name">
       <div class="flex-column align-self-center ms-2">
         <h4>Name</h4>
-        <i class="mdi mdi-github fs-3"></i>
-        <i class="mdi mdi-linkedin fs-3"></i>
+        <a href="" target="_blank"><i class="mdi mdi-github fs-3"></i></a>
+        <a href="" target="_blank"><i class="mdi mdi-linkedin fs-3"></i></a>
       </div>
       <div class="align-self-center ms-4 karla">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus tempore totam officiis velit voluptates
@@ -61,8 +62,8 @@
         alt="contributor name">
       <div class="flex-column align-self-center ms-2">
         <h4>Name</h4>
-        <i class="mdi mdi-github fs-3"></i>
-        <i class="mdi mdi-linkedin fs-3"></i>
+        <a href="" target="_blank"><i class="mdi mdi-github fs-3"></i></a>
+        <a href="" target="_blank"><i class="mdi mdi-linkedin fs-3"></i></a>
       </div>
       <div class="align-self-center ms-4 karla">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus tempore totam officiis velit voluptates
@@ -77,8 +78,8 @@
         alt="contributor name">
       <div class="flex-column align-self-center ms-2">
         <h4>Name</h4>
-        <i class="mdi mdi-github fs-3"></i>
-        <i class="mdi mdi-linkedin fs-3"></i>
+        <a href="" target="_blank"><i class="mdi mdi-github fs-3"></i></a>
+        <a href="" target="_blank"><i class="mdi mdi-linkedin fs-3"></i></a>
       </div>
       <div class="align-self-center ms-4 karla">
         <p>
@@ -92,7 +93,7 @@
 
 <style scoped lang="scss">
 .about {
-  height: 90dvh;
+  height: 40dvh;
 }
 
 .jim-nightshade-regular {

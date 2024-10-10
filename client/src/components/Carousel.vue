@@ -26,7 +26,6 @@ const props = defineProps({
 })
 
 const revealCreate = ref(false);
-const activeIndex = ref(0);
 
 const pictureData = ref({
   picture: '',
@@ -67,14 +66,11 @@ async function deletePicture(locationPictureId) {
 </script>
 
 <template>
-  <div v-if="locationPictures.length !== 0 && account" id="locationCarouselIndicator"
-    class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div v-if="locationPictures.length !== 0" id="locationCarouselIndicator" class="carousel slide carousel-fade"
+    data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img :src="location.coverImg" class="d-block w-100" alt="...">
-      </div>
-      <div v-for="(locationPicture, index) in locationPictures" :key="locationPicture.id"
-        :class="['carousel-item', { active: index === activeIndex }]" data-bs-interval="3000">
+      <div v-for="(locationPicture) in locationPictures" :key="locationPicture.id" class="carousel-item active"
+        data-bs-interval="3000">
         <img :src="locationPicture.picture" class="d-block w-100 position-relative" :alt="locationPicture.id">
         <div
           class="position-absolute w-100 h-100 top-0 start-0 d-flex flex-column align-items-center justify-content-between">
@@ -91,7 +87,7 @@ async function deletePicture(locationPictureId) {
               </form>
             </div>
           </div>
-          <div v-if="account.id === locationPicture.creatorId" class="delete-design mb-2">
+          <div v-if="account?.id === locationPicture.creatorId" class="delete-design mb-2">
             <button @click="deletePicture(locationPicture.id)" class="btn btn-outline-light" type="button">
               <i class="fa-solid fa-trash fa-lg" style="color: #dd0000;"></i>
             </button>
@@ -111,7 +107,7 @@ async function deletePicture(locationPictureId) {
     </button>
   </div>
   <div v-else>
-    <img class="w-100" :src="location.coverImg" alt="Creator Location Image">
+    <img class="w-100 d-block" :src="location?.coverImg" alt="Location Image">
   </div>
 </template>
 
