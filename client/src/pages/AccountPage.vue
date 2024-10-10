@@ -48,9 +48,7 @@ async function deleteLocation(visitorLocationId) {
     Pop.error(error);
     logger.log(error)
   }
-
 }
-
 </script>
 
 <template>

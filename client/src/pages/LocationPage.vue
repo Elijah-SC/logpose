@@ -24,15 +24,14 @@ const randomLocations = computed(() => AppState.randomLocations);
 const locationVisitors = computed(() => AppState.locationVisitors.filter(visitor => visitor.visited));
 const comments = computed(() => AppState.comments)
 
-
 const toggler = () => {
   toggle.value = !toggle.value;
 }
+
 const toggle = ref(null);
 const editableCommentData = ref({
   body: '',
 });
-
 
 const YouAreAVisitor = computed(() => {
   if (AppState.identity == null) return false
@@ -70,7 +69,6 @@ async function getActiveLocation() {
   }
 }
 
-
 // @ts-ignore
 async function getRandomLocations() {
   try {
@@ -95,7 +93,10 @@ async function createSavedLocation(visited) {
 
 async function checkIn() {
   try {
-    await savedLocations.checkIn({ visited: !foundUserVisitedLocation.value.visited, id: foundUserVisitedLocation.value.id }, foundUserVisitedLocation.value.id)
+    await savedLocations.checkIn({
+      visited: !foundUserVisitedLocation.value.visited,
+      id: foundUserVisitedLocation.value.id
+    }, foundUserVisitedLocation.value.id)
   }
   catch (error) {
     Pop.error(error);
@@ -164,7 +165,6 @@ function handleCheckIn() {
     createSavedLocation(true)
   }
 }
-
 </script>
 
 <template>
