@@ -24,7 +24,11 @@ class LocationService {
 
   // @ts-ignore
   async getRandomLocations() {
-    const response = await api.get("api/locations");
+    const response = await api.get("api/locations", {
+      params: {
+        maxSearchRadius: 40075000
+      },
+    });
     const locations = response.data.map((location) => new Location(location));
     const randomLocations = [];
     while (randomLocations.length < 3) {

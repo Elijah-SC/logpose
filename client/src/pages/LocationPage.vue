@@ -176,6 +176,8 @@ function handleCheckIn() {
       <div class="col-12">
         <Carousel :location="activeLocation" />
       </div>
+      <h1 class="w-100 text-center">{{ activeLocation.name }} </h1>
+
       <div class="col-12">
         <TrueHereMap :coordinatesProp="{ latitude: activeLocation.latitude, longitude: activeLocation.longitude }" />
       </div>
