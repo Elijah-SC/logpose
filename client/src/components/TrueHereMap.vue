@@ -70,7 +70,7 @@ function initializeExploreMap(map) {
   <path d="M12 2A7 7 0 0 0 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9A7 7 0 0 0 12 2Z" fill="blue"/>
 </svg>`
 
-  const icon = new H.map.Icon(svgMarkup);
+  const icon = new H.map.Icon(svgIcon);
 
   map.setCenter({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }); // Current Coordinates
   map.setZoom(13);
