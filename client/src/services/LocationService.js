@@ -48,10 +48,11 @@ class LocationService {
     AppState.activeLocation = acquiredLocation;
   }
   // @ts-ignore
-  async getLocations(currentLocation) {
+  async getLocations(currentLocation, maxSearchRadius) {
     const response = await api.get(`api/locations`, {
       params: {
         browserLocation: currentLocation,
+        maxSearchRadius: maxSearchRadius
       },
     });
     logger.log(response.data);

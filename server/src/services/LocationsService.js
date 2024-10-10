@@ -2,6 +2,8 @@ import { dbContext } from "../db/DbContext.js";
 
 class LocationsService {
   async getAllLocations(query) {
+    const maxSearchRadius = query.maxSearchRadius || 16093.4
+    delete query.maxSearchRadius
     const browserLocation = query.browserLocation || [34, 39]
     delete query.browserLocation
     delete query.sort
@@ -9,7 +11,7 @@ class LocationsService {
     const limitAmount = 20
     const skipAmount = (pageNumber - 1) * limitAmount
     delete query.page
-    const locations = await dbContext.Locations.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: browserLocation }, $maxDistance: 40075000 } } }).skip(skipAmount).limit(limitAmount).populate(`creator`, `-email -subs`)
+    const locations = await dbContext.Locations.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: browserLocation }, $maxDistance: maxSearchRadius } } }).skip(skipAmount).limit(limitAmount).populate(`creator`, `-email -subs`)
     return locations
   }
   async findLocationById(locationId) {

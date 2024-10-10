@@ -3,7 +3,7 @@ import Login from './Login.vue';
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm bg-light px-3 ">
+  <nav class="navbar navbar-expand-sm bg-white px-3 ">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <img class="ms-2" src="/img/logpose-logo.svg" alt="logo" />
     </router-link>
