@@ -59,6 +59,9 @@ async function deletePicture(locationPictureId) {
   <div v-if="locationPictures.length !== 0 && account" id="locationCarouselIndicator"
     class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img :src="location.coverImg" class="d-block w-100" alt="...">
+      </div>
       <div v-for="(locationPicture, index) in locationPictures" :key="locationPicture.id"
         :class="['carousel-item', { active: index === activeIndex }]" data-bs-interval="3000">
         <img :src="locationPicture.picture" class="d-block w-100 position-relative" :alt="locationPicture.id">
