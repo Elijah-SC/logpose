@@ -65,16 +65,18 @@ function initializeMap() {
 
 function initializeExploreMap(map) {
   const svgIcon = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" fill="#008000" />
+    <circle cx="12" cy="12" r="10" fill="#0000FF" />
 </svg>`;
   const icon = new H.map.Icon(svgIcon);
 
   map.setCenter({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }); // Current Coordinates
   map.setZoom(13);
-  const pinMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude });
+  // @ts-ignore
+  const pinMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }, { icon: icon });
   map.addObject(pinMarker);
 
   props.exploreCoordinatesProp.forEach(coord => {
+    // @ts-ignore
     const pinMarker = new H.map.Marker({ lat: coord.latitude, lng: coord.longitude });
     map.addObject(pinMarker);
   })
