@@ -86,17 +86,30 @@ function handleMapClick(payload) {
   <section v-if="locations" class="container-fluid bg-white">
     <div class="row">
       <div class="order-1 order-md-0 col-md-4">
-        <div class="d-flex justify-content-around">
+        <div class="d-flex justify-content-around selectors bg-white py-2">
           <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
             data-bs-target="#location-form">Create</button>
           <ModalWrapper id="location-form">
             <LocationForm v-if="coords.latitude && coords.longitude" :coords="coords" />
           </ModalWrapper>
-          <div>
-            <Form @submit.prevent="getLocations()">
-              <label for="Search Radius me-2">Search Radius</label>
-              <input v-model="searchRadius" type="number" min="1" max="24901" placeholder="miles">
-            </Form>
+          <div class="dropdown">
+            <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Dropdown button
+            </button>
+            <ul class="dropdown-menu text-center">
+              <li>
+                <div>
+                  <Form @submit.prevent="getLocations()">
+                    <label for="Search Radius" class="me-2">Search Radius</label>
+                    <input v-model="searchRadius" type="number" min="1" max="24901" placeholder="miles"
+                      title="radius to see locations around you in miles">
+                  </Form>
+                </div>
+              </li>
+              <li><button class="dropdown-item" @click="filterCategory = category" v-for="category in categories"
+                  :key="category">{{ category }}</button></li>
+            </ul>
           </div>
         </div>
         <div class="row">
@@ -106,14 +119,13 @@ function handleMapClick(payload) {
         </div>
       </div>
       <div class="order-0 order-md-2 col-md-8">
-        <div class="d-flex jusitfy-content-between">
-          <button @click="filterCategory = category" v-for="category in categories" :key="category" type="button"
-            class="btn btn-outline-dark">
-            {{ category }}
-          </button>
+        <div class="w-100 text-end">
+
         </div>
         <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude && locations.length !== 0"
           :exploreCoordinatesProp="locations" :coordinatesProp="coords" class="map" />
+        <TrueHereMap v-else-if="coords.latitude && coords.longitude && locations.length == 0" :coordinatesProp="coords"
+          class="map" />
         <div v-else class="loading d-flex justify-content-center align-items-center mt">
           <h1>Loading Map</h1><i class="mdi mdi-earth mdi-spin"></i>
         </div>
@@ -126,7 +138,7 @@ function handleMapClick(payload) {
 <style lang="scss" scoped>
 .map {
   position: sticky;
-  top: 12vh;
+  top: 13.5vh;
 }
 
 section {
@@ -139,5 +151,10 @@ section {
 
 .mt {
   margin-top: 20vh;
+}
+
+.selectors {
+  position: sticky;
+  top: 88px
 }
 </style>
