@@ -1,16 +1,27 @@
 <script setup>
 import { AppState } from "@/AppState.js";
 import { Location } from "@/models/Location.js";
+import { Picture } from "@/models/Picture.js";
 import { picturesService } from "@/services/PicturesService.js";
 import { logger } from "@/utils/Logger.js";
 // import { logger } from "@/utils/Logger.js"
 import Pop from "@/utils/Pop.js";
 import { computed, ref } from "vue";
 
-const locationPictures = computed(() => AppState.pictures);
+const locationPictures = computed(() => {
+  const locationPicture = new Picture(
+    {
+      id: props.location.id,
+      locationId: props.location.id,
+      picture: props.location.coverImg,
+      creatorId: props.location.creatorId
+    }
+  )
+  return [locationPicture, ...AppState.pictures]
+});
 const account = computed(() => AppState.account);
 
-defineProps({
+const props = defineProps({
   location: { type: Location, required: true }
 })
 
