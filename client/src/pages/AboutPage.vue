@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="about jim-nightshade-regular">
+  <div class="jim-nightshade-regular">
     <div class="d-flex justify-content-center">
       <div class="align-self-center">
         <router-link :to="{ name: 'Home' }">
@@ -23,7 +23,6 @@
         <h4 class="fs-2">Explore</h4>
       </router-link>
     </div>
-
   </div>
 
   <div class="container">
@@ -93,7 +92,7 @@
 
 <style scoped lang="scss">
 .about {
-  height: var(--main-height);
+  height: 90dvh;
 }
 
 .jim-nightshade-regular {
@@ -118,7 +117,6 @@
 }
 
 .logposeLogImg {
-  height: calc(100vh - 30px - 60px);
-  width: calc(100vh - 32px - 64px);
+  height: 60dvh;
 }
 </style>
