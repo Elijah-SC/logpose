@@ -93,10 +93,10 @@ function handleMapClick(payload) {
             <LocationForm v-if="coords.latitude && coords.longitude" :coords="coords" />
           </ModalWrapper>
           <div>
-            <Form @submit.prevent="getLocations()">
+            <form @submit.prevent="getLocations()">
               <label for="Search Radius me-2">Search Radius</label>
               <input v-model="searchRadius" type="number" min="1" max="24901" placeholder="miles">
-            </Form>
+            </form>
           </div>
         </div>
         <div class="row">
