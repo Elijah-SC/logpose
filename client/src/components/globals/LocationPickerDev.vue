@@ -6,6 +6,7 @@ import TrueHereMap from "../TrueHereMap.vue";
 import { Location } from "@/models/Location.js";
 import { AppState } from "@/AppState.js";
 import Swal from "sweetalert2";
+import LocationPickerMap from "../LocationPickerMap.vue";
 
 const activeLocation = computed(() => AppState.activeLocation)
 const emit = defineEmits(['within-distance'])
@@ -72,7 +73,7 @@ function isLocationInRadius() {
     <div class="w-100 text-end">
       <button @click="isLocationInRadius()" class="btn btn-outline-primary">Submit</button>
     </div>
-    <TrueHereMap @clickedMap="handleMapClick"
+    <LocationPickerMap @clickedMap="handleMapClick"
       :coordinatesProp="{ latitude: activeLocation.latitude, longitude: activeLocation.longitude }" />
   </div>
 </template>

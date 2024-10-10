@@ -7,6 +7,7 @@ import { Logger } from "sass";
 import { locationService } from "@/services/LocationService.js";
 import { useRoute, useRouter } from "vue-router";
 import { Modal } from "bootstrap";
+import LocationPickerMap from "./LocationPickerMap.vue";
 const route = useRoute()
 const router = useRouter()
 const locationCategories = ["Wilderness", "Mountains", "Cycling", "Views", "Hiking", "Caves", "Skiing", "HotSprings", "Stargazing", "Swimming", "Adventure"];
@@ -141,7 +142,7 @@ async function postLocation() {
         </div>
       </div>
       <div class="col-md-12">
-        <TrueHereMap @clickedMap="handleMapClick" :coordinatesProp="coords" :exploreCoordinatesProp="[]" />
+        <LocationPickerMap @clickedMap="handleMapClick" :coordinatesProp="coords" :exploreCoordinatesProp="[]" />
       </div>
       <div class="w-100 text-end">
         <button class="btn btn-success" type="submit">Submit</button>

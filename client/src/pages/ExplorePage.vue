@@ -95,7 +95,7 @@ function handleMapClick(payload) {
           <div class="dropdown">
             <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              Dropdown button
+              Search Dropdown
             </button>
             <ul class="dropdown-menu text-center">
               <li>
