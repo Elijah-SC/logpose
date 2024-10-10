@@ -3,6 +3,7 @@ import { AppState } from "@/AppState.js";
 import LocationCard from "@/components/globals/LocationCard.vue";
 import LocationForm from "@/components/LocationForm.vue";
 import ModalWrapper from "@/components/ModalWrapper.vue";
+import Navbar from "@/components/Navbar.vue";
 import TrueHereMap from "@/components/TrueHereMap.vue";
 import { locationService } from "@/services/LocationService.js";
 import { logger } from "@/utils/Logger.js";
@@ -70,6 +71,9 @@ function handleMapClick(payload) {
 
 
 <template>
+  <header class="sticky-top">
+    <Navbar />
+  </header>
   <section v-if="locations" class="container-fluid bg-light">
     <div class="row">
       <div class="order-1 order-md-0 col-md-4">

@@ -5,6 +5,7 @@ import DiscoverLocCard from '@/components/DiscoverLocCard.vue';
 import Comment from '@/components/globals/Comment.vue';
 import LocationPickerDev from "@/components/globals/LocationPickerDev.vue";
 import ModalWrapper from "@/components/ModalWrapper.vue";
+import Navbar from "@/components/Navbar.vue";
 import TrueHereMap from '@/components/TrueHereMap.vue';
 import { commentsService } from '@/services/CommentsService.js';
 import { locationService } from '@/services/LocationService.js';
@@ -167,6 +168,9 @@ function handleCheckIn() {
 </script>
 
 <template>
+  <header class="sticky-top">
+    <Navbar />
+  </header>
   <div v-if="activeLocation" class="container-fluid">
     <section class="row">
       <div class="col-12">
