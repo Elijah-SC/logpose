@@ -97,9 +97,7 @@ async function deletePicture(locationPictureId) {
     </button>
   </div>
   <div v-else>
-    <img class="w-100"
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Clouds_over_the_Atlantic_Ocean.jpg/1200px-Clouds_over_the_Atlantic_Ocean.jpg"
-      alt="Default">
+    <img class="w-100" :src="location.coverImg" alt="Creator Location Image">
   </div>
 </template>
 

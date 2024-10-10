@@ -7,8 +7,8 @@ const hMap = ref(null);
 const route = useRoute();
 let map = null;
 const props = defineProps({
-  coordinatesProp: { type: Object, Default: { latitude: 34, longitude: 39 } },
-  exploreCoordinatesProp: { type: Array },
+  coordinatesProp: { type: Object, default: () => { return { latitude: 34, longitude: 39 } } },
+  exploreCoordinatesProp: { type: Array, default: () => [] },
   SavedLocationsCoordinatesProp: { type: Array },
 })
 
@@ -57,12 +57,6 @@ function initializeMap() {
   // Enable default UI interactions
   const ui = H.ui.UI.createDefault(map, defaultLayers);
 
-  // NOTE Disabled for now
-  // const svgMarkup = '<svg class="map-marker" height="50px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>map-marker</title><path  style="fill: blue;" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>';
-  // const icon = new H.map.Icon(svgMarkup);
-
-
-
   // ** NOTE this resizes the map when you change the browser size **//
   window.addEventListener('resize', () => {
     map.getViewPort().resize();
@@ -70,25 +64,20 @@ function initializeMap() {
 }
 
 function initializeExploreMap(map) {
-  let iconMarkup = `
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#000000">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>map-marker</title><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>
-</svg>
-`
-
-
-  const icon = new H.map.Icon(iconMarkup);
+  const svgIcon = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" fill="#008000" />
+</svg>`;
+  const icon = new H.map.Icon(svgIcon);
 
   map.setCenter({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }); // Current Coordinates
   map.setZoom(13);
-  const pinMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }, { icon: icon });
+  const pinMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude });
   map.addObject(pinMarker);
 
   props.exploreCoordinatesProp.forEach(coord => {
     const pinMarker = new H.map.Marker({ lat: coord.latitude, lng: coord.longitude });
     map.addObject(pinMarker);
   })
-
 
 
   map.addEventListener('tap', (e) => {
@@ -119,7 +108,6 @@ function initializeAccountMap(map) {
   // @ts-ignore
   const nonVisitedLocations = props.SavedLocationsCoordinatesProp.filter(location => location.visited === false);
 
-  // NOTE Temporary only used to display locations that have been visited. Plan to make unqiue markers for visitedLocations & nonVisitedLocations
   const svgIcon = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
     <circle cx="12" cy="12" r="10" fill="#0000FF" />
 </svg>`;

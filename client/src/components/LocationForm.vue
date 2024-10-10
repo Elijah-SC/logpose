@@ -141,7 +141,7 @@ async function postLocation() {
         </div>
       </div>
       <div class="col-md-12">
-        <TrueHereMap @clickedMap="handleMapClick" :coordinatesProp="coords" />
+        <TrueHereMap @clickedMap="handleMapClick" :coordinatesProp="coords" :exploreCoordinatesProp="[]" />
       </div>
       <div class="w-100 text-end">
         <button class="btn btn-success" type="submit">Submit</button>
