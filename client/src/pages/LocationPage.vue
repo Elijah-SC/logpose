@@ -214,9 +214,6 @@ function handleCheckIn() {
         <div class="bg-light p-2 rounded">
           <div class="d-flex justify-content-between">
             <h4>Comments</h4>
-            <div>
-              <p>Latest | Popular</p>
-            </div>
           </div>
           <!-- Create Comment -->
           <Comment />
