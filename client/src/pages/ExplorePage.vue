@@ -24,7 +24,7 @@ const coords = ref({
   longitude: null,
 });
 const categories = ["All", "Wilderness", "Mountains", "Cycling", "Views", "Hiking", "Caves", "Skiing", "HotSprings", "Stargazing", "Swimming", "Adventure"]
-
+const gotLocations = ref(false)
 // @ts-ignore
 async function getCurrentLocation() {
   try {
@@ -67,6 +67,7 @@ async function getLocations() {
     const maxSearchRadius = 1609.34 * searchRadius.value
     logger.log('Getting locations', currentLocation)
     await locationService.getLocations(currentLocation, maxSearchRadius)
+    gotLocations.value = true
   } catch (error) {
     Pop.error(error)
     logger.error(error)
@@ -119,11 +120,13 @@ function handleMapClick(payload) {
         </div>
       </div>
       <div class="order-0 order-md-2 col-md-8">
-        <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude && locations.length !== 0"
-          :exploreCoordinatesProp="locations" :coordinatesProp="coords" class="map" />
-        <div v-else-if="coords.latitude && coords.longitude && locations.length == 0" class="text-center my-5">
-          <h2>No Locations match that search</h2>
-          <p>Try a bigger Radius or a different category</p>
+        <div v-if="gotLocations">
+          <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude && locations.length !== 0"
+            :exploreCoordinatesProp="locations" :coordinatesProp="coords" class="map" />
+          <div v-else-if="coords.latitude && coords.longitude && locations.length == 0" class="text-center my-5">
+            <h2>No Locations match that search</h2>
+            <p>Try a bigger Radius or a different category</p>
+          </div>
         </div>
         <div v-else class="loading d-flex justify-content-center align-items-center mt">
           <h1>Loading Map</h1><i class="mdi mdi-earth mdi-spin"></i>
