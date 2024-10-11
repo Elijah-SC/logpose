@@ -42,11 +42,10 @@
     </div>
     <div class=" d-flex bg-light shadow rounded mb-3 col-md-8 mt-3">
       <img class="contributor-img img-fluid mb-2 m-2"
-        src="https://images.unsplash.com/photo-1557109077-4caf3851fd3f?q=80&w=1933&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="contributor name">
+        src="https://www.mvtimes.com/mvt/uploads/2019/10/Cyanocitta-cristata-004.jpg" alt="contributor name">
       <div class="flex-column align-self-center ms-2">
-        <h4>Name</h4>
-        <a href="" target="_blank"><i class="mdi mdi-github fs-3"></i></a>
+        <h4>Eduardo</h4>
+        <a href="https://github.com/ESaucedo3" target="_blank"><i class="mdi mdi-github fs-3"></i></a>
         <a href="" target="_blank"><i class="mdi mdi-linkedin fs-3"></i></a>
       </div>
       <div class="align-self-center ms-4 karla">
