@@ -88,6 +88,10 @@ async function createSavedLocation(visited) {
 
 async function checkIn() {
   try {
+    if (foundUserVisitedLocation.value.visited == true) {
+      const doesUserWantToLeave = await Pop.confirm(`Are you sure you want to leave`, 'you wont be able to add comments or photos to this location if you do')
+      if (!doesUserWantToLeave) return
+    }
     await savedLocations.checkIn({
       visited: !foundUserVisitedLocation.value.visited,
       id: foundUserVisitedLocation.value.id
@@ -263,7 +267,7 @@ function handleCheckIn() {
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 text-center">
         <h3>People who have checked in</h3>
         <div v-for="visitor in locationVisitors" :key="visitor.id" class="p-2 bg-light visitor-container m-2">
           <div class="d-flex align-items-center border-start border-2 border-dark">
@@ -304,6 +308,6 @@ textarea {
 }
 
 .visitor-container {
-  max-width: fit-content;
+  width: 70%;
 }
 </style>
