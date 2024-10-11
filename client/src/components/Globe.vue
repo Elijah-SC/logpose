@@ -25,7 +25,7 @@ function prime() {
   const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
   // NOTE Camera | What we see from our pov
   const camera = new THREE.PerspectiveCamera(77, 2, 0.1, 100);
-  camera.position.z = 2.9;
+  camera.position.z = 2;
   // NOTE Scene | Root of scene graph kinda like the landscape
   const scene = new THREE.Scene();
 
@@ -44,7 +44,7 @@ function prime() {
   });
   // NOTE Mesh | Finalized version of both geometry & material
   const earthMesh = new THREE.Mesh(geometry, material);
-  earthMesh.position.set(3, 0, 0);
+  earthMesh.position.set(0, 0, 0);
   scene.add(earthMesh);
 
   // NOTE Setting skybox
