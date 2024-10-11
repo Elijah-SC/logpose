@@ -121,7 +121,7 @@ function handleMapClick(payload) {
       <div class="order-0 order-md-2 col-md-8">
         <TrueHereMap @clickedMap="handleMapClick" v-if="coords.latitude && coords.longitude && locations.length !== 0"
           :exploreCoordinatesProp="locations" :coordinatesProp="coords" class="map" />
-        <div v-else-if="locations.length == 0" class="text-center my-5">
+        <div v-else-if="coords.latitude && coords.longitude && locations.length == 0" class="text-center my-5">
           <h2>No Locations match that search</h2>
           <p>Try a bigger Radius or a different category</p>
         </div>

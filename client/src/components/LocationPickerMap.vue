@@ -57,30 +57,33 @@ function initializeMap() {
 function initializeExploreMap(map) {
   const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50" height="50">
   <circle cx="12" cy="10" r="9" fill="blue" opacity="0.7"/>
-  <circle cx="12" cy="10" r="4" fill="white"/>
+  <circle cx="12" cy="10" r="4" fill="blue"/>
   <path d="M12 2A7 7 0 0 0 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9A7 7 0 0 0 12 2Z" fill="blue"/>
+</svg>`
+  const secondMarker = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50" height="50">
+  <circle cx="12" cy="10" r="9" fill="red" opacity="0"/>
+  <circle cx="12" cy="10" r="4" fill="red"/>
+  <path d="M12 2A7 7 0 0 0 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9A7 7 0 0 0 12 2Z" fill="red"/>
 </svg>`
 
   const icon = new H.map.Icon(svgMarkup);
+  const SecondIcon = new H.map.Icon(secondMarker);
 
   map.setCenter({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }); // Current Coordinates
   map.setZoom(13);
-  // @ts-ignore
-  const pinMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }, { icon: icon });
-  map.addObject(pinMarker);
 
-  props.exploreCoordinatesProp.forEach(coord => {
-    // @ts-ignore
-    const pinMarker = new H.map.Marker({ lat: coord.latitude, lng: coord.longitude });
-    map.addObject(pinMarker);
-  })
+  const pinMarker = new H.map.Marker({ lat: props.coordinatesProp.latitude, lng: props.coordinatesProp.longitude }, { icon: icon, data: { name: 'Starting Point' } });
+  map.addObject(pinMarker);
+  const chosenLocation = new H.map.Marker({ lat: props.coordinatesProp.latitude + 10, lng: props.coordinatesProp.longitude }, { icon: SecondIcon, data: { name: ';SECONDARY' } });
+  map.addObject(chosenLocation);
+
 
 
 
   map.addEventListener('tap', (e) => {
     const coord = map.screenToGeo(e.currentPointer.viewportX, e.currentPointer.viewportY);
     emit('clickedMap', { lat: coord.lat, lng: coord.lng })
-    pinMarker.setGeometry(coord);
+    chosenLocation.setGeometry(coord);
   });
 }
 

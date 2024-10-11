@@ -191,7 +191,8 @@ function handleCheckIn() {
         <div>
           <h3 class="text-center">Directions</h3>
           <p>{{ activeLocation.directions }}</p>
-          <div class="text-center">
+          <div v-if="account" class="text-center">
+            <div>
               <button v-if="!foundUserVisitedLocation" @click="createSavedLocation(false)" type="button"
                 class="btn btn-outline-dark rounded me-2">
                 Log it
@@ -203,6 +204,7 @@ function handleCheckIn() {
                 data-bs-target="#location-picker">
                 Check in
               </button>
+            </div>
           </div>
         </div>
       </div>
@@ -217,9 +219,7 @@ function handleCheckIn() {
             </div>
           </div>
           <!-- Create Comment -->
-           <div v-if="YouAreAVisitor">
-             <Comment />
-           </div>
+          <Comment />
           <!-- Account | User Comments -->
           <div v-for="comment in comments" :key="comment.id">
             <div class="d-flex justify-content-between">
@@ -232,15 +232,13 @@ function handleCheckIn() {
                   aria-expanded="false"></i>
                 <ul class="dropdown-menu rounded-0">
                   <li>
-                    <button @click="toggler" class="dropdown-item">
-                      Edit
+                    <button @click="toggler" class="dropdown-item">Edit
                     </button>
                   </li>
                   <hr />
                   <li>
                     <button :disabled="comment.creator.id != account?.id" @click="deleteComment(comment.id)"
-                      class="dropdown-item">
-                      Delete
+                      class="dropdown-item">Delete
                     </button>
                   </li>
                 </ul>
