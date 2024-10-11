@@ -144,8 +144,13 @@ function initializeAccountMap(map) {
 <style lang="scss" scoped>
 .hMap {
   width: 100%;
-  height: 600px;
+  height: 87dvh;
   border: 1px solid #333;
   margin: 1rem auto;
+  cursor: grab;
+}
+
+.hMap:active {
+  cursor: grabbing;
 }
 </style>

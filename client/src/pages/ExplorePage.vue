@@ -159,7 +159,7 @@ function handleMapClick(payload) {
 }
 
 .locations-column {
-  height: 580px;
+  height: 87dvh;
   overflow-y: auto;
 }
 </style>

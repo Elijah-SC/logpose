@@ -100,5 +100,6 @@ function initializeExploreMap(map) {
   height: 600px;
   border: 1px solid #333;
   margin: 1rem auto;
+  cursor: crosshair;
 }
 </style>
