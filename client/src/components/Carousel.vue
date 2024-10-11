@@ -75,7 +75,7 @@ async function deletePicture(locationPictureId) {
   <div v-if="locationPictures.length !== 0" id="locationCarouselIndicator" class="carousel slide carousel-fade"
     data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div v-for="(locationPicture) in locationPictures" :key="locationPicture.id" class="carousel-item active"
+      <div v-for="(locationPicture, index) in locationPictures" :key="locationPicture.id" class="carousel-item active"
         data-bs-interval="3000">
         <img :src="locationPicture.picture" class="d-block w-100 position-relative" :alt="locationPicture.id">
         <div v-if="YouAreAVisitor"
@@ -93,10 +93,12 @@ async function deletePicture(locationPictureId) {
               </form>
             </div>
           </div>
-          <div v-if="account?.id === locationPicture.creatorId" class="delete-design mb-2">
+
+          <div v-if="account?.id === locationPicture.creatorId && index !== 0" class="delete-design mb-2">
             <i @click="deletePicture(locationPicture.id)" type="button" class="fa-solid fa-trash fa-lg"
               style="color: #dd0000;"></i>
           </div>
+
         </div>
       </div>
     </div>
