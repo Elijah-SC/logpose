@@ -40,11 +40,6 @@ const YouAreAVisitor = computed(() => {
   return true
 })
 
-// const LocationSaved = computed(()=> {
-//   if (AppState.identity == null) return false
-//   const savedLocation = AppState
-// })
-
 const foundUserVisitedLocation = computed(() => AppState.locationVisitors.find(lv => lv.creatorId == AppState.account?.id))
 
 watch(() => route.params.locationId, () => {
@@ -202,8 +197,7 @@ function handleCheckIn() {
                 class="btn btn-outline-dark rounded me-2">
                 Log it
               </button>
-            </div>
-            <div>
+
               <button v-if="YouAreAVisitor" @click="checkIn()" type="button" class="btn btn-outline-danger rounded">
                 Leave </button>
               <button v-else type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"

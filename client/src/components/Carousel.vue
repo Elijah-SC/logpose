@@ -32,6 +32,13 @@ const pictureData = ref({
   locationId: null
 });
 
+const YouAreAVisitor = computed(() => {
+  if (AppState.identity == null) return false
+  const visited = AppState.locationVisitors.find(visitor => visitor.creatorId == AppState.account?.id && visitor.visited)
+  if (!visited) return false
+  return true
+})
+
 const toggleCreate = () => {
   revealCreate.value = !revealCreate.value;
 }
@@ -52,7 +59,6 @@ async function createPicture() {
   }
 }
 
-
 async function deletePicture(locationPictureId) {
   try {
     const deleteConfirmation = await Pop.confirm('You sure you want to delete this photo?');
@@ -72,7 +78,7 @@ async function deletePicture(locationPictureId) {
       <div v-for="(locationPicture) in locationPictures" :key="locationPicture.id" class="carousel-item active"
         data-bs-interval="3000">
         <img :src="locationPicture.picture" class="d-block w-100 position-relative" :alt="locationPicture.id">
-        <div
+        <div v-if="YouAreAVisitor"
           class="position-absolute w-100 h-100 top-0 start-0 d-flex flex-column align-items-center justify-content-between">
           <div class="create-design mt-2">
             <button @click="toggleCreate()" class="btn btn-outline-light" type="button">

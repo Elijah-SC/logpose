@@ -13,6 +13,7 @@ class CommentsService {
     await deletedComment.deleteOne();
     return "Comment Deleted";
   }
+  
   async updateComment(userId, commentId, commentData) {
     const updatedComment = await dbContext.Comments.findById(commentId);
     if (updatedComment === null) {
@@ -26,11 +27,13 @@ class CommentsService {
     await updatedComment.save();
     return updatedComment;
   }
+
   async createComment(commentData) {
     const createdComment = await dbContext.Comments.create(commentData);
     await createdComment.populate("creator", "-email -subs");
     return createdComment;
   }
+
   async getLocationComments(locationId) {
     const locationComments = await dbContext.Comments.find({
       locationId: locationId,
