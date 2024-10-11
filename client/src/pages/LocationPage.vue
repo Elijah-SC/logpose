@@ -196,7 +196,7 @@ function handleCheckIn() {
         <div>
           <h3 class="text-center">Directions</h3>
           <p>{{ activeLocation.directions }}</p>
-          <div class="text-center">
+          <div v-if="account" class="text-center">
             <div>
               <button v-if="!foundUserVisitedLocation" @click="createSavedLocation(false)" type="button"
                 class="btn btn-outline-dark rounded me-2">
