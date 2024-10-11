@@ -1,6 +1,6 @@
 <script setup>
+import Globe from "@/components/Globe.vue";
 import HomeNaveBar from "@/components/HomeNavBar.vue";
-
 
 </script>
 
@@ -27,7 +27,7 @@ import HomeNaveBar from "@/components/HomeNavBar.vue";
     <div class="mx d-flex justify-content-center align-items-center explore p-4 rounded my-5">
 
       <div class="row justify-content-start">
-        <div class="col-md-6">
+        <div class="col-md-5">
           <div class="text-light about-msgs">
             <h5 class="fw-bold about-msg-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis
               perferendis
@@ -51,8 +51,12 @@ import HomeNaveBar from "@/components/HomeNavBar.vue";
             </div>
           </div>
         </div>
+        <div class="col-md-7">
+          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+            <Globe />
+          </div>
+        </div>
       </div>
-
     </div>
   </section>
 </template>
