@@ -8,6 +8,7 @@ import { logger } from '@/utils/Logger.js';
 import DiscoverLocCard from "@/components/DiscoverLocCard.vue";
 import { locationService } from "@/services/LocationService.js";
 import Navbar from "@/components/Navbar.vue";
+import SavedLocationCard from "@/components/globals/SavedLocationCard.vue";
 
 const account = computed(() => AppState.account)
 const randomLocations = computed(() => AppState.randomLocations);
@@ -56,23 +57,33 @@ async function deleteLocation(visitorLocationId) {
     <Navbar />
   </header>
   <div v-if="account">
-    <section v-if="account" class="d-flex ms-3">
-          <img class="creator-img" :src="account.picture" :alt="account.name" />
-          <h1 class="align-self-center ms-2">{{ account.name }}</h1>
+    <section class="d-flex ms-3 justify-content-center align-items-center">
+      <img class="creator-img me-2" :src="account.picture" :alt="account.name" />
+      <h1 class="ms-2r">{{ account.name }}</h1>
     </section>
     <section class="container-fluid">
       <section class="row">
         <div v-if="SavedLocations.length !== 0" class="col-md-12">
-          <h4 class="text-center">See where you have been</h4>
+          <div class="d-flex justify-content-end">
+            <div class="Key p-2">
+              <p class="mb-0">
+                <i class="mdi mdi-square text-danger"></i>-Visited Locations
+              </p>
+              <p class="mb-0">
+                <i class="mdi mdi-square text-primary"></i>-Saved Locations
+              </p>
+
+            </div>
+          </div>
+          <h4 class="text-center">See your Visited and Saved Locations</h4>
           <TrueHereMap :SavedLocationsCoordinatesProp="SavedLocations" />
         </div>
       </section>
     </section>
     <section class="container">
       <section class="row">
-        <h4 class="text-center">Where your planning to go</h4>
         <div v-for="SavedLocation in SavedLocations" :key="SavedLocation.id" class="col-md-4">
-          <LocationCard :location="SavedLocation.location" />
+          <SavedLocationCard :location="SavedLocation.location" :SavedLocation="SavedLocation" />
           <div>
             <button @click="deleteLocation(SavedLocation.id)" class="btn btn-success">Delete</button>
           </div>
@@ -107,5 +118,14 @@ img {
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
+}
+
+.Map-Position {
+  position: relative;
+}
+
+.Key {
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.668);
+  width: 25vw;
 }
 </style>
