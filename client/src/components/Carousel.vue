@@ -79,8 +79,8 @@ async function deletePicture(locationPictureId) {
         data-bs-interval="3000">
         <img :src="locationPicture.picture" class="d-block w-100 position-relative" :alt="locationPicture.id">
         <div v-if="YouAreAVisitor"
-          class="position-absolute w-100 h-100 top-0 start-0 d-flex flex-column align-items-center justify-content-between">
-          <div class="create-design mt-2">
+          class="position-absolute w-100 h-100 top-0 start-0 d-flex align-items-end justify-content-center">
+          <div class="create-design mb-2">
             <div @click="toggleCreate()">
               <i type="button" class="fa-solid fa-camera fa-lg" style="color: #8ca6d5;"></i>
             </div>
@@ -94,11 +94,10 @@ async function deletePicture(locationPictureId) {
             </div>
           </div>
 
-          <div v-if="account?.id === locationPicture.creatorId && index !== 0" class="delete-design mb-2">
+          <div v-if="account?.id === locationPicture.creatorId && index !== 0" class="delete-design ms-2 mb-2">
             <i @click="deletePicture(locationPicture.id)" type="button" class="fa-solid fa-trash fa-lg"
               style="color: #dd0000;"></i>
           </div>
-
         </div>
       </div>
     </div>
