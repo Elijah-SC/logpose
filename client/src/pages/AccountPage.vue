@@ -83,7 +83,7 @@ async function deleteLocation(visitorLocationId) {
     <section class="container">
       <section class="row">
         <div v-for="SavedLocation in SavedLocations" :key="SavedLocation.id" class="col-md-4">
-          <SavedLocationCard :location="SavedLocation.location" :SavedLocation="SavedLocation" />
+          <SavedLocationCard :location="SavedLocation.location" :SavedLocationProp="SavedLocation" />
           <div>
             <button @click="deleteLocation(SavedLocation.id)" class="btn btn-success">Delete</button>
           </div>
