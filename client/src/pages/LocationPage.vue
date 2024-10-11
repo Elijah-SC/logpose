@@ -40,11 +40,6 @@ const YouAreAVisitor = computed(() => {
   return true
 })
 
-// const LocationSaved = computed(()=> {
-//   if (AppState.identity == null) return false
-//   const savedLocation = AppState
-// })
-
 const foundUserVisitedLocation = computed(() => AppState.locationVisitors.find(lv => lv.creatorId == AppState.account?.id))
 
 watch(() => route.params.locationId, () => {
@@ -197,20 +192,17 @@ function handleCheckIn() {
           <h3 class="text-center">Directions</h3>
           <p>{{ activeLocation.directions }}</p>
           <div class="text-center">
-            <div>
               <button v-if="!foundUserVisitedLocation" @click="createSavedLocation(false)" type="button"
                 class="btn btn-outline-dark rounded me-2">
                 Log it
               </button>
-            </div>
-            <div>
+
               <button v-if="YouAreAVisitor" @click="checkIn()" type="button" class="btn btn-outline-danger rounded">
                 Leave </button>
               <button v-else type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"
                 data-bs-target="#location-picker">
                 Check in
               </button>
-            </div>
           </div>
         </div>
       </div>
@@ -225,7 +217,9 @@ function handleCheckIn() {
             </div>
           </div>
           <!-- Create Comment -->
-          <Comment />
+           <div v-if="YouAreAVisitor">
+             <Comment />
+           </div>
           <!-- Account | User Comments -->
           <div v-for="comment in comments" :key="comment.id">
             <div class="d-flex justify-content-between">
@@ -238,13 +232,15 @@ function handleCheckIn() {
                   aria-expanded="false"></i>
                 <ul class="dropdown-menu rounded-0">
                   <li>
-                    <button @click="toggler" class="dropdown-item">Edit
+                    <button @click="toggler" class="dropdown-item">
+                      Edit
                     </button>
                   </li>
                   <hr />
                   <li>
                     <button :disabled="comment.creator.id != account?.id" @click="deleteComment(comment.id)"
-                      class="dropdown-item">Delete
+                      class="dropdown-item">
+                      Delete
                     </button>
                   </li>
                 </ul>

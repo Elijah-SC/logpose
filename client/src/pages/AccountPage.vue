@@ -56,16 +56,9 @@ async function deleteLocation(visitorLocationId) {
     <Navbar />
   </header>
   <div v-if="account">
-    <section v-if="account" class="container">
-      <section class="row">
-        <div class="col-md-3">
+    <section v-if="account" class="d-flex ms-3">
           <img class="creator-img" :src="account.picture" :alt="account.name" />
-        </div>
-        <div class="col-md-8">
-          <h1>{{ account.name }}</h1>
-          <p><i class="mdi mdi-shield-star fs-1"></i></p>
-        </div>
-      </section>
+          <h1 class="align-self-center ms-2">{{ account.name }}</h1>
     </section>
     <section class="container-fluid">
       <section class="row">
