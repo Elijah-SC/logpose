@@ -29,13 +29,24 @@ async function createComment() {
         <textarea v-model="commentData.body" name="body" id="body" class="form-control" rows="9" required
             v-bind:contenteditable="true" placeholder="Leave a comment" minlength="3" maxlength="300"></textarea>
         <div class="text-end">
-            <button class="btn btn-outline-dark rounded mt-2" type="submit">Send</button>
+            <button class="btn btn-outline-dark rounded mt-2 submit-btn" type="submit">Send</button>
         </div>
     </form>
 </template>
 
 
 <style lang="scss" scoped>
+.submit-btn {
+    background-color: #5daf58;
+    color: rgb(3, 3, 3);
+    border: none;
+    border-radius: 5px;
+}
+
+.submit-btn:hover {
+    background-color: #5daf58;
+}
+
 textarea {
     resize: none
 }
