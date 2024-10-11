@@ -183,103 +183,101 @@ function handleCheckIn() {
       <ModalWrapper id="location-picker">
         <LocationPickerDev :activeLocation="activeLocation" @within-distance="handleCheckIn()" />
       </ModalWrapper>
+    </section>
 
-      <!-- SECTION About Location -->
-      <div class="col-md-6">
-        <div>
-          <h3>About this location</h3>
-          <p>{{ activeLocation.description }}</p>
-        </div>
-      </div>
-
-      <!-- SECTION Directions -->
-      <div class="col-md-6">
-        <div class="text-center">
-          <h3 class="text-center">Directions</h3>
-          <p>{{ activeLocation.directions }}</p>
-          <div v-if="account" class="text-center">
-            <div>
-              <button v-if="!foundUserVisitedLocation" @click="createSavedLocation(false)" type="button"
-                class="btn btn-outline-dark rounded me-2">
-                Log it
-              </button>
-
-              <button v-if="YouAreAVisitor" @click="checkIn()" type="button" class="btn btn-outline-danger rounded">
-                Leave
-              </button>
-              <button v-else type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"
-                data-bs-target="#location-picker">
-                Check in
-              </button>
+    <section class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="h-100">
+              <h2>About this location</h2>
+              <p>{{ activeLocation.description }}</p>
             </div>
           </div>
-        </div>
-      </div>
+          <div class="col-md-5">
+            <div class="d-flex flex-column">
+              <div>
+                <h3>Directions</h3>
+                <p class="directions-design">{{ activeLocation.directions }}</p>
+                <div v-if="account" class="text-center">
+                  <div>
+                    <button v-if="!foundUserVisitedLocation" @click="createSavedLocation(false)" type="button"
+                      class="btn btn-outline-dark rounded me-2">
+                      Log it
+                    </button>
 
-      <!-- NOTE Comments -->
-      <div class="col-md-6">
-        <div class="bg-light p-2 rounded">
-          <div class="d-flex justify-content-between">
-            <h4>Comments</h4>
-          </div>
-          <!-- Create Comment -->
-          <div v-if="YouAreAVisitor">
-            <Comment />
-          </div>
-          <!-- Account | User Comments -->
-          <div v-for="comment in comments" :key="comment.id">
-            <div class="d-flex justify-content-between">
-              <div class="d-flex align-items-center mb-2">
-                <img class="guy me-2" :src="comment.creator.picture" :alt="comment.creator.name">
-                <p class="m-0">{{ comment.creator.name }}</p>
-              </div>
-              <div v-if="account && account.id === comment.creatorId" class="dropdown mx-3 account-comment">
-                <i class="mdi mdi-dots-horizontal fs-4" type="button" data-bs-toggle="dropdown"
-                  aria-expanded="false"></i>
-                <ul class="dropdown-menu rounded-0">
-                  <li>
-                    <button @click="toggler" class="dropdown-item">
-                      Edit
+                    <button v-if="YouAreAVisitor" @click="checkIn()" type="button"
+                      class="btn btn-outline-danger rounded">
+                      Leave
                     </button>
-                  </li>
-                  <hr />
-                  <li>
-                    <button :disabled="comment.creator.id != account?.id" @click="deleteComment(comment.id)"
-                      class="dropdown-item">
-                      Delete
+                    <button v-else type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"
+                      data-bs-target="#location-picker">
+                      Check in
                     </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div v-if="toggle && account.id === comment.creatorId">
-              <form @submit.prevent="editComment(comment.id)">
-                <textarea rows="5" v-model="editableCommentData.body" placeholder="Editing Comment" class="form-control"
-                  name="body" id="body">
-                </textarea>
-                <div class="mt-2">
-                  <button @click="toggler()" type="button" class="btn btn-outline-dark">
-                    Cancel
-                  </button>
-                  <button class="btn btn-outline-dark ms-2">
-                    Finish Editing
-                  </button>
+                  </div>
                 </div>
-              </form>
-            </div>
-            <div v-else>
-              <p>{{ comment.body }}</p>
+              </div>
+              <div class="my-3">
+                <h3>People who have checked in</h3>
+                <div v-for="visitor in locationVisitors" :key="visitor.id" class="p-2 bg-light">
+                  <div class="d-flex align-items-center border-start border-2 border-dark">
+                    <img class="visitor-icon mx-2" :src="visitor.creator?.picture" :alt="visitor.creator?.name">
+                    <p class="m-0">{{ visitor.creator?.name }}</p>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-md-6 text-center">
-        <h3>People who have checked in</h3>
-        <div v-for="visitor in locationVisitors" :key="visitor.id" class="p-2 bg-light visitor-container m-2">
-          <div class="d-flex align-items-center border-start border-2 border-dark">
-            <i class="fa-solid fa-certificate fa-lg mx-2" style="color: #B197FC;"></i>
-            <img class="guy me-2" :src="visitor.creator?.picture" :alt="visitor.creator?.name">
-            <p class="m-0">{{ visitor.creator?.name }}</p>
+          <div class="col-12">
+            <div class="bg-light p-2 mt-4">
+              <h3 class="text-center">Comments</h3>
+              <Comment v-if="YouAreAVisitor" />
+              <div v-for="comment in comments" :key="comment.id">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center mb-2">
+                    <img class="visitor-icon me-2" :src="comment.creator.picture" :alt="comment.creator.name">
+                    <p class="m-0">{{ comment.creator.name }}</p>
+                  </div>
+                  <div v-if="account && account.id === comment.creatorId" class="dropdown mx-3 account-comment">
+                    <i class="mdi mdi-dots-horizontal fs-4" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false"></i>
+                    <ul class="dropdown-menu rounded-0">
+                      <li>
+                        <button @click="toggler" class="dropdown-item">
+                          Edit
+                        </button>
+                      </li>
+                      <hr />
+                      <li>
+                        <button :disabled="comment.creator.id != account?.id" @click="deleteComment(comment.id)"
+                          class="dropdown-item">
+                          Delete
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div v-if="toggle && account.id === comment.creatorId">
+                  <form @submit.prevent="editComment(comment.id)">
+                    <textarea rows="5" v-model="editableCommentData.body" placeholder="Editing Comment"
+                      class="form-control" name="body" id="body">
+                </textarea>
+                    <div class="mt-2">
+                      <button @click="toggler()" type="button" class="btn btn-outline-dark">
+                        Cancel
+                      </button>
+                      <button class="btn btn-outline-dark ms-2">
+                        Finish Editing
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div v-else>
+                  <p>{{ comment.body }}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -305,7 +303,7 @@ textarea {
   border: none;
 }
 
-.guy {
+.visitor-icon {
   aspect-ratio: 1/1;
   height: 45px;
   border-radius: 50%;
@@ -313,7 +311,7 @@ textarea {
   object-position: center;
 }
 
-.visitor-container {
-  width: 70%;
+.directions-design {
+  line-height: 2em;
 }
 </style>

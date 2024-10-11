@@ -26,8 +26,8 @@ async function createComment() {
 
 <template>
     <form @submit.prevent="createComment()">
-        <textarea v-model="commentData.body" name="body" id="body" class="form-control" rows="7" required v-bind:contenteditable="true"
-            placeholder="Leave a comment" minlength="3" maxlength="300"></textarea>
+        <textarea v-model="commentData.body" name="body" id="body" class="form-control" rows="9" required
+            v-bind:contenteditable="true" placeholder="Leave a comment" minlength="3" maxlength="300"></textarea>
         <div class="text-end">
             <button class="btn btn-outline-dark rounded mt-2" type="submit">Send</button>
         </div>
@@ -35,4 +35,8 @@ async function createComment() {
 </template>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+textarea {
+    resize: none
+}
+</style>
