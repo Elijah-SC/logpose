@@ -25,7 +25,7 @@ function prime() {
   const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
   // NOTE Camera | What we see from our pov
   const camera = new THREE.PerspectiveCamera(77, 2, 0.1, 100);
-  camera.position.z = 3;
+  camera.position.z = 2.9;
   // NOTE Scene | Root of scene graph kinda like the landscape
   const scene = new THREE.Scene();
 
@@ -44,7 +44,7 @@ function prime() {
   });
   // NOTE Mesh | Finalized version of both geometry & material
   const earthMesh = new THREE.Mesh(geometry, material);
-  earthMesh.position.set(0, 0, 0);
+  earthMesh.position.set(3, 0, 0);
   scene.add(earthMesh);
 
   // NOTE Setting skybox
@@ -70,8 +70,8 @@ function prime() {
 
   // NOTE Recursive | animating the globe
   const animate = (time) => {
-    time *= 0.001 - 0.0003;
-    //earthMesh.rotation.x = time;
+    time *= 0.001 - 0.0006;
+    // earthMesh.rotation.x = time;
     earthMesh.rotation.y = time;
 
     light.position.set(Math.sin(time) * 3, 1, Math.cos(time) * 3);
@@ -109,10 +109,9 @@ function resizeRendererToDisplaySize(canvas, renderer) {
 
 <style lang="scss" scoped>
 .c {
-  aspect-ratio: 16/9;
-  height: 40svh;
   display: block;
   margin-bottom: 1rem;
-  border-radius: 15px;
+  width: 100%;
+  height: 100%;
 }
 </style>

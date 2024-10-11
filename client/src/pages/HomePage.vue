@@ -13,7 +13,10 @@ import HomeNaveBar from "@/components/HomeNavBar.vue";
     <div class="hero-child d-flex flex-column justify-content-center align-items-center">
 
 
-      <video class="vid" src="/src/assets/vid/Explore.mp4" autoplay loop playsinline muted></video>
+      <!-- <video class="vid" src="/src/assets/vid/Explore.mp4" autoplay loop playsinline muted></video> -->
+      <div class="earth">
+        <Globe />
+      </div>
       <div class="text-center text-light mb-5 hero-msg">
         <h1 class="mb-4">Find Your Outside</h1>
         <h4>Explore Locations</h4>
@@ -49,11 +52,6 @@ import HomeNaveBar from "@/components/HomeNavBar.vue";
                 <button class="btn btn-light rounded-pill px-3" type="button">Explore</button>
               </router-link>
             </div>
-          </div>
-        </div>
-        <div class="col-md-7">
-          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
-            <Globe />
           </div>
         </div>
       </div>
@@ -125,13 +123,12 @@ import HomeNaveBar from "@/components/HomeNavBar.vue";
   aspect-ratio: 1/1;
 }
 
-.vid {
+.earth {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  object-fit: cover;
   z-index: -1;
 }
 </style>
