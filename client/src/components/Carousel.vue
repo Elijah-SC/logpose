@@ -81,9 +81,9 @@ async function deletePicture(locationPictureId) {
         <div v-if="YouAreAVisitor"
           class="position-absolute w-100 h-100 top-0 start-0 d-flex flex-column align-items-center justify-content-between">
           <div class="create-design mt-2">
-            <button @click="toggleCreate()" class="btn btn-outline-light" type="button">
-              <i class="fa-solid fa-camera fa-lg" style="color: #8ca6d5;"></i>
-            </button>
+            <div @click="toggleCreate()">
+              <i type="button" class="fa-solid fa-camera fa-lg" style="color: #8ca6d5;"></i>
+            </div>
             <div v-if="revealCreate">
               <form @submit.prevent="createPicture()">
                 <label class="form-label" for="pictureUrl">Picture:</label>
@@ -94,9 +94,8 @@ async function deletePicture(locationPictureId) {
             </div>
           </div>
           <div v-if="account?.id === locationPicture.creatorId" class="delete-design mb-2">
-            <button @click="deletePicture(locationPicture.id)" class="btn btn-outline-light" type="button">
-              <i class="fa-solid fa-trash fa-lg" style="color: #dd0000;"></i>
-            </button>
+            <i @click="deletePicture(locationPicture.id)" type="button" class="fa-solid fa-trash fa-lg"
+              style="color: #dd0000;"></i>
           </div>
         </div>
       </div>
