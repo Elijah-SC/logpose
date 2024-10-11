@@ -93,9 +93,11 @@ async function deletePicture(locationPictureId) {
               </form>
             </div>
           </div>
-          <div v-if="account?.id === locationPicture.creatorId" class="delete-design mb-2">
-            <i @click="deletePicture(locationPicture.id)" type="button" class="fa-solid fa-trash fa-lg"
-              style="color: #dd0000;"></i>
+          <div v-if="!location.coverImg" >
+            <div v-if="account?.id === locationPicture.creatorId" class="delete-design mb-2">
+              <i @click="deletePicture(locationPicture.id)" type="button" class="fa-solid fa-trash fa-lg"
+                style="color: #dd0000;"></i>
+            </div>
           </div>
         </div>
       </div>

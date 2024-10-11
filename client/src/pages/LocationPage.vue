@@ -238,13 +238,15 @@ function handleCheckIn() {
                   aria-expanded="false"></i>
                 <ul class="dropdown-menu rounded-0">
                   <li>
-                    <button @click="toggler" class="dropdown-item">Edit
+                    <button @click="toggler" class="dropdown-item">
+                      Edit
                     </button>
                   </li>
                   <hr />
                   <li>
                     <button :disabled="comment.creator.id != account?.id" @click="deleteComment(comment.id)"
-                      class="dropdown-item">Delete
+                      class="dropdown-item">
+                      Delete
                     </button>
                   </li>
                 </ul>
@@ -256,8 +258,12 @@ function handleCheckIn() {
                   name="body" id="body">
                 </textarea>
                 <div class="mt-2">
-                  <button @click="toggler()" type="button" class="btn btn-outline-dark">Cancel</button>
-                  <button class="btn btn-outline-dark ms-2">Finish Editing</button>
+                  <button @click="toggler()" type="button" class="btn btn-outline-dark">
+                    Cancel
+                  </button>
+                  <button class="btn btn-outline-dark ms-2">
+                    Finish Editing
+                  </button>
                 </div>
               </form>
             </div>
