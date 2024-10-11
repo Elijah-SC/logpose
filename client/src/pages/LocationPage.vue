@@ -201,7 +201,7 @@ function handleCheckIn() {
               </button>
 
               <button v-if="YouAreAVisitor" @click="checkIn()" type="button" class="btn btn-outline-danger rounded">
-                Leave 
+                Leave
               </button>
               <button v-else type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"
                 data-bs-target="#location-picker">
@@ -219,7 +219,9 @@ function handleCheckIn() {
             <h4>Comments</h4>
           </div>
           <!-- Create Comment -->
-          <Comment />
+          <div v-if="YouAreAVisitor">
+            <Comment />
+          </div>
           <!-- Account | User Comments -->
           <div v-for="comment in comments" :key="comment.id">
             <div class="d-flex justify-content-between">
