@@ -186,7 +186,7 @@ function handleCheckIn() {
     </section>
 
     <section class="row justify-content-center">
-      <div class="col-md-8">
+      <div class="col-md-9">
         <div class="row">
           <div class="col-md-7">
             <div class="h-100">
@@ -226,7 +226,6 @@ function handleCheckIn() {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
           <div class="col-12">
