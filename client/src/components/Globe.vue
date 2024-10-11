@@ -61,7 +61,7 @@ function prime() {
   scene.background = skyboxTexture;
 
   // NOTE Ambient Light
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
   scene.add(ambientLight);
 
   // NOTE Pointer Light
