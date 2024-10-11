@@ -8,11 +8,11 @@ import {
 import { AppState } from "@/AppState.js";
 
 class SavedLocations {
-  async checkIn(updateData, savedLocationId) {
+  async checkIn(updateData, currentVisitorId) {
     const response = await api.put(`api/savedLocations`, updateData);
     // logger.log("visit location", response.data);
     const newVisitor = new SavedLocationCreator(response.data);
-    const foundVisitorIndex = AppState.locationVisitors.findIndex(visitor => visitor.creatorId == savedLocationId)
+    const foundVisitorIndex = AppState.locationVisitors.findIndex(visitor => visitor.id == currentVisitorId)
     AppState.locationVisitors.splice(foundVisitorIndex, 1, newVisitor)
 
     logger.log(`New Visitor`, newVisitor);

@@ -32,16 +32,12 @@ import HomeNaveBar from "@/components/HomeNavBar.vue";
       <div class="row justify-content-start">
         <div class="col-md-5">
           <div class="text-light about-msgs">
-            <h5 class="fw-bold about-msg-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis
-              perferendis
-              natus,
-              deserunt
-              necessitatibus</h5>
-            <p class="about-msg-2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus autem iure
-              laudantium
-              assumenda ad
-              praesentium doloribus delectus eligendi recusandae ratione sapiente, cupiditate iste eos non officiis.
-              Beatae officia facilis unde, doloremque, qui enim molestias quam facere quae vitae eum ullam.</p>
+            <h5 class="fw-bold about-msg-1">About LogePose</h5>
+            <p class="about-msg-2">LogPose is an app designed to promote going outside and exploring. Users can post
+              locations with a longitude and latitude so other users can go and checkout these cool spots out. Once a
+              user visits a location they can check into said location to comment and add pictures to the location. Not
+              just anybody can check in though your geo-location location has to be within range of half a mile to check
+              into the location</p>
           </div>
           <div class="explore-msg mt-3">
             <div class="p-1 rounded mb-3">

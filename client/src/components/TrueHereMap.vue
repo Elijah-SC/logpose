@@ -111,22 +111,31 @@ function initializeAccountMap(map) {
   // @ts-ignore
   const visitedLocations = props.SavedLocationsCoordinatesProp.filter(location => location.visited === true);
   // @ts-ignore
-  const nonVisitedLocations = props.SavedLocationsCoordinatesProp.filter(location => location.visited === false);
+  const SavedLocations = props.SavedLocationsCoordinatesProp.filter(location => location.visited === false);
 
-  const svgIcon = `<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" fill="#0000FF" />
-</svg>`;
-  const icon = new H.map.Icon(svgIcon);
+  const visitedIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50" height="50">
+  <circle cx="12" cy="10" r="9" fill="red" opacity="red"/>
+  <circle cx="12" cy="10" r="4" fill="white"/>
+  <path d="M12 2A7 7 0 0 0 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9A7 7 0 0 0 12 2Z" fill="red"/>
+</svg>`
+
+  const savedIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50" height="50">
+  <circle cx="12" cy="10" r="9" fill="blue" opacity="1"/>
+  <circle cx="12" cy="10" r="4" fill="white"/>
+  <path d="M12 2A7 7 0 0 0 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9A7 7 0 0 0 12 2Z" fill="blue"/>
+</svg>`
+  const VisitedIcon = new H.map.Icon(visitedIcon);
+  const SavedIcon = new H.map.Icon(savedIcon);
 
   visitedLocations.forEach(coord => {
     // @ts-ignore
-    const visitedLocationMarker = new H.map.Marker({ lat: coord.location.latitude, lng: coord.location.longitude }, { icon: icon });
+    const visitedLocationMarker = new H.map.Marker({ lat: coord.location.latitude, lng: coord.location.longitude }, { icon: VisitedIcon });
     map.addObject(visitedLocationMarker);
   });
 
-  nonVisitedLocations.forEach(coord => {
+  SavedLocations.forEach(coord => {
     // @ts-ignore
-    const nonVisitedLocationMarker = new H.map.Marker({ lat: coord.location.latitude, lng: coord.location.longitude });
+    const nonVisitedLocationMarker = new H.map.Marker({ lat: coord.location.latitude, lng: coord.location.longitude }, { icon: SavedIcon });
     map.addObject(nonVisitedLocationMarker);
   });
 

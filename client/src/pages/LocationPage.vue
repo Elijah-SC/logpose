@@ -89,7 +89,7 @@ async function createSavedLocation(visited) {
 async function checkIn() {
   try {
     if (foundUserVisitedLocation.value.visited == true) {
-      const doesUserWantToLeave = await Pop.confirm(`Are you sure you want to leave`, 'you wont be able to add comments or photos to this location if you do')
+      const doesUserWantToLeave = await Pop.confirm(`Are you sure you want to leave`, "you won't be able to add comments or photos to this location if you do")
       if (!doesUserWantToLeave) return
     }
     await savedLocations.checkIn({

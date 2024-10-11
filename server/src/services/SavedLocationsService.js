@@ -32,14 +32,13 @@ class SavedLocationsService {
   async getLocationVisitor(locationId) {
     const savedLocation = await dbContext.SavedLocations.find({
       locationId: locationId,
-      visited: true,
     }).populate("creator");
     return savedLocation;
   }
 
   async createSavedLocation(savedLocationData) {
-    const foundTicket = await dbContext.SavedLocations.findOne(savedLocationData)
-    if (foundTicket) throw new BadRequest(`location is already Saved by this User`)
+    const foundSavedLocation = await dbContext.SavedLocations.findOne(savedLocationData)
+    if (foundSavedLocation) throw new BadRequest(`location is already Saved by this User`)
     const savedLocation = await dbContext.SavedLocations.create(
       savedLocationData
     );
