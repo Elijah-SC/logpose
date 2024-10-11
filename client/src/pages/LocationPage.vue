@@ -179,16 +179,18 @@ function handleCheckIn() {
       <ModalWrapper id="location-picker">
         <LocationPickerDev :activeLocation="activeLocation" @within-distance="handleCheckIn()" />
       </ModalWrapper>
+
       <!-- SECTION About Location -->
       <div class="col-md-6">
         <div>
-          <h3 class="text-center">About this location</h3>
+          <h3>About this location</h3>
           <p>{{ activeLocation.description }}</p>
         </div>
       </div>
+
       <!-- SECTION Directions -->
       <div class="col-md-6">
-        <div>
+        <div class="text-center">
           <h3 class="text-center">Directions</h3>
           <p>{{ activeLocation.directions }}</p>
           <div v-if="account" class="text-center">
@@ -199,7 +201,8 @@ function handleCheckIn() {
               </button>
 
               <button v-if="YouAreAVisitor" @click="checkIn()" type="button" class="btn btn-outline-danger rounded">
-                Leave </button>
+                Leave 
+              </button>
               <button v-else type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal"
                 data-bs-target="#location-picker">
                 Check in
@@ -260,7 +263,7 @@ function handleCheckIn() {
       </div>
       <div class="col-md-6">
         <h3>People who have checked in</h3>
-        <div v-for="visitor in locationVisitors" :key="visitor.id" class="p-2 bg-light visitor-container">
+        <div v-for="visitor in locationVisitors" :key="visitor.id" class="p-2 bg-light visitor-container m-2">
           <div class="d-flex align-items-center border-start border-2 border-dark">
             <i class="fa-solid fa-certificate fa-lg mx-2" style="color: #B197FC;"></i>
             <img class="guy me-2" :src="visitor.creator?.picture" :alt="visitor.creator?.name">
