@@ -8,6 +8,10 @@
       "name": "server",
       "path": "server"
     },
+    {
+      "name": "github",
+      "path": ".github"
+    }
   ],
   "settings": {
     "cSpell.words": [
