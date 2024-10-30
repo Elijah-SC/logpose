@@ -5,17 +5,17 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // @ts-ignore
 import earthImg from '@/assets/img/earth_night.jpg';
 // @ts-ignore
-import stars1 from '@/assets/img/stars1.png';
+import stars1 from '@/assets/img/Stars1.png';
 // @ts-ignore
-import stars2 from '@/assets/img/stars2.png';
+import stars2 from '@/assets/img/Stars2.png';
 // @ts-ignore
-import stars3 from '@/assets/img/stars3.png';
+import stars3 from '@/assets/img/Stars3.png';
 // @ts-ignore
-import stars4 from '@/assets/img/stars4.png';
+import stars4 from '@/assets/img/Stars4.png';
 // @ts-ignore
-import stars5 from '@/assets/img/stars5.png';
+import stars5 from '@/assets/img/Stars5.png';
 // @ts-ignore
-import stars6 from '@/assets/img/stars6.png';
+import stars6 from '@/assets/img/Stars6.png';
 
 onMounted(() => prime());
 
