@@ -19,6 +19,7 @@ const locations = computed(() => {
 });
 const filterCategory = ref('All')
 const searchRadius = ref(10)
+const account = computed(() => AppState.account)
 const coords = ref({
   latitude: null,
   longitude: null,
@@ -91,7 +92,7 @@ function handleMapClick(payload) {
     <div class="row">
       <div class="order-1 order-md-0 col-md-4">
         <div class="d-flex justify-content-around selectors bg-white">
-          <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+          <button v-if="account" type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
             data-bs-target="#location-form">Create</button>
           <div class="dropdown">
             <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"

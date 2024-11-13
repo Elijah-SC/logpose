@@ -98,7 +98,7 @@ async function postLocation() {
       <div class="col-12">
         <label class="form-label" for="locationDirections">Directions</label>
         <input v-model="locationData.directions" class="form-control" id="locationDirections" name="locationDirections"
-          min="25" maxlength="1000" required>
+          minlength="25" maxlength="1000" required>
       </div>
       <div class="col-12">
         <label class="form-label" for="locationDescription">Description</label>
