@@ -6,7 +6,7 @@ import { AuthService } from '../services/AuthService';
 const identity = computed(() => AppState.identity)
 const account = computed(() => AppState.account)
 async function login() {
-  AuthService.loginWithPopup()
+  AuthService.loginWithRedirect()
 }
 async function logout() {
   AuthService.logout()
@@ -30,7 +30,7 @@ async function logout() {
           <div class="list-group">
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item dropdown-item list-group-item-action">
-               Your Profile
+                Your Profile
               </div>
             </router-link>
             <div class="list-group-item dropdown-item list-group-item-action text-danger selectable" @click="logout">
